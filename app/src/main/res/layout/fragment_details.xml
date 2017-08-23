@@ -28,9 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:orientation="vertical"
-                android:paddingEnd="4dp"
                 android:paddingLeft="4dp"
-                android:paddingRight="4dp"
                 android:paddingStart="4dp">
 
                 <!-- Name field -->
@@ -67,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
                     android:spinnerMode="dropdown" />
             </LinearLayout>
         </LinearLayout>
@@ -80,7 +79,7 @@
             <!-- Label -->
             <TextView
                 style="@style/CategoryStyle"
-                android:text="@string/category_your_submissions" />
+                android:text="@string/category_your_tags" />
         </LinearLayout>
 
     </LinearLayout>
