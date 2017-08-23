@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "50909401732",
+    "firebase_url": "https://rolltime-b4b81.firebaseio.com",
+    "project_id": "rolltime-b4b81",
+    "storage_bucket": "rolltime-b4b81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50909401732:android:490371b9ddcab997",
+        "android_client_info": {
+          "package_name": "com.noahkim.rolltime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50909401732-o1hagvj1iqqlpucf7biklbutkve47cki.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.noahkim.rolltime",
+            "certificate_hash": "9d77bc09013196ea1b27b45aff3644f97ae24364"
+          }
+        },
+        {
+          "client_id": "50909401732-c1mqgnm0m6abmj5ist1cekbdj2euth1n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJbWphDzDJppvJE2N8vQjpczJNQ1_vsfk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50909401732-c1mqgnm0m6abmj5ist1cekbdj2euth1n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

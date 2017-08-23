@@ -1,0 +1,171 @@
+package com.noahkim.rolltime;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+
+import java.util.Arrays;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Initialize toolbar and fab
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
+
+    public static final String ANONYMOUS = "anonymous";
+    public static final int RC_SIGN_IN = 1;
+
+
+    private String mUsername;
+
+    // Firebase instance variables
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mMessagesDatabaseReference;
+    private ChildEventListener mChildEventListener;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private FirebaseListAdapter mFirebaseListAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
+
+        // inflate MainFragment
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new MainFragment())
+                    .commit();
+        }
+
+        mUsername = ANONYMOUS;
+
+        // Initialize Firebase components
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+
+        // Create login authentication page
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // user is signed in
+                    onSignedInInitialize(user.getDisplayName());
+                } else {
+                    // user is signed out
+                    onSignedOutCleanup();
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setAvailableProviders(
+                                            Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                                    new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                                    .build(),
+                            RC_SIGN_IN);
+                }
+            }
+        };
+    }
+
+    // FAB opens RecordMatchActivity
+    @OnClick(R.id.fab)
+    public void onFabClick(View view) {
+        Intent intent = new Intent(MainActivity.this, RecordMatchActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    private void onSignedInInitialize(String username) {
+        mUsername = username;
+//        attachDatabaseReadListener();
+    }
+
+    private void onSignedOutCleanup() {
+        mUsername = ANONYMOUS;
+        // TODO: clear adapter
+//        detachDatabaseReadListener();
+    }
+
+    private void attachDatabaseReadListener() {
+        if (mChildEventListener == null) {
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    // TODO: attach adapter
+                }
+
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+                public void onChildRemoved(DataSnapshot dataSnapshot) {}
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+                public void onCancelled(DatabaseError databaseError) {}
+            };
+            mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
+        }
+    }
+
+    private void detachDatabaseReadListener() {
+        if (mChildEventListener != null) {
+            mMessagesDatabaseReference.removeEventListener(mChildEventListener);
+            mChildEventListener = null;
+        }
+    }
+}
