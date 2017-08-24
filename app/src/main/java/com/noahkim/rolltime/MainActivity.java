@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private String mUsername;
 
     // Firebase instance variables
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mMessagesDatabaseReference;
     private ChildEventListener mChildEventListener;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -72,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Firebase components
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
         // Create login authentication page
@@ -158,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
-
         detachDatabaseReadListener();
     }
 
@@ -193,13 +189,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             };
-            mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
         }
     }
 
     private void detachDatabaseReadListener() {
         if (mChildEventListener != null) {
-            mMessagesDatabaseReference.removeEventListener(mChildEventListener);
             mChildEventListener = null;
         }
     }
