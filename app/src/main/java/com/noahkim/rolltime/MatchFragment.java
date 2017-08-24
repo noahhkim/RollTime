@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.data.MatchDetails;
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by noahkim on 8/16/17.
  */
 
-public class DetailFragment extends Fragment {
+public class MatchFragment extends Fragment {
 
     // Initialize EditText fields
     @BindView(R.id.edit_opponent_name)
@@ -67,11 +66,17 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_details, menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_save:
                 saveMatch();
+                getActivity().finish();
                 Toast.makeText(getActivity(), "Match saved!", Toast.LENGTH_SHORT).show();
                 return true;
             default:

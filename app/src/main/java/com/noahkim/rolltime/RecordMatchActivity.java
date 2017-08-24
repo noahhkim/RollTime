@@ -3,7 +3,6 @@ package com.noahkim.rolltime;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 
 import butterknife.ButterKnife;
 
@@ -22,14 +21,14 @@ public class RecordMatchActivity extends AppCompatActivity {
         // inflate DetailFragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.record_match_container, new DetailFragment())
+                    .add(R.id.record_match_container, new MatchFragment())
                     .commit();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_details, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_details, menu);
+//        return true;
+//    }
 }
