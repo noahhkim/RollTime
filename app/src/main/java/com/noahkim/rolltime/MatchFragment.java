@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.noahkim.rolltime.data.MatchDetails;
+import com.noahkim.rolltime.data.Match;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,9 +87,8 @@ public class MatchFragment extends Fragment {
     // Get user input and save match into database
     private void saveMatch() {
         String nameString = mNameEditText.getText().toString().trim();
-        MatchDetails matchDetails = new MatchDetails(nameString);
+        Match matchDetails = new Match(nameString);
         mDatabaseReference.push().setValue(matchDetails);
-
     }
 
 }

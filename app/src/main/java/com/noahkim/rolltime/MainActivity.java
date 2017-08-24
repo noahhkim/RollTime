@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
-    private FirebaseListAdapter mFirebaseListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,29 +168,29 @@ public class MainActivity extends AppCompatActivity {
 //        detachDatabaseReadListener();
     }
 
-    private void attachDatabaseReadListener() {
-        if (mChildEventListener == null) {
-            mChildEventListener = new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    // TODO: attach adapter
-                }
-
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                }
-
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-                }
-
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                }
-
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            };
-        }
-    }
-
+//    private void attachDatabaseReadListener() {
+//        if (mChildEventListener == null) {
+//            mChildEventListener = new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    // TODO: attach adapter
+//                }
+//
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                }
+//
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                }
+//
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//                }
+//
+//                public void onCancelled(DatabaseError databaseError) {
+//                }
+//            };
+//        }
+//    }
+//
     private void detachDatabaseReadListener() {
         if (mChildEventListener != null) {
             mChildEventListener = null;

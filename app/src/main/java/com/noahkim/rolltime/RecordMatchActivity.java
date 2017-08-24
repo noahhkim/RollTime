@@ -25,10 +25,4 @@ public class RecordMatchActivity extends AppCompatActivity {
                     .commit();
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_details, menu);
-//        return true;
-//    }
 }
