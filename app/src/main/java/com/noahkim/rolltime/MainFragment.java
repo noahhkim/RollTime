@@ -33,7 +33,6 @@ public class MainFragment extends Fragment {
     RecyclerView mMatchesRecyclerView;
 
     private List<Match> mMatches;
-    private MatchAdapter mMatchAdapter;
     private String mId;
 
     // Firebase instance variables
@@ -51,68 +50,27 @@ public class MainFragment extends Fragment {
 
         // Initialize Firebase
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        // Set up reference to database
         mDatabaseReference = mFirebaseDatabase.getReference();
 
-        mMatches = new ArrayList<>();
-        mId = Settings.Secure.getString(getActivity().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-
+        // Set LayoutManager to recyclerview
         mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mMatchAdapter = new MatchAdapter(mMatches, mId);
 
-
-//        mRecyclerAdapter = new FirebaseRecyclerAdapter<Match, MatchAdapter.MatchHolder>(Match.class,
-//                R.layout.fragment_main,
-//                MatchAdapter.MatchHolder.class,
-//                mDatabaseReference) {
-//            @Override
-//            protected void populateViewHolder(MatchAdapter.MatchHolder holder, Match match, int position) {
-//                holder.setName(match.getOpponentName());
-//            }
-//        };
-
-        mMatchesRecyclerView.setAdapter(mMatchAdapter);
-
-        attachDatabaseReadListener();
+        // Create subclass of FirebaseRecyclerAdapter
+        mRecyclerAdapter = new FirebaseRecyclerAdapter<Match, MatchHolder>(
+                Match.class,
+                R.layout.list_item_matches,
+                MatchHolder.class,
+                mDatabaseReference) {
+            @Override
+            protected void populateViewHolder(MatchHolder holder, Match match, int position) {
+                holder.setName(match.getOpponentName());
+            }
+        };
+        mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
 
         return rootView;
-    }
-
-    private void attachDatabaseReadListener() {
-        if (mChildEventListener == null) {
-            mChildEventListener = new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    if (dataSnapshot != null && dataSnapshot.getValue() != null) {
-                        Match match = dataSnapshot.getValue(Match.class);
-                        mMatches.add(match);
-                        mMatchesRecyclerView.scrollToPosition(mMatches.size() - 1);
-                        mMatchAdapter.notifyItemInserted(mMatches.size() - 1);
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            };
-            mDatabaseReference.addChildEventListener(mChildEventListener);
-        }
     }
 
 

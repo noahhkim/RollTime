@@ -6,6 +6,10 @@ package com.noahkim.rolltime.data;
 
 public class Match {
 
+    public Match() {
+        // Needed for Firebase
+    }
+
     private String mOpponentName;
 
     public Match(String opponentName) {

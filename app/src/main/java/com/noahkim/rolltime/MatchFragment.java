@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.data.Match;
@@ -34,6 +37,7 @@ public class MatchFragment extends Fragment {
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    private ChildEventListener mChildEventListener;
 
     // Keep track of whether match info has been edited or not
     private boolean mInfoHasChanged = false;
@@ -60,6 +64,7 @@ public class MatchFragment extends Fragment {
         // Initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
+        // Set up reference to database
         mDatabaseReference = mFirebaseDatabase.getReference();
 
         return rootView;
@@ -90,5 +95,6 @@ public class MatchFragment extends Fragment {
         Match matchDetails = new Match(nameString);
         mDatabaseReference.push().setValue(matchDetails);
     }
+
 
 }
