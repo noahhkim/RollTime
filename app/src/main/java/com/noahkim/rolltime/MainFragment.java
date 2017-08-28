@@ -54,7 +54,6 @@ public class MainFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
-        mMatchesRecyclerView.setHasFixedSize(true);
         mMatchesRecyclerView.setLayoutManager(mLayoutManager);
 
         // Create subclass of FirebaseRecyclerAdapter

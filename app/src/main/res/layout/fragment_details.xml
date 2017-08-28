@@ -61,7 +61,7 @@
 
                 <!-- Belt drop-down spinner -->
                 <Spinner
-                    android:id="@+id/spinner_belt"
+                    android:id="@+id/belts_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:paddingRight="16dp"
