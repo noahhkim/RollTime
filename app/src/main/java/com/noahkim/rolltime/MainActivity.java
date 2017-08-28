@@ -40,11 +40,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
 
-
     private String mUsername;
 
     // Firebase instance variables
-    private ChildEventListener mChildEventListener;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -67,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         mUsername = ANONYMOUS;
 
-        // Initialize Firebase components
+        // Initialize Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
@@ -112,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     // FAB opens RecordMatchActivity
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
@@ -138,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -154,46 +150,13 @@ public class MainActivity extends AppCompatActivity {
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
-        detachDatabaseReadListener();
     }
 
     private void onSignedInInitialize(String username) {
         mUsername = username;
-//        attachDatabaseReadListener();
     }
 
     private void onSignedOutCleanup() {
         mUsername = ANONYMOUS;
-        // TODO: clear adapter
-//        detachDatabaseReadListener();
-    }
-
-//    private void attachDatabaseReadListener() {
-//        if (mChildEventListener == null) {
-//            mChildEventListener = new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    // TODO: attach adapter
-//                }
-//
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                }
-//
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                }
-//
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//                }
-//
-//                public void onCancelled(DatabaseError databaseError) {
-//                }
-//            };
-//        }
-//    }
-//
-    private void detachDatabaseReadListener() {
-        if (mChildEventListener != null) {
-            mChildEventListener = null;
-        }
     }
 }

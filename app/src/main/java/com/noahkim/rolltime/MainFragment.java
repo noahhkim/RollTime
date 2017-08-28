@@ -1,6 +1,5 @@
 package com.noahkim.rolltime;
 
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,15 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.noahkim.rolltime.data.Match;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,14 +26,13 @@ public class MainFragment extends Fragment {
     @BindView(R.id.rv_matches)
     RecyclerView mMatchesRecyclerView;
 
-    private List<Match> mMatches;
-    private String mId;
+    private LinearLayoutManager mLayoutManager;
 
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private ChildEventListener mChildEventListener;
     private FirebaseRecyclerAdapter mRecyclerAdapter;
+    private Query mRecentMatches;
 
     @Nullable
     @Override
@@ -54,15 +47,22 @@ public class MainFragment extends Fragment {
         // Set up reference to database
         mDatabaseReference = mFirebaseDatabase.getReference();
 
-        // Set LayoutManager to recyclerview
-        mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // Limit query to last 10 matches
+        mRecentMatches = mDatabaseReference.limitToLast(10);
+
+        // Initialize LayoutManager
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mMatchesRecyclerView.setHasFixedSize(true);
+        mMatchesRecyclerView.setLayoutManager(mLayoutManager);
 
         // Create subclass of FirebaseRecyclerAdapter
         mRecyclerAdapter = new FirebaseRecyclerAdapter<Match, MatchHolder>(
                 Match.class,
                 R.layout.list_item_matches,
                 MatchHolder.class,
-                mDatabaseReference) {
+                mRecentMatches) {
             @Override
             protected void populateViewHolder(MatchHolder holder, Match match, int position) {
                 holder.setName(match.getOpponentName());
