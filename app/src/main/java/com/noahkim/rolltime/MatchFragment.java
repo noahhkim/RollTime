@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -30,9 +31,11 @@ import butterknife.ButterKnife;
 
 public class MatchFragment extends Fragment {
 
-    // Initialize EditText fields
+    // Initialize fields
     @BindView(R.id.edit_opponent_name)
     EditText mNameEditText;
+    @BindView(R.id.belts_spinner)
+    Spinner mBeltSpinner;
 
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
@@ -66,6 +69,9 @@ public class MatchFragment extends Fragment {
 
         // Set up reference to database
         mDatabaseReference = mFirebaseDatabase.getReference();
+
+        // Set up custom spinner
+        mBeltSpinner.setAdapter(new SpinnerAdapter());
 
         return rootView;
     }
