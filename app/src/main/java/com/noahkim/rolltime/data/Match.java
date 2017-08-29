@@ -36,5 +36,7 @@ public class Match {
         return mBeltLevel;
     }
 
-
+    public void setBeltLevel(int beltLevel) {
+        mBeltLevel = beltLevel;
+    }
 }

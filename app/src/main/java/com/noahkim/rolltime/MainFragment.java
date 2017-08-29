@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.noahkim.rolltime.data.Match;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -33,6 +35,15 @@ public class MainFragment extends Fragment {
     private DatabaseReference mDatabaseReference;
     private FirebaseRecyclerAdapter mRecyclerAdapter;
     private Query mRecentMatches;
+
+    // Array of belt levels
+    private int[] beltArray = {
+            R.drawable.ic_bjj_white_belt,
+            R.drawable.ic_bjj_blue_belt,
+            R.drawable.ic_bjj_purple_belt,
+            R.drawable.ic_bjj_brown_belt,
+            R.drawable.ic_bjj_black_belt
+    };
 
     @Nullable
     @Override
@@ -65,6 +76,8 @@ public class MainFragment extends Fragment {
             @Override
             protected void populateViewHolder(MatchHolder holder, Match match, int position) {
                 holder.setName(match.getOpponentName());
+                holder.setBeltLevel(beltArray[match.getBeltLevel()]);
+                Timber.d("Belt level = " + String.valueOf(match.getBeltLevel()));
             }
         };
         mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
