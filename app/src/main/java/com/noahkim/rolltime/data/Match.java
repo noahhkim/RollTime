@@ -5,15 +5,23 @@ package com.noahkim.rolltime.data;
  */
 
 public class Match {
+    public static int WHITE_BELT = 0;
+    public static int BLUE_BELT = 1;
+    public static int PURPLE_BELT = 2;
+    public static int BROWN_BELT = 3;
+    public static int BLACK_BELT = 4;
+
+    private String mOpponentName;
+    private int mBeltLevel;
+
 
     public Match() {
         // Needed for Firebase
     }
 
-    private String mOpponentName;
-
-    public Match(String opponentName) {
-        this.mOpponentName = opponentName;
+    public Match(String opponentName, int beltLevel) {
+        mOpponentName = opponentName;
+        mBeltLevel = beltLevel;
     }
 
     public String getOpponentName() {
@@ -23,4 +31,10 @@ public class Match {
     public void setOpponentName(String name) {
         mOpponentName = name;
     }
+
+    public int getBeltLevel() {
+        return mBeltLevel;
+    }
+
+
 }

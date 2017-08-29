@@ -1,9 +1,11 @@
 package com.noahkim.rolltime;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +13,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -40,7 +44,6 @@ public class MatchFragment extends Fragment {
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private ChildEventListener mChildEventListener;
 
     // Keep track of whether match info has been edited or not
     private boolean mInfoHasChanged = false;
@@ -52,6 +55,18 @@ public class MatchFragment extends Fragment {
             mInfoHasChanged = true;
             return false;
         }
+    };
+
+    // Belt level. Default level is white
+    private int mBeltLevel = Match.WHITE_BELT;
+
+    // Array of belt levels
+    private int[] beltArray = {
+            R.drawable.ic_bjj_white_belt,
+            R.drawable.ic_bjj_blue_belt,
+            R.drawable.ic_bjj_purple_belt,
+            R.drawable.ic_bjj_brown_belt,
+            R.drawable.ic_bjj_black_belt
     };
 
     @Nullable
@@ -70,10 +85,45 @@ public class MatchFragment extends Fragment {
         // Set up reference to database
         mDatabaseReference = mFirebaseDatabase.getReference();
 
-        // Set up custom spinner
-        mBeltSpinner.setAdapter(new SpinnerAdapter());
+        setUpSpinner();
 
         return rootView;
+    }
+
+    // Set up custom spinner
+    private void setUpSpinner() {
+        mBeltSpinner.setAdapter(new SpinnerAdapter(getActivity(), beltArray));
+        mBeltSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+                int selection = parent.getSelectedItemPosition();
+                switch (selection) {
+                    case 0:
+                        mBeltLevel = Match.WHITE_BELT;
+                        break;
+                    case 1:
+                        mBeltLevel = Match.BLUE_BELT;
+                        break;
+                    case 2:
+                        mBeltLevel = Match.PURPLE_BELT;
+                        break;
+                    case 3:
+                        mBeltLevel = Match.BROWN_BELT;
+                        break;
+                    case 4:
+                        mBeltLevel = Match.BLACK_BELT;
+                        break;
+                    default:
+                        mBeltLevel = Match.WHITE_BELT;
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                mBeltLevel = Match.WHITE_BELT;
+            }
+        });
     }
 
     @Override
@@ -98,7 +148,7 @@ public class MatchFragment extends Fragment {
     // Get user input and save match into database
     private void saveMatch() {
         String nameString = mNameEditText.getText().toString().trim();
-        Match matchDetails = new Match(nameString);
+        Match matchDetails = new Match(nameString, mBeltLevel);
         mDatabaseReference.push().setValue(matchDetails);
     }
 
