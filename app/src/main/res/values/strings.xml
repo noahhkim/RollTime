@@ -14,5 +14,11 @@
     <string name="hint_opponent_name">Name</string>
     <string name="category_belt">Belt</string>
     <string name="category_your_tags">Your Tags</string>
+    <string name="hint_submission_count">#</string>
 
+
+    <!--Submission types-->
+    <string name="choke">Choke</string>
+    <string name="armlock">Armlock</string>
+    <string name="leglock">Leglock</string>
 </resources>

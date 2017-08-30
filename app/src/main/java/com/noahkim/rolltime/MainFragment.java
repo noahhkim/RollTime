@@ -56,10 +56,10 @@ public class MainFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         // Set up reference to database
-        mDatabaseReference = mFirebaseDatabase.getReference();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("matches");
 
         // Limit query to last 10 matches
-        mRecentMatches = mDatabaseReference.limitToLast(10);
+        mRecentMatches = mDatabaseReference.limitToLast(5);
 
         // Initialize LayoutManager
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -67,7 +67,7 @@ public class MainFragment extends Fragment {
         mLayoutManager.setStackFromEnd(true);
         mMatchesRecyclerView.setLayoutManager(mLayoutManager);
 
-        // Create subclass of FirebaseRecyclerAdapter
+        // Attach FirebaseRecyclerAdapter to recyclerview
         mRecyclerAdapter = new FirebaseRecyclerAdapter<Match, MatchHolder>(
                 Match.class,
                 R.layout.list_item_matches,
@@ -77,7 +77,6 @@ public class MainFragment extends Fragment {
             protected void populateViewHolder(MatchHolder holder, Match match, int position) {
                 holder.setName(match.getOpponentName());
                 holder.setBeltLevel(beltArray[match.getBeltLevel()]);
-                Timber.d("Belt level = " + String.valueOf(match.getBeltLevel()));
             }
         };
         mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
@@ -90,5 +89,11 @@ public class MainFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mRecyclerAdapter.cleanup();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMatchesRecyclerView.smoothScrollToPosition(5);
     }
 }
