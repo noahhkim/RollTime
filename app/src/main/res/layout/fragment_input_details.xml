@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -64,13 +65,13 @@
                     android:id="@+id/belts_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:paddingRight="16dp"
                     android:paddingEnd="16dp"
+                    android:paddingRight="16dp"
                     android:spinnerMode="dialog" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Your submissions category -->
+        <!-- Submissions category -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,24 +87,33 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp">
 
-                <!-- Submission drop-down spinner -->
-                <Spinner
-                    android:id="@+id/submission_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:paddingRight="16dp"
-                    android:paddingEnd="16dp"
-                    android:spinnerMode="dropdown" />
-
+                <!-- Choke field -->
                 <EditText
-                    android:id="@+id/edit_submission_count"
+                    android:id="@+id/edit_choke"
                     style="@style/EditorFieldStyle"
-                    android:hint="@string/hint_submission_count"
+                    android:hint="@string/choke"
                     android:inputType="number" />
 
-                </LinearLayout>
+                <!--Armlock field-->
+                <EditText
+                    android:id="@+id/edit_armlock"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/armlock"
+                    android:inputType="number" />
+
+                <!--Leglock field-->
+                <EditText
+                    android:id="@+id/edit_leglock"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/leglock"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

@@ -1,7 +1,6 @@
 package com.noahkim.rolltime;
 
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,17 +13,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.data.Match;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,10 +36,14 @@ public class MatchFragment extends Fragment {
     EditText mNameEditText;
     @BindView(R.id.belts_spinner)
     Spinner mBeltSpinner;
-    @BindView(R.id.submission_spinner)
-    Spinner mSubmissionSpinner;
-    @BindView(R.id.edit_submission_count)
-    EditText mSubmissionEditText;
+    @BindView(R.id.edit_choke)
+    EditText mChokeEditText;
+    @BindView(R.id.edit_armlock)
+    EditText mArmlockEditText;
+    @BindView(R.id.edit_leglock)
+    EditText mLeglockEditText;
+
+    private View rootView;
 
     // Firebase instance variables
     private FirebaseDatabase mFirebaseDatabase;
@@ -65,7 +65,7 @@ public class MatchFragment extends Fragment {
     private int mBeltLevel = Match.WHITE_BELT;
 
     // Submission type. Default is choke
-    private int mSubmissionType = Match.CHOKE;
+//    private int mSubmissionType = Match.CHOKE;
 
     // Array of belt levels
     private int[] beltArray = {
@@ -79,13 +79,12 @@ public class MatchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_input_details, container, false);
+        rootView = inflater.inflate(R.layout.fragment_input_details, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
 
         // Setup OnTouchListeners on all input fields
         mNameEditText.setOnTouchListener(mTouchListener);
-        mSubmissionEditText.setOnTouchListener(mTouchListener);
 
         // Initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -95,7 +94,7 @@ public class MatchFragment extends Fragment {
 
         // Set up spinners
         setUpBeltSpinner();
-        setUpSubmissionSpinner();
+//        setUpSubmissionSpinner();
 
         return rootView;
     }
@@ -136,36 +135,36 @@ public class MatchFragment extends Fragment {
         });
     }
 
-    // Set up submission type spinner
-    private void setUpSubmissionSpinner() {
-        // Create adapter and attach to spinner
-        ArrayAdapter submissionSpinnerAdapter = ArrayAdapter.createFromResource(
-                getActivity(), R.array.array_submssion_types, android.R.layout.simple_spinner_item);
-        submissionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        mSubmissionSpinner.setAdapter(submissionSpinnerAdapter);
-
-        // Set integer mSelected to constant values
-        mSubmissionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selection = (String) adapterView.getItemAtPosition(i);
-                if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(getString(R.string.armlock))) {
-                        mSubmissionType = Match.ARM_LOCK;
-                    } else if (selection.equals(getString(R.string.leglock))) {
-                        mSubmissionType = Match.LEG_LOCK;
-                    } else  {
-                        mSubmissionType = Match.CHOKE;
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                mSubmissionType = Match.CHOKE;
-            }
-        });
-    }
+//    // Set up submission type spinner
+//    private void setUpSubmissionSpinner() {
+//        // Create adapter and attach to spinner
+//        ArrayAdapter submissionSpinnerAdapter = ArrayAdapter.createFromResource(
+//                getActivity(), R.array.array_submssion_types, android.R.layout.simple_spinner_item);
+//        submissionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+//        mSubmissionTypeTextView.setAdapter(submissionSpinnerAdapter);
+//
+//        // Set integer mSelected to constant values
+//        mSubmissionTypeTextView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                String selection = (String) adapterView.getItemAtPosition(i);
+//                if (!TextUtils.isEmpty(selection)) {
+//                    if (selection.equals(getString(R.string.armlock))) {
+//                        mSubmissionType = Match.ARM_LOCK;
+//                    } else if (selection.equals(getString(R.string.leglock))) {
+//                        mSubmissionType = Match.LEG_LOCK;
+//                    } else  {
+//                        mSubmissionType = Match.CHOKE;
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                mSubmissionType = Match.CHOKE;
+//            }
+//        });
+//    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -189,16 +188,36 @@ public class MatchFragment extends Fragment {
     private void saveMatch() {
         // Read from input fields
         String nameString = mNameEditText.getText().toString().trim();
-        String submissionString = mSubmissionEditText.getText().toString().trim();
-
-        Match matchDetails = new Match(nameString, mBeltLevel, mSubmissionType);
+        String chokeString = mChokeEditText.getText().toString().trim();
+        String armlockString = mArmlockEditText.getText().toString().trim();
+        String leglockString = mLeglockEditText.getText().toString().trim();
 
         // If the submission count is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
-        int submissionCount = 0;
-        if (!TextUtils.isEmpty(submissionString)) {
-            submissionCount = Integer.parseInt(submissionString);
+        int chokeCount = 0;
+        if (!TextUtils.isEmpty(chokeString)) {
+            chokeCount = Integer.parseInt(chokeString);
         }
+        // If the submission count is not provided by the user, don't try to parse the string into an
+        // integer value. Use 0 by default.
+        int armlockCount = 0;
+        if (!TextUtils.isEmpty(chokeString)) {
+            armlockCount = Integer.parseInt(chokeString);
+        }
+        // If the submission count is not provided by the user, don't try to parse the string into an
+        // integer value. Use 0 by default.
+        int leglockCount = 0;
+        if (!TextUtils.isEmpty(chokeString)) {
+            leglockCount = Integer.parseInt(chokeString);
+        }
+
+        Match matchDetails = new Match(
+                nameString, mBeltLevel, chokeCount);
+
         mDatabaseReference.push().setValue(matchDetails);
+    }
+
+    private void addEditText() {
+
     }
 }

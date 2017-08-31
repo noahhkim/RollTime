@@ -17,8 +17,7 @@ public class Match {
 
     private String mOpponentName;
     private int mBeltLevel;
-    private int mSubmissionType;
-    private int mSubmissionCount;
+    private int mChokeCount;
 
     public Match() {
         // Needed for Firebase
@@ -29,10 +28,10 @@ public class Match {
         mBeltLevel = beltLevel;
     }
 
-    public Match(String opponentName, int beltLevel, int submissionType) {
+    public Match(String opponentName, int beltLevel, int chokeCount) {
         mOpponentName = opponentName;
         mBeltLevel = beltLevel;
-        mSubmissionType = submissionType;
+        mChokeCount = chokeCount;
     }
 
     public String getOpponentName() {
@@ -51,19 +50,11 @@ public class Match {
         mBeltLevel = beltLevel;
     }
 
-    public int getSubmissionType() {
-        return mSubmissionType;
+    public int getChokeCount() {
+        return mChokeCount;
     }
 
-    public void setSubmissionType(int submissionType) {
-        mSubmissionType = submissionType;
+    public void setChokeCount(int chokeCount) {
+        mChokeCount = chokeCount;
     }
-
-//    public int getSubmissionCount() {
-//        return mSubmissionCount;
-//    }
-//
-//    public void setSubmissionCount(int submissionCount) {
-//        mSubmissionType = submissionCount;
-//    }
 }
