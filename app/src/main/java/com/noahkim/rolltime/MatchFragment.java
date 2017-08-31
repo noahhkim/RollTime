@@ -64,9 +64,6 @@ public class MatchFragment extends Fragment {
     // Belt level. Default level is white
     private int mBeltLevel = Match.WHITE_BELT;
 
-    // Submission type. Default is choke
-//    private int mSubmissionType = Match.CHOKE;
-
     // Array of belt levels
     private int[] beltArray = {
             R.drawable.ic_bjj_white_belt,
@@ -94,7 +91,6 @@ public class MatchFragment extends Fragment {
 
         // Set up spinners
         setUpBeltSpinner();
-//        setUpSubmissionSpinner();
 
         return rootView;
     }
@@ -134,37 +130,6 @@ public class MatchFragment extends Fragment {
             }
         });
     }
-
-//    // Set up submission type spinner
-//    private void setUpSubmissionSpinner() {
-//        // Create adapter and attach to spinner
-//        ArrayAdapter submissionSpinnerAdapter = ArrayAdapter.createFromResource(
-//                getActivity(), R.array.array_submssion_types, android.R.layout.simple_spinner_item);
-//        submissionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-//        mSubmissionTypeTextView.setAdapter(submissionSpinnerAdapter);
-//
-//        // Set integer mSelected to constant values
-//        mSubmissionTypeTextView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String selection = (String) adapterView.getItemAtPosition(i);
-//                if (!TextUtils.isEmpty(selection)) {
-//                    if (selection.equals(getString(R.string.armlock))) {
-//                        mSubmissionType = Match.ARM_LOCK;
-//                    } else if (selection.equals(getString(R.string.leglock))) {
-//                        mSubmissionType = Match.LEG_LOCK;
-//                    } else  {
-//                        mSubmissionType = Match.CHOKE;
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                mSubmissionType = Match.CHOKE;
-//            }
-//        });
-//    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

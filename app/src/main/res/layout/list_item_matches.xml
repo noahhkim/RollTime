@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_gravity="center"
+    android:layout_marginBottom="4dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:elevation="3dp"
@@ -16,46 +16,111 @@
     android:foreground="?android:selectableItemBackground"
     app:cardCornerRadius="4dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="You"/>
+                android:id="@+id/you_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="You"
+                android:layout_weight="1" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <ImageView
+                android:id="@+id/user_belt_level"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_bjj_black_belt"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1" />
 
-                <TextView
-                    android:id="@+id/opponent_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp" />
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/SubmissionTextViewStyle"
+                android:layout_marginTop="4dp"
+                android:text="Chokes: " />
 
-                <ImageView
-                    android:id="@+id/opponent_belt"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:padding="4dp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/SubmissionTextViewStyle"
+                android:layout_marginTop="4dp"
+                android:text="Armlocks: " />
 
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/SubmissionTextViewStyle"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Leglocks: " />
 
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/versus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="vs." />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/opponent_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="Ivan"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/opponent_belt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_bjj_black_belt"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/SubmissionTextViewStyle"
+                android:layout_marginTop="4dp"
+                android:text="Chokes: " />
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/SubmissionTextViewStyle"
+                android:layout_marginTop="4dp"
+                android:text="Armlocks: " />
+
+            <TextView
+                android:id="@+id/textView9"
+                style="@style/SubmissionTextViewStyle"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:text="Leglocks: " />
 
         </LinearLayout>
 
 
-
     </LinearLayout>
+
+
 </android.support.v7.widget.CardView>
