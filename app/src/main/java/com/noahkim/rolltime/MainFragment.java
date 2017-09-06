@@ -1,5 +1,6 @@
 package com.noahkim.rolltime;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -77,9 +78,30 @@ public class MainFragment extends Fragment {
             protected void populateViewHolder(MatchHolder holder, Match match, int position) {
                 holder.setName(match.getOpponentName());
                 holder.setBeltLevel(beltArray[match.getBeltLevel()]);
+                holder.setUserChokeCount(match.getChokeCount());
+            }
+
+            @Override
+            public MatchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                MatchHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+                viewHolder.setOnClickListener(new MatchHolder.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(getActivity(), RecordMatchActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+
+                    }
+                });
+
+                return viewHolder;
             }
         };
         mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
+
 
         return rootView;
     }

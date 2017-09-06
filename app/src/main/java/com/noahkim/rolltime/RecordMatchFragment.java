@@ -156,6 +156,12 @@ public class RecordMatchFragment extends Fragment {
         String armlockString = mArmlockEditText.getText().toString().trim();
         String leglockString = mLeglockEditText.getText().toString().trim();
 
+        // Check if the name field is blank
+        if (TextUtils.isEmpty(nameString)) {
+            // If name field is blank, exit without saving to database
+            return;
+        }
+
         // If the submission count is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
         int chokeCount = 0;
@@ -179,9 +185,5 @@ public class RecordMatchFragment extends Fragment {
                 nameString, mBeltLevel, chokeCount);
 
         mDatabaseReference.push().setValue(matchDetails);
-    }
-
-    private void addEditText() {
-
     }
 }

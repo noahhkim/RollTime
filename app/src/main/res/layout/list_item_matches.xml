@@ -46,7 +46,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/user_choke_count"
                 style="@style/SubmissionTextViewStyle"
                 android:layout_marginTop="4dp"
                 android:text="Chokes: " />
