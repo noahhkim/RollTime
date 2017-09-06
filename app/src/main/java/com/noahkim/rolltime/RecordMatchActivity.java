@@ -21,7 +21,7 @@ public class RecordMatchActivity extends AppCompatActivity {
         // inflate DetailFragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.record_match_container, new MatchFragment())
+                    .add(R.id.record_match_container, new RecordMatchFragment())
                     .commit();
         }
     }

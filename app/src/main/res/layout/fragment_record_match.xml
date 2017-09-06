@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_margin"
-    tools:context="com.noahkim.rolltime.MatchFragment">
+    tools:context="com.noahkim.rolltime.RecordMatchFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +46,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
 
             <!-- Label -->
             <TextView
@@ -71,16 +72,34 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Submissions category -->
+        <!--Your Submissions category -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="16dp"
             android:orientation="horizontal">
 
             <!-- Label -->
-            <TextView
-                style="@style/CategoryStyle"
-                android:text="@string/category_your_tags" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/CategoryStyle"
+                    android:layout_width="match_parent"
+                    android:text="@string/category_your" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/CategoryStyle"
+                    android:layout_width="match_parent"
+                    android:text="@string/category_submissions"
+                    android:paddingTop="0dp"/>
+
+            </LinearLayout>
 
             <!-- Input field -->
             <LinearLayout
@@ -108,6 +127,69 @@
                 <!--Leglock field-->
                 <EditText
                     android:id="@+id/edit_leglock"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/leglock"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Opponent Submissions category -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:orientation="horizontal">
+
+            <!-- Label -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/CategoryStyle"
+                    android:layout_width="match_parent"
+                    android:text="@string/category_opponent" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/CategoryStyle"
+                    android:layout_width="match_parent"
+                    android:text="@string/category_submissions"
+                    android:paddingTop="0dp"/>
+
+            </LinearLayout>
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp">
+
+                <!-- Choke field -->
+                <EditText
+                    android:id="@+id/edit_opp_choke"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/choke"
+                    android:inputType="number" />
+
+                <!--Armlock field-->
+                <EditText
+                    android:id="@+id/edit_opp_armlock"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/armlock"
+                    android:inputType="number" />
+
+                <!--Leglock field-->
+                <EditText
+                    android:id="@+id/edit_opp_leglock"
                     style="@style/EditorFieldStyle"
                     android:hint="@string/leglock"
                     android:inputType="number" />

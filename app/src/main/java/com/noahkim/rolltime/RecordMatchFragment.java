@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by noahkim on 8/16/17.
  */
 
-public class MatchFragment extends Fragment {
+public class RecordMatchFragment extends Fragment {
 
     // Initialize fields
     @BindView(R.id.edit_opponent_name)
@@ -76,7 +75,7 @@ public class MatchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_input_details, container, false);
+        rootView = inflater.inflate(R.layout.fragment_record_match, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
 
