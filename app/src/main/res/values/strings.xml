@@ -16,11 +16,11 @@
     <string name="category_your">Your</string>
     <string name="category_submissions">Submissions</string>
 
-
-
-
     <!--Submission types-->
     <string name="choke">Chokes</string>
     <string name="armlock">Armlocks</string>
     <string name="leglock">Leglocks</string>
+
+    <string name="edit_activity_title_new_match">Add a Match</string>
+    <string name="edit_activity_title_edit_match">Edit Match</string>
 </resources>

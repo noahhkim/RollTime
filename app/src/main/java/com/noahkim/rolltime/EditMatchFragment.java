@@ -1,10 +1,13 @@
 package com.noahkim.rolltime;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,18 +20,24 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.data.Match;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.noahkim.rolltime.MainFragment.FIREBASE_DB_REF;
+
 /**
  * Created by noahkim on 8/16/17.
  */
 
-public class RecordMatchFragment extends Fragment {
+public class EditMatchFragment extends Fragment {
+    public static final String LOG_TAG = EditMatchFragment.class.getName();
 
     // Initialize fields
     @BindView(R.id.edit_opponent_name)
@@ -43,10 +52,6 @@ public class RecordMatchFragment extends Fragment {
     EditText mLeglockEditText;
 
     private View rootView;
-
-    // Firebase instance variables
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference;
 
     // Keep track of whether match info has been edited or not
     private boolean mInfoHasChanged = false;
@@ -63,6 +68,8 @@ public class RecordMatchFragment extends Fragment {
     // Belt level. Default level is white
     private int mBeltLevel = Match.WHITE_BELT;
 
+    private Uri mCurrentMatchUri;
+
     // Array of belt levels
     private int[] beltArray = {
             R.drawable.ic_bjj_white_belt,
@@ -75,20 +82,44 @@ public class RecordMatchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_record_match, container, false);
+        rootView = inflater.inflate(R.layout.fragment_edit_match, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
 
-        // Setup OnTouchListeners on all input fields
-        mNameEditText.setOnTouchListener(mTouchListener);
-
         // Initialize Firebase components
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+//        FIREBASE_DB = FirebaseDatabase.getInstance();
 
         // Set up reference to database
-        mDatabaseReference = mFirebaseDatabase.getReference().child("matches");
+//        FIREBASE_DB_REF = FIREBASE_DB.getReference().child("matches");
 
-        // Set up spinners
+        Intent intent = getActivity().getIntent();
+        mCurrentMatchUri = intent.getData();
+
+        if (mCurrentMatchUri == null) {
+            // This is a new match, so change the app bar to say "Add a Match"
+            getActivity().setTitle(getString(R.string.edit_activity_title_new_match));
+        } else {
+            getActivity().setTitle(getString(R.string.edit_activity_title_edit_match));
+            final String matchKey = mCurrentMatchUri.toString();
+            Log.v(LOG_TAG, "Firebase key: " + matchKey);
+            FIREBASE_DB_REF.child(matchKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Match match = dataSnapshot.getValue(Match.class);
+                    mNameEditText.setText(match.getOpponentName());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        // Setup OnTouchListeners on all input fields
+        mNameEditText.setOnTouchListener(mTouchListener);
+        mChokeEditText.setOnTouchListener(mTouchListener);
+
         setUpBeltSpinner();
 
         return rootView;
@@ -184,6 +215,6 @@ public class RecordMatchFragment extends Fragment {
         Match matchDetails = new Match(
                 nameString, mBeltLevel, chokeCount);
 
-        mDatabaseReference.push().setValue(matchDetails);
+        FIREBASE_DB_REF.push().setValue(matchDetails);
     }
 }

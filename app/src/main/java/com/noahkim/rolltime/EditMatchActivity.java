@@ -10,18 +10,18 @@ import butterknife.ButterKnife;
  * Created by noahkim on 8/16/17.
  */
 
-public class RecordMatchActivity extends AppCompatActivity {
+public class EditMatchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_match);
+        setContentView(R.layout.activity_edit_match);
         ButterKnife.bind(this);
 
         // inflate DetailFragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.record_match_container, new RecordMatchFragment())
+                    .add(R.id.record_match_container, new EditMatchFragment())
                     .commit();
         }
     }

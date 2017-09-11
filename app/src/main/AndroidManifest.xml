@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RecordMatchActivity"
+            android:name=".EditMatchActivity"
             android:parentActivityName=".MainActivity"
             android:label="@string/label_record_match">
 

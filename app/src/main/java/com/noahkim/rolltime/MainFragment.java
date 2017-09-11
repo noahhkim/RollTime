@@ -1,12 +1,12 @@
 package com.noahkim.rolltime;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,6 @@ import com.noahkim.rolltime.data.Match;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -32,8 +31,8 @@ public class MainFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
 
     // Firebase instance variables
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference;
+    public static FirebaseDatabase FIREBASE_DB;
+    public static DatabaseReference FIREBASE_DB_REF;
     private FirebaseRecyclerAdapter mRecyclerAdapter;
     private Query mRecentMatches;
 
@@ -54,13 +53,13 @@ public class MainFragment extends Fragment {
         setHasOptionsMenu(true);
 
         // Initialize Firebase
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FIREBASE_DB = FirebaseDatabase.getInstance();
 
         // Set up reference to database
-        mDatabaseReference = mFirebaseDatabase.getReference().child("matches");
+        FIREBASE_DB_REF = FIREBASE_DB.getReference().child("matches");
 
         // Limit query to last 10 matches
-        mRecentMatches = mDatabaseReference.limitToLast(5);
+        mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
 
         // Initialize LayoutManager
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -87,7 +86,10 @@ public class MainFragment extends Fragment {
                 viewHolder.setOnClickListener(new MatchHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(getActivity(), RecordMatchActivity.class);
+                        DatabaseReference itemRef = mRecyclerAdapter.getRef(position);
+                        Intent intent = new Intent(getActivity(), EditMatchActivity.class);
+                        String postId = itemRef.getKey();
+                        intent.setData(Uri.parse(postId));
                         startActivity(intent);
                     }
 
