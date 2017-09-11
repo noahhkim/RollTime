@@ -68,6 +68,7 @@ public class EditMatchFragment extends Fragment {
     // Belt level. Default level is white
     private int mBeltLevel = Match.WHITE_BELT;
 
+    // Uri of selected match
     private Uri mCurrentMatchUri;
 
     // Array of belt levels
@@ -85,12 +86,7 @@ public class EditMatchFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_edit_match, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
-
-        // Initialize Firebase components
-//        FIREBASE_DB = FirebaseDatabase.getInstance();
-
-        // Set up reference to database
-//        FIREBASE_DB_REF = FIREBASE_DB.getReference().child("matches");
+        setUpBeltSpinner();
 
         Intent intent = getActivity().getIntent();
         mCurrentMatchUri = intent.getData();
@@ -100,13 +96,14 @@ public class EditMatchFragment extends Fragment {
             getActivity().setTitle(getString(R.string.edit_activity_title_new_match));
         } else {
             getActivity().setTitle(getString(R.string.edit_activity_title_edit_match));
-            final String matchKey = mCurrentMatchUri.toString();
+            String matchKey = mCurrentMatchUri.toString();
             Log.v(LOG_TAG, "Firebase key: " + matchKey);
             FIREBASE_DB_REF.child(matchKey).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Match match = dataSnapshot.getValue(Match.class);
                     mNameEditText.setText(match.getOpponentName());
+                    mBeltSpinner.setSelection(match.getBeltLevel());
                 }
 
                 @Override
@@ -119,8 +116,6 @@ public class EditMatchFragment extends Fragment {
         // Setup OnTouchListeners on all input fields
         mNameEditText.setOnTouchListener(mTouchListener);
         mChokeEditText.setOnTouchListener(mTouchListener);
-
-        setUpBeltSpinner();
 
         return rootView;
     }
