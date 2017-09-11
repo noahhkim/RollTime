@@ -112,21 +112,21 @@
 
                 <!-- Choke field -->
                 <EditText
-                    android:id="@+id/edit_choke"
+                    android:id="@+id/edit_user_choke"
                     style="@style/EditorFieldStyle"
                     android:hint="@string/choke"
                     android:inputType="number" />
 
                 <!--Armlock field-->
                 <EditText
-                    android:id="@+id/edit_armlock"
+                    android:id="@+id/edit_user_armlock"
                     style="@style/EditorFieldStyle"
                     android:hint="@string/armlock"
                     android:inputType="number" />
 
                 <!--Leglock field-->
                 <EditText
-                    android:id="@+id/edit_leglock"
+                    android:id="@+id/edit_user_leglock"
                     style="@style/EditorFieldStyle"
                     android:hint="@string/leglock"
                     android:inputType="number" />

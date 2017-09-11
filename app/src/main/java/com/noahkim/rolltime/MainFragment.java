@@ -75,9 +75,9 @@ public class MainFragment extends Fragment {
                 mRecentMatches) {
             @Override
             protected void populateViewHolder(MatchHolder holder, Match match, int position) {
-                holder.setName(match.getOpponentName());
-                holder.setBeltLevel(beltArray[match.getBeltLevel()]);
-                holder.setUserChokeCount(match.getChokeCount());
+                holder.setName(match.getOppName());
+                holder.setBeltLevel(beltArray[match.getOppBeltLevel()]);
+                holder.setUserChokeCount(match.getUserChokeCount());
             }
 
             @Override

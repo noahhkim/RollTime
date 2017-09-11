@@ -20,10 +20,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.data.Match;
 
@@ -44,12 +42,18 @@ public class EditMatchFragment extends Fragment {
     EditText mNameEditText;
     @BindView(R.id.belts_spinner)
     Spinner mBeltSpinner;
-    @BindView(R.id.edit_choke)
-    EditText mChokeEditText;
-    @BindView(R.id.edit_armlock)
-    EditText mArmlockEditText;
-    @BindView(R.id.edit_leglock)
-    EditText mLeglockEditText;
+    @BindView(R.id.edit_user_choke)
+    EditText mUserChokeEditText;
+    @BindView(R.id.edit_user_armlock)
+    EditText mUserArmlockEditText;
+    @BindView(R.id.edit_user_leglock)
+    EditText mUserLeglockEditText;
+    @BindView(R.id.edit_opp_choke)
+    EditText mOppChokeEditText;
+    @BindView(R.id.edit_opp_armlock)
+    EditText mOppArmlockEditText;
+    @BindView(R.id.edit_opp_leglock)
+    EditText mOppLeglockEditText;
 
     private View rootView;
 
@@ -96,14 +100,15 @@ public class EditMatchFragment extends Fragment {
             getActivity().setTitle(getString(R.string.edit_activity_title_new_match));
         } else {
             getActivity().setTitle(getString(R.string.edit_activity_title_edit_match));
-            String matchKey = mCurrentMatchUri.toString();
+            final String matchKey = mCurrentMatchUri.toString();
             Log.v(LOG_TAG, "Firebase key: " + matchKey);
             FIREBASE_DB_REF.child(matchKey).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Match match = dataSnapshot.getValue(Match.class);
-                    mNameEditText.setText(match.getOpponentName());
-                    mBeltSpinner.setSelection(match.getBeltLevel());
+                    mNameEditText.setText(match.getOppName());
+                    mBeltSpinner.setSelection(match.getOppBeltLevel());
+                    mUserChokeEditText.setText(String.valueOf(match.getUserChokeCount()));
                 }
 
                 @Override
@@ -115,7 +120,7 @@ public class EditMatchFragment extends Fragment {
 
         // Setup OnTouchListeners on all input fields
         mNameEditText.setOnTouchListener(mTouchListener);
-        mChokeEditText.setOnTouchListener(mTouchListener);
+        mUserChokeEditText.setOnTouchListener(mTouchListener);
 
         return rootView;
     }
@@ -177,38 +182,61 @@ public class EditMatchFragment extends Fragment {
 
     private void saveMatch() {
         // Read from input fields
-        String nameString = mNameEditText.getText().toString().trim();
-        String chokeString = mChokeEditText.getText().toString().trim();
-        String armlockString = mArmlockEditText.getText().toString().trim();
-        String leglockString = mLeglockEditText.getText().toString().trim();
+        String oppNameString = mNameEditText.getText().toString().trim();
+        String userChokeString = mUserChokeEditText.getText().toString().trim();
+        String userArmlockString = mUserArmlockEditText.getText().toString().trim();
+        String userLeglockString = mUserLeglockEditText.getText().toString().trim();
+        String oppChokeString = mOppChokeEditText.getText().toString().trim();
+        String oppArmlockString = mOppArmlockEditText.getText().toString().trim();
+        String oppLeglockString = mOppLeglockEditText.getText().toString().trim();
 
         // Check if the name field is blank
-        if (TextUtils.isEmpty(nameString)) {
+        if (TextUtils.isEmpty(oppNameString)) {
             // If name field is blank, exit without saving to database
             return;
         }
 
         // If the submission count is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
-        int chokeCount = 0;
-        if (!TextUtils.isEmpty(chokeString)) {
-            chokeCount = Integer.parseInt(chokeString);
+        int userChokeCount = 0;
+        if (!TextUtils.isEmpty(userChokeString)) {
+            userChokeCount = Integer.parseInt(userChokeString);
         }
-        // If the submission count is not provided by the user, don't try to parse the string into an
-        // integer value. Use 0 by default.
-        int armlockCount = 0;
-        if (!TextUtils.isEmpty(chokeString)) {
-            armlockCount = Integer.parseInt(chokeString);
+
+        int userArmlockCount = 0;
+        if (!TextUtils.isEmpty(userArmlockString)) {
+            userArmlockCount = Integer.parseInt(userArmlockString);
         }
-        // If the submission count is not provided by the user, don't try to parse the string into an
-        // integer value. Use 0 by default.
-        int leglockCount = 0;
-        if (!TextUtils.isEmpty(chokeString)) {
-            leglockCount = Integer.parseInt(chokeString);
+
+        int userLeglockCount = 0;
+        if (!TextUtils.isEmpty(userLeglockString)) {
+            userLeglockCount = Integer.parseInt(userLeglockString);
+        }
+
+        int oppChokeCount = 0;
+        if (!TextUtils.isEmpty(oppChokeString)) {
+            oppChokeCount = Integer.parseInt(oppChokeString);
+        }
+
+        int oppArmlockCount = 0;
+        if (!TextUtils.isEmpty(oppArmlockString)) {
+            oppArmlockCount = Integer.parseInt(oppArmlockString);
+        }
+
+        int oppLeglockCount = 0;
+        if (!TextUtils.isEmpty(oppLeglockString)) {
+            oppLeglockCount = Integer.parseInt(oppLeglockString);
         }
 
         Match matchDetails = new Match(
-                nameString, mBeltLevel, chokeCount);
+                oppNameString,
+                mBeltLevel,
+                userChokeCount,
+                userArmlockCount,
+                userLeglockCount,
+                oppChokeCount,
+                oppArmlockCount,
+                oppLeglockCount);
 
         FIREBASE_DB_REF.push().setValue(matchDetails);
     }
