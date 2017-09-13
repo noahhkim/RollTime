@@ -17,8 +17,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.noahkim.rolltime.data.Match;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.noahkim.rolltime.R.array.array_belt_colors;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -51,6 +57,7 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
+
 
         // Initialize Firebase
         FIREBASE_DB = FirebaseDatabase.getInstance();

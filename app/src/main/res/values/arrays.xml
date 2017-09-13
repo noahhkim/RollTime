@@ -8,7 +8,7 @@
         <item>@drawable/ic_bjj_black_belt</item>
     </integer-array>
 
-    <string-array name="array_submssion_types">
+    <string-array name="array_submission_types">
         <item>@string/choke</item>
         <item>@string/armlock</item>
         <item>@string/leglock</item>

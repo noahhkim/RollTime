@@ -109,6 +109,11 @@ public class EditMatchFragment extends Fragment {
                     mNameEditText.setText(match.getOppName());
                     mBeltSpinner.setSelection(match.getOppBeltLevel());
                     mUserChokeEditText.setText(String.valueOf(match.getUserChokeCount()));
+                    mUserArmlockEditText.setText(String.valueOf(match.getUserArmlockCount()));
+                    mUserLeglockEditText.setText(String.valueOf(match.getUserLeglockCount()));
+                    mOppChokeEditText.setText(String.valueOf(match.getOppChokeCount()));
+                    mOppArmlockEditText.setText(String.valueOf(match.getOppArmlockCount()));
+                    mOppLeglockEditText.setText(String.valueOf(match.getOppLeglockCount()));
                 }
 
                 @Override

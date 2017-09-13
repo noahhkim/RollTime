@@ -23,4 +23,10 @@
 
     <string name="edit_activity_title_new_match">Add a Match</string>
     <string name="edit_activity_title_edit_match">Edit Match</string>
+
+    <!--Bottom nav menu-->
+    <string name="text_home">Home</string>
+    <string name="text_history">History</string>
+    <string name="text_timer">Timer</string>
+
 </resources>
