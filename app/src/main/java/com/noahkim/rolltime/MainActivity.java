@@ -3,7 +3,9 @@ package com.noahkim.rolltime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView mBottomNavView;
 
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
@@ -41,18 +45,16 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
-
         setSupportActionBar(mToolbar);
 
-        // inflate MainFragment
+        // inflate HomeFragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new MainFragment())
+                    .add(R.id.container, new HomeFragment())
                     .commit();
         }
 
@@ -85,6 +87,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+        // set bottom nav views to inflate fragments upon selection
+        mBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                        if (currentFragment instanceof HomeFragment) {
+                            return false;
+                        } else {
+                            fragment = new HomeFragment();
+                        }
+                        break;
+                    case R.id.action_history:
+                        fragment = new HistoryFragment();
+                        break;
+                    case R.id.action_timer:
+                        fragment = new TimerFragment();
+                        break;
+                }
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragment, "TAG").commit();
+                return true;
+            }
+        });
     }
 
     // Close app if sign-in is cancelled
@@ -152,4 +181,6 @@ public class MainActivity extends AppCompatActivity {
     private void onSignedOutCleanup() {
         mUsername = ANONYMOUS;
     }
+
+
 }

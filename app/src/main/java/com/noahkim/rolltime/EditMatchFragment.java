@@ -28,7 +28,7 @@ import com.noahkim.rolltime.data.Match;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.noahkim.rolltime.MainFragment.FIREBASE_DB_REF;
+import static com.noahkim.rolltime.HomeFragment.FIREBASE_DB_REF;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -99,6 +99,8 @@ public class EditMatchFragment extends Fragment {
             // This is a new match, so change the app bar to say "Add a Match"
             getActivity().setTitle(getString(R.string.edit_activity_title_new_match));
         } else {
+            // This is a previously saved match, so change app bar to say "Edit Match"
+            // and also display saved info
             getActivity().setTitle(getString(R.string.edit_activity_title_edit_match));
             final String matchKey = mCurrentMatchUri.toString();
             Log.v(LOG_TAG, "Firebase key: " + matchKey);

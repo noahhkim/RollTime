@@ -8,6 +8,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/container"
         android:layout_above="@+id/bottom_navigation"
         tools:context="com.noahkim.rolltime.MainActivity">
 
@@ -26,7 +27,7 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <include layout="@layout/fragment_main" />
+        <include layout="@layout/fragment_home" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -45,8 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
         app:layout_insetEdge="bottom"
         app:menu="@menu/bottom_navigation_main" />
 </RelativeLayout>

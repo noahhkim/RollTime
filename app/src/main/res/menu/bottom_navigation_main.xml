@@ -14,7 +14,7 @@
         android:title="@string/text_history"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_music"
+        android:id="@+id/action_timer"
         android:enabled="true"
         android:icon="@drawable/ic_av_timer_white_24dp"
         android:title="@string/text_timer"
