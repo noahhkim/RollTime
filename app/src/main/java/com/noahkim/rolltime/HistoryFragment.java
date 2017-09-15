@@ -101,7 +101,7 @@ public class HistoryFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Match match = postSnapshot.getValue(Match.class);
-                    mUserChokes += match.getUserChokeCount();
+                    mUserChokes = match.getUserChokeCount();
                     Log.d(LOG_TAG, "Total user chokes = " + mUserChokes);
                 }
             }
@@ -111,6 +111,7 @@ public class HistoryFragment extends Fragment {
 
             }
         });
+        Log.d(LOG_TAG, "Actual user chokes = " + mUserChokes);
         return mUserChokes;
     }
 }
