@@ -109,8 +109,11 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new TimerFragment();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, fragment, "TAG").commit();
+                if (fragment != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, fragment, "TAG").commit();
+                }
+
                 return true;
             }
         });

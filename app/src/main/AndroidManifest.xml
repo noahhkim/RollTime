@@ -25,6 +25,7 @@
             android:label="@string/label_record_match">
 
         </activity>
+
     </application>
 
 </manifest>
