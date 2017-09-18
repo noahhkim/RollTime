@@ -56,7 +56,54 @@ public class HistoryFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, rootView);
 
-        setUpBarChart();
+        FIREBASE_DB_REF.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Match match = postSnapshot.getValue(Match.class);
+                    mUserChokes += match.getUserChokeCount();
+                    ArrayList<String> labels = new ArrayList<>();
+                    labels.add(getResources().getString(R.string.choke));
+                    labels.add(getResources().getString(R.string.armlock));
+                    labels.add(getResources().getString(R.string.leglock));
+
+                    ArrayList<BarEntry> userBarGroup = new ArrayList<>();
+
+                    float userChokeFloat = (float) mUserChokes;
+                    userBarGroup.add(new BarEntry(userChokeFloat, TOTAL_CHOKES));
+                    userBarGroup.add(new BarEntry(14f, TOTAL_ARMLOCKS));
+                    userBarGroup.add(new BarEntry(23f, TOTAL_LEGLOCKS));
+                    BarDataSet barDataSet1 = new BarDataSet(userBarGroup, "You");
+                    barDataSet1.setColor(Color.rgb(104, 241, 175));
+
+                    ArrayList<BarEntry> oppBarGroup = new ArrayList<>();
+                    oppBarGroup.add(new BarEntry(22f, TOTAL_CHOKES));
+                    oppBarGroup.add(new BarEntry(15f, TOTAL_ARMLOCKS));
+                    oppBarGroup.add(new BarEntry(21f, TOTAL_LEGLOCKS));
+                    BarDataSet barDataSet2 = new BarDataSet(oppBarGroup, "Opponent");
+                    barDataSet2.setColor(Color.rgb(255, 102, 0));
+
+                    ArrayList<BarDataSet> dataSets = new ArrayList<>();
+                    dataSets.add(barDataSet1);
+                    dataSets.add(barDataSet2);
+
+                    BarData theData = new BarData(labels, dataSets);
+                    mBarChart.setData(theData);
+
+                    mBarChart.setTouchEnabled(false);
+                    mBarChart.setPinchZoom(false);
+
+                    Log.d(LOG_TAG, "Total user chokes = " + mUserChokes);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        setUpBarChart();
 
         return rootView;
     }
@@ -68,8 +115,8 @@ public class HistoryFragment extends Fragment {
         labels.add(getResources().getString(R.string.leglock));
 
         ArrayList<BarEntry> userBarGroup = new ArrayList<>();
+
         float userChokeFloat = (float) getUserChokes();
-        Log.d(LOG_TAG, "Int value = " + getUserChokes());
         Log.d(LOG_TAG, "Float value = " + userChokeFloat);
         userBarGroup.add(new BarEntry(userChokeFloat, TOTAL_CHOKES));
         userBarGroup.add(new BarEntry(14f, TOTAL_ARMLOCKS));
@@ -101,7 +148,7 @@ public class HistoryFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Match match = postSnapshot.getValue(Match.class);
-                    mUserChokes = match.getUserChokeCount();
+                    mUserChokes += match.getUserChokeCount();
                     Log.d(LOG_TAG, "Total user chokes = " + mUserChokes);
                 }
             }
