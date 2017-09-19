@@ -1,37 +1,29 @@
-package com.noahkim.rolltime;
+package com.noahkim.rolltime.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Match;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.R.attr.data;
-import static android.R.attr.entries;
-import static com.noahkim.rolltime.HomeFragment.FIREBASE_DB_REF;
+import static com.noahkim.rolltime.ui.fragment.HomeFragment.FIREBASE_DB_REF;
 
 
 /**

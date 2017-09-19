@@ -1,4 +1,4 @@
-package com.noahkim.rolltime;
+package com.noahkim.rolltime.ui.fragment;
 
 
 import android.content.Intent;
@@ -23,12 +23,14 @@ import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.noahkim.rolltime.R;
+import com.noahkim.rolltime.SpinnerAdapter;
 import com.noahkim.rolltime.data.Match;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.noahkim.rolltime.HomeFragment.FIREBASE_DB_REF;
+import static com.noahkim.rolltime.ui.fragment.HomeFragment.FIREBASE_DB_REF;
 
 /**
  * Created by noahkim on 8/16/17.

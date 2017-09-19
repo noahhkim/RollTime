@@ -1,4 +1,4 @@
-package com.noahkim.rolltime;
+package com.noahkim.rolltime.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,10 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.noahkim.rolltime.ui.fragment.HistoryFragment;
+import com.noahkim.rolltime.ui.fragment.HomeFragment;
+import com.noahkim.rolltime.R;
+import com.noahkim.rolltime.ui.fragment.TimerFragment;
 
 import java.util.Arrays;
 
@@ -97,13 +101,16 @@ public class MainActivity extends AppCompatActivity {
                             return false;
                         } else {
                             fragment = new HomeFragment();
+                            mFab.setVisibility(View.VISIBLE);
                         }
                         break;
                     case R.id.action_history:
                         fragment = new HistoryFragment();
+                        mFab.setVisibility(View.GONE);
                         break;
                     case R.id.action_timer:
                         fragment = new TimerFragment();
+                        mFab.setVisibility(View.VISIBLE);
                         break;
                 }
                 if (fragment != null) {
@@ -115,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     // Close app if sign-in is cancelled
     @Override

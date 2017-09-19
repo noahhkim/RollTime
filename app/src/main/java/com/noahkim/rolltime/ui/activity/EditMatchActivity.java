@@ -1,8 +1,11 @@
-package com.noahkim.rolltime;
+package com.noahkim.rolltime.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import com.noahkim.rolltime.ui.fragment.EditMatchFragment;
+import com.noahkim.rolltime.R;
 
 import butterknife.ButterKnife;
 

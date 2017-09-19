@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_margin"
-    tools:context="com.noahkim.rolltime.EditMatchFragment">
+    tools:context="com.noahkim.rolltime.ui.fragment.EditMatchFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
