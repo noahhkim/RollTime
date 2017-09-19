@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import java.util.Arrays;
 
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -62,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
         // Create login authentication page
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
