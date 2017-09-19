@@ -31,4 +31,10 @@
     <string name="text_history">History</string>
     <string name="text_timer">Timer</string>
 
+    <!--Timer-->
+    <string name="hint_minutes">Minutes</string>
+    <string name="message_minutes">Please Enter Minutes</string>
+    <string name="default_hint">1</string>
+    <string name="default_time">00:01:00</string>
+
 </resources>
