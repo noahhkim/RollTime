@@ -85,7 +85,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         if (timerStatus == TimerStatus.STOPPED) {
             setTimerValues();
             setProgressBarValues();
-            mImageViewReset.setVisibility(View.INVISIBLE);
+            mImageViewReset.setVisibility(View.VISIBLE);
             mImageViewSartStop.setImageResource(R.drawable.icon_stop);
             mEditTextMinute.setEnabled(false);
             timerStatus = TimerStatus.STARTED;
@@ -136,7 +136,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
 
     // Method to stop countdown timer
     private void stopCountDownTimer() {
-        mCountDownTimer.cancel();
+            mCountDownTimer.cancel();
     }
 
     // Method to set circular progress bar values

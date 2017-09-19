@@ -9,8 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground">
+        android:layout_height="match_parent">
 
         <ProgressBar
             android:id="@+id/progressBarCircle"
@@ -18,11 +17,11 @@
             android:layout_width="270dp"
             android:layout_height="270dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/drawable_circle_dark_blue"
+            android:background="@drawable/drawable_circle_red"
             android:indeterminate="false"
             android:max="100"
             android:progress="100"
-            android:progressDrawable="@drawable/drawable_circle_yellow"
+            android:progressDrawable="@drawable/drawable_circle_primary"
             android:rotation="-90" />
 
         <EditText
@@ -39,8 +38,8 @@
             android:maxLines="1"
             android:minEms="5"
             android:text="@string/default_hint"
-            android:textColor="@color/colorYellow"
-            android:textColorHint="@color/colorYellow" />
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorAccent" />
 
         <TextView
             android:id="@+id/textViewTime"
@@ -48,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/default_time"
-            android:textColor="@color/colorYellow"
+            android:textColor="@color/colorPrimary"
             android:textSize="40sp" />
 
         <ImageView
@@ -58,8 +57,9 @@
             android:layout_below="@+id/textViewTime"
             android:layout_centerInParent="true"
             android:layout_marginTop="30dp"
-            android:src="@drawable/icon_reset"
-            android:visibility="gone" />
+            android:src="@drawable/ic_replay_black_24dp"
+            android:tint="@color/colorAccent"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/imageViewStartStop"
@@ -68,7 +68,8 @@
             android:layout_below="@+id/progressBarCircle"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:src="@drawable/icon_start" />
+            android:src="@drawable/icon_start"
+            android:tint="@color/colorPrimary"/>
 
     </RelativeLayout>
 
