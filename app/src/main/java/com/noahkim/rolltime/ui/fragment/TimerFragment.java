@@ -1,7 +1,9 @@
 package com.noahkim.rolltime.ui.fragment;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -129,6 +131,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 mImageViewSartStop.setImageResource(R.drawable.icon_start);
                 mEditTextMinute.setEnabled(true);
                 timerStatus = TimerStatus.STOPPED;
+                playAlarm();
             }
         }.start();
         mCountDownTimer.start();
@@ -156,5 +159,10 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
                 TimeUnit.MILLISECONDS.toMinutes(milliSeconds) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(milliSeconds)),
                 TimeUnit.MILLISECONDS.toSeconds(milliSeconds) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliSeconds)));
         return hms;
+    }
+
+    private void playAlarm() {
+        MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), Settings.System.DEFAULT_ALARM_ALERT_URI);
+        mediaPlayer.start();
     }
 }
