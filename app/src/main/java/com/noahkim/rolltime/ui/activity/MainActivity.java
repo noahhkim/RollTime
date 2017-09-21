@@ -160,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_settings:
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.action_sign_out:
                 AuthUI.getInstance().signOut(this);

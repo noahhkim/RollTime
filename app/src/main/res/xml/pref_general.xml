@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListPreference
+        android:title="@string/belt_level_label"
+        android:key="@string/belt_level_key"
+        android:defaultValue="@string/pref_belt_white"
+        android:entryValues="@array/pref_belt_levels"
+        android:entries="@array/pref_belt_labels" />
+
+</PreferenceScreen>

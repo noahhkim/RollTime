@@ -8,9 +8,29 @@
         <item>@drawable/ic_bjj_black_belt</item>
     </integer-array>
 
+    <string-array name="pref_belt_levels">
+        <item>@string/pref_belt_white</item>
+        <item>@string/pref_belt_blue</item>
+        <item>@string/pref_belt_purple</item>
+        <item>@string/pref_belt_brown</item>
+        <item>@string/pref_belt_black</item>
+
+    </string-array>
+
+    <string-array name="pref_belt_labels">
+        <item>@string/pref_belt_label_white</item>
+        <item>@string/pref_belt_label_blue</item>
+        <item>@string/pref_belt_label_purple</item>
+        <item>@string/pref_belt_label_brown</item>
+        <item>@string/pref_belt_label_black</item>
+
+    </string-array>
+
     <string-array name="array_submission_types">
         <item>@string/choke</item>
         <item>@string/armlock</item>
         <item>@string/leglock</item>
     </string-array>
+
+
 </resources>
