@@ -22,15 +22,16 @@
         <activity
             android:name=".ui.activity.EditMatchActivity"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:label="@string/label_record_match">
-
+            android:label="@string/title_activity_record_match">
         </activity>
-
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:parentActivityName=".ui.activity.MainActivity"
-            android:label="@string/label_settings">
-
+            android:label="@string/title_activity_settings"
+            android:theme="@style/SettingsTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.noahkim.rolltime.ui.activity.MainActivity" />
         </activity>
 
     </application>

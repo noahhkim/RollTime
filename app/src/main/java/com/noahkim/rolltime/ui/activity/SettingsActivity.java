@@ -66,4 +66,20 @@ public class SettingsActivity extends PreferenceActivity
         setPreferenceSummary(preference, o);
         return true;
     }
+
+    // Registers a shared preference change listener that gets notified when preferences change
+    @Override
+    protected void onResume() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sp.registerOnSharedPreferenceChangeListener(this);
+        super.onResume();
+    }
+
+    // Unregisters a shared preference change listener
+    @Override
+    protected void onPause() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        sp.unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
 }
