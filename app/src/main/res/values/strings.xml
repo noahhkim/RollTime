@@ -53,4 +53,16 @@
     <string name="pref_belt_brown" translatable="false">3</string>
     <string name="pref_belt_black" translatable="false">4</string>
 
+    <!-- Dialog message to ask the user to confirm deleting [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this match?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
+
+
+
 </resources>

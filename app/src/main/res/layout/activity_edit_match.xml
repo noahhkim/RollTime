@@ -2,9 +2,203 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/record_match_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.noahkim.rolltime.ui.activity.EditMatchActivity">
+    android:padding="@dimen/activity_margin"
+    tools:context="com.noahkim.rolltime.ui.fragment.EditMatchFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--Opponent name category-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Label -->
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/category_opponent" />
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp">
+
+                <!-- Name field -->
+                <EditText
+                    android:id="@+id/edit_opponent_name"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/hint_opponent_name"
+                    android:inputType="textCapWords" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Belt category -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+            <!-- Label -->
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/category_belt" />
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <!-- Belt spinner -->
+                <Spinner
+                    android:id="@+id/belts_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:paddingEnd="16dp"
+                    android:paddingRight="16dp"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--Your Submissions category -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:orientation="horizontal">
+
+            <!-- Label -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/CategoryStyle"
+                    android:layout_width="match_parent"
+                    android:text="@string/category_your" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/CategoryStyle"
+                    android:layout_width="match_parent"
+                    android:text="@string/category_submissions"
+                    android:paddingTop="0dp"/>
+
+            </LinearLayout>
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp">
+
+                <!-- Choke field -->
+                <EditText
+                    android:id="@+id/edit_user_choke"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/choke"
+                    android:inputType="number" />
+
+                <!--Armlock field-->
+                <EditText
+                    android:id="@+id/edit_user_armlock"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/armlock"
+                    android:inputType="number" />
+
+                <!--Leglock field-->
+                <EditText
+                    android:id="@+id/edit_user_leglock"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/leglock"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Opponent Submissions category -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:orientation="horizontal">
+
+            <!-- Label -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/CategoryStyle"
+                    android:layout_width="match_parent"
+                    android:text="@string/category_opponent" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/CategoryStyle"
+                    android:layout_width="match_parent"
+                    android:text="@string/category_submissions"
+                    android:paddingTop="0dp"/>
+
+            </LinearLayout>
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp">
+
+                <!-- Choke field -->
+                <EditText
+                    android:id="@+id/edit_opp_choke"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/choke"
+                    android:inputType="number" />
+
+                <!--Armlock field-->
+                <EditText
+                    android:id="@+id/edit_opp_armlock"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/armlock"
+                    android:inputType="number" />
+
+                <!--Leglock field-->
+                <EditText
+                    android:id="@+id/edit_opp_leglock"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/leglock"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
