@@ -1,7 +1,6 @@
 package com.noahkim.rolltime;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,6 @@ import android.widget.ImageView;
 public class SpinnerAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
-//    private int[] mBeltArray = {
-//            R.drawable.ic_bjj_white_belt,
-//            R.drawable.ic_bjj_blue_belt,
-//            R.drawable.ic_bjj_purple_belt,
-//            R.drawable.ic_bjj_brown_belt,
-//            R.drawable.ic_bjj_black_belt
-//    };
 
     private int[] mBeltArray;
 

@@ -5,5 +5,4 @@
     android:minWidth="300dp"
     android:previewImage="@drawable/ic_bjj_blue_belt"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen" />
