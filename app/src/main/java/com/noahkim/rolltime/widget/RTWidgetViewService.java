@@ -11,6 +11,6 @@ public class RTWidgetViewService extends RemoteViewsService{
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new RTWidgetViewFactory(this.getApplicationContext());
+        return new RTWidgetViewFactory(this.getApplicationContext(), intent);
     }
 }

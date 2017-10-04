@@ -3,6 +3,7 @@ package com.noahkim.rolltime.widget;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -36,8 +37,10 @@ public class RTWidgetViewFactory implements RemoteViewsService.RemoteViewsFactor
     private CountDownLatch mCountDownLatch;
 
 
-    public RTWidgetViewFactory(Context context) {
+    public RTWidgetViewFactory(Context context, Intent intent) {
         mContext = context;
+        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID);
     }
 
     @Override
