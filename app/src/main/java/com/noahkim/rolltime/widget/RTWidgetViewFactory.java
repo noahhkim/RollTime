@@ -1,5 +1,7 @@
 package com.noahkim.rolltime.widget;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -27,6 +29,7 @@ public class RTWidgetViewFactory implements RemoteViewsService.RemoteViewsFactor
     // Firebase global variables
     private FirebaseDatabase mFirebaseDB;
     private DatabaseReference mDatabaseReference;
+    private int appWidgetId;
 
     private Context mContext;
     private List<Match> mMatches = new ArrayList<>();
@@ -39,7 +42,6 @@ public class RTWidgetViewFactory implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onCreate() {
-
     }
 
     @Override
@@ -113,10 +115,10 @@ public class RTWidgetViewFactory implements RemoteViewsService.RemoteViewsFactor
                     Match match = postSnapshot.getValue(Match.class);
                     mMatches.add(match);
                     mCountDownLatch.countDown();
-//                        AppWidgetManager mgr = AppWidgetManager.getInstance(mContext);
-//                        ComponentName cn = new ComponentName(mContext, RTWidgetProvider.class);
-//                        mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widget_match_list);
                 }
+                AppWidgetManager mgr = AppWidgetManager.getInstance(mContext);
+                ComponentName cn = new ComponentName(mContext, RTWidgetProvider.class);
+                mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widget_match_list);
             }
 
             @Override
