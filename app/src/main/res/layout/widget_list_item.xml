@@ -2,12 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:id="@+id/widget_recent_matches_list">
 
-    <TextView
-        android:id="@+id/widget_opp_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widget_user_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/you" />
+
+            <TextView
+                android:id="@+id/widget_user_choke_count"
+                style="@style/SubmissionTextViewStyle"
+                android:text="Chokes: " />
+
+            <TextView
+                android:id="@+id/widget_user_armlock_count"
+                style="@style/SubmissionTextViewStyle"
+                android:text="Armlocks: " />
+
+            <TextView
+                android:id="@+id/widget_user_leglock_count"
+                style="@style/SubmissionTextViewStyle"
+                android:text="Leglocks: " />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/widget_versus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/versus" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widget_opp_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/widget_opp_choke_count"
+                style="@style/SubmissionTextViewStyle"
+                android:text="Chokes: " />
+
+            <TextView
+                android:id="@+id/widget_opp_armlock_count"
+                style="@style/SubmissionTextViewStyle"
+                android:text="Armlocks: " />
+
+            <TextView
+                android:id="@+id/widget_opp_leglock_count"
+                style="@style/SubmissionTextViewStyle"
+                android:text="Leglocks: " />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </LinearLayout>

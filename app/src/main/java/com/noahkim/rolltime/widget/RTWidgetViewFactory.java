@@ -13,6 +13,7 @@ import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Match;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -38,6 +39,7 @@ public class RTWidgetViewFactory implements RemoteViewsService.RemoteViewsFactor
 
     @Override
     public void onCreate() {
+
     }
 
     @Override
@@ -66,17 +68,18 @@ public class RTWidgetViewFactory implements RemoteViewsService.RemoteViewsFactor
         final Match currentMatch = mMatches.get(position);
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_item);
 
-//        // Inflate widget layout with matches
-//        remoteViews.removeAllViews(R.id.widget_recent_matches_list);
-//        for (int i = 0; i < mMatches.size(); i++) {
-//            RemoteViews matchRemoteView = new RemoteViews(mContext.getPackageName(), R.layout.list_item_matches);
-//            matchRemoteView.setTextViewText(R.id.opponent_name, currentMatch.getOppName());
-//            remoteViews.addView(R.id.widget_recent_matches_list, matchRemoteView);
-//        }
-
         for (int i = 0; i < mMatches.size(); i++) {
+            remoteViews.setTextViewText(R.id.widget_user_choke_count, mContext.getString(R.string.choke) + ": " + currentMatch.getUserChokeCount());
+            remoteViews.setTextViewText(R.id.widget_user_armlock_count, mContext.getString(R.string.armlock) + ": " + Integer.toString(currentMatch.getUserArmlockCount()));
+            remoteViews.setTextViewText(R.id.widget_user_leglock_count, mContext.getString(R.string.choke) + ": " + Integer.toString(currentMatch.getUserLeglockCount()));
+
             remoteViews.setTextViewText(R.id.widget_opp_name, currentMatch.getOppName());
+            remoteViews.setTextViewText(R.id.widget_opp_choke_count, mContext.getString(R.string.choke) + ": " + Integer.toString(currentMatch.getOppChokeCount()));
+            remoteViews.setTextViewText(R.id.widget_opp_armlock_count, mContext.getString(R.string.armlock) + ": " + Integer.toString(currentMatch.getOppArmlockCount()));
+            remoteViews.setTextViewText(R.id.widget_opp_leglock_count, mContext.getString(R.string.choke) + ": " + Integer.toString(currentMatch.getOppLeglockCount()));
         }
+        Collections.reverse(mMatches);
+
         return remoteViews;
     }
 
@@ -110,6 +113,9 @@ public class RTWidgetViewFactory implements RemoteViewsService.RemoteViewsFactor
                     Match match = postSnapshot.getValue(Match.class);
                     mMatches.add(match);
                     mCountDownLatch.countDown();
+//                        AppWidgetManager mgr = AppWidgetManager.getInstance(mContext);
+//                        ComponentName cn = new ComponentName(mContext, RTWidgetProvider.class);
+//                        mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widget_match_list);
                 }
             }
 
