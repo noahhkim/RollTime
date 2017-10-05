@@ -1,5 +1,6 @@
 package com.noahkim.rolltime;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import butterknife.ButterKnife;
 
 public class MatchHolder extends RecyclerView.ViewHolder {
     private MatchHolder.ClickListener mClickListener;
+    private Context mContext;
 
     @BindView(R.id.opponent_name)
     TextView mOpponentNameTextView;
@@ -44,6 +46,7 @@ public class MatchHolder extends RecyclerView.ViewHolder {
 
     public MatchHolder(View itemView) {
         super(itemView);
+        mContext = itemView.getContext();
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -71,27 +74,33 @@ public class MatchHolder extends RecyclerView.ViewHolder {
     }
 
     public void setUserChokeCount(int userChokeCount) {
-        mUserChokeTextView.setText("Chokes: " + Integer.toString(userChokeCount));
+        String userChokeText = mContext.getString(R.string.choke) + ": " + Integer.toString(userChokeCount);
+        mUserChokeTextView.setText(userChokeText);
     }
 
     public void setUserArmlockCount(int userArmlockCount) {
-        mUserArmlockTextView.setText("Armlocks: " + Integer.toString(userArmlockCount));
+        String userArmlockText = mContext.getString(R.string.armlock) + ": " + Integer.toString(userArmlockCount);
+        mUserArmlockTextView.setText(userArmlockText);
     }
 
     public void setUserLeglockCount(int userLeglockCount) {
-        mUserLeglockTextView.setText("Leglocks: " + Integer.toString(userLeglockCount));
+        String userLeglockText = mContext.getString(R.string.leglock) + ": " + Integer.toString(userLeglockCount);
+        mUserLeglockTextView.setText(userLeglockText);
     }
 
     public void setOppChokeCount(int oppChokeCount) {
-        mOppChokeTextView.setText("Chokes: " + Integer.toString(oppChokeCount));
+        String oppChokeText = mContext.getString(R.string.choke) + ": " + Integer.toString(oppChokeCount);
+        mOppChokeTextView.setText(oppChokeText);
     }
 
     public void setOppArmlockCount(int oppArmlockCount) {
-        mOppArmlockTextView.setText("Armlocks: " + Integer.toString(oppArmlockCount));
+        String oppArmlockText = mContext.getString(R.string.armlock) + ": " + Integer.toString(oppArmlockCount);
+        mOppArmlockTextView.setText(oppArmlockText);
     }
 
     public void setOppLeglockCount(int oppLeglockCount) {
-        mOppLeglockTextView.setText("Leglocks: " + Integer.toString(oppLeglockCount));
+        String oppLeglockText = mContext.getString(R.string.leglock) + ": " + Integer.toString(oppLeglockCount);
+        mOppLeglockTextView.setText(oppLeglockText);
     }
 }
 

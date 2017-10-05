@@ -25,18 +25,15 @@
 
             <TextView
                 android:id="@+id/widget_user_choke_count"
-                style="@style/SubmissionTextViewStyle"
-                android:text="Chokes: " />
+                style="@style/SubmissionTextViewStyle" />
 
             <TextView
                 android:id="@+id/widget_user_armlock_count"
-                style="@style/SubmissionTextViewStyle"
-                android:text="Armlocks: " />
+                style="@style/SubmissionTextViewStyle" />
 
             <TextView
                 android:id="@+id/widget_user_leglock_count"
-                style="@style/SubmissionTextViewStyle"
-                android:text="Leglocks: " />
+                style="@style/SubmissionTextViewStyle" />
 
         </LinearLayout>
 
@@ -63,18 +60,15 @@
 
             <TextView
                 android:id="@+id/widget_opp_choke_count"
-                style="@style/SubmissionTextViewStyle"
-                android:text="Chokes: " />
+                style="@style/SubmissionTextViewStyle" />
 
             <TextView
                 android:id="@+id/widget_opp_armlock_count"
-                style="@style/SubmissionTextViewStyle"
-                android:text="Armlocks: " />
+                style="@style/SubmissionTextViewStyle" />
 
             <TextView
                 android:id="@+id/widget_opp_leglock_count"
-                style="@style/SubmissionTextViewStyle"
-                android:text="Leglocks: " />
+                style="@style/SubmissionTextViewStyle" />
 
         </LinearLayout>
 

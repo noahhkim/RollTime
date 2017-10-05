@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="You"
+                android:text="@string/you"
                 android:layout_weight="1" />
 
             <ImageView
@@ -48,21 +48,18 @@
             <TextView
                 android:id="@+id/user_choke_count"
                 style="@style/SubmissionTextViewStyle"
-                android:layout_marginTop="4dp"
-                android:text="Chokes: " />
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:id="@+id/user_armlock_count"
                 style="@style/SubmissionTextViewStyle"
-                android:layout_marginTop="4dp"
-                android:text="Armlocks: " />
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:id="@+id/user_leglock_count"
                 style="@style/SubmissionTextViewStyle"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:text="Leglocks: " />
+                android:layout_marginBottom="8dp" />
 
         </LinearLayout>
 
@@ -73,7 +70,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="vs." />
+            android:text="@string/versus" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -86,7 +83,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="Ivan"
                 android:layout_weight="1" />
 
             <ImageView
@@ -101,21 +97,18 @@
             <TextView
                 android:id="@+id/opp_choke_count"
                 style="@style/SubmissionTextViewStyle"
-                android:layout_marginTop="4dp"
-                android:text="Chokes: " />
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:id="@+id/opp_armlock_count"
                 style="@style/SubmissionTextViewStyle"
-                android:layout_marginTop="4dp"
-                android:text="Armlocks: " />
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:id="@+id/opp_leglock_count"
                 style="@style/SubmissionTextViewStyle"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:text="Leglocks: " />
+                android:layout_marginBottom="8dp" />
 
         </LinearLayout>
 
