@@ -1,4 +1,4 @@
-package com.noahkim.rolltime;
+package com.noahkim.rolltime.util;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.noahkim.rolltime.R;
 
 /**
  * Created by noahkim on 8/28/17.

@@ -1,10 +1,12 @@
-package com.noahkim.rolltime;
+package com.noahkim.rolltime.util;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.noahkim.rolltime.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

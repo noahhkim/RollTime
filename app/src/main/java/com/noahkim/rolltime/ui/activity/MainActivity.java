@@ -8,18 +8,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.ui.fragment.HistoryFragment;
 import com.noahkim.rolltime.ui.fragment.HomeFragment;
-import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.ui.fragment.TimerFragment;
+import com.noahkim.rolltime.ui.fragment.VideosFragment;
+import com.noahkim.rolltime.util.BottomNavigationViewHelper;
 
 import java.util.Arrays;
 
@@ -89,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        BottomNavigationViewHelper.removeShiftMode(mBottomNavView);
+
         // set bottom nav views to inflate fragments upon selection
         mBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -110,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_timer:
                         fragment = new TimerFragment();
+                        mFab.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.action_videos:
+                        fragment = new VideosFragment();
                         mFab.setVisibility(View.VISIBLE);
                         break;
                 }

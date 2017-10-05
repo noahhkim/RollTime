@@ -15,7 +15,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.noahkim.rolltime.MatchHolder;
+import com.noahkim.rolltime.util.MatchHolder;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Match;
 import com.noahkim.rolltime.ui.activity.EditMatchActivity;

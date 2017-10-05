@@ -5,18 +5,20 @@
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@drawable/ic_home_white_24dp"
-        android:title="@string/text_home"
-        app:showAsAction="ifRoom" />
+        android:title="@string/text_home" />
     <item
         android:id="@+id/action_history"
         android:enabled="true"
         android:icon="@drawable/ic_history_white_24dp"
-        android:title="@string/text_history"
-        app:showAsAction="ifRoom" />
+        android:title="@string/text_history" />
     <item
         android:id="@+id/action_timer"
         android:enabled="true"
         android:icon="@drawable/ic_av_timer_white_24dp"
-        android:title="@string/text_timer"
-        app:showAsAction="ifRoom" />
+        android:title="@string/text_timer" />
+    <item
+        android:id="@+id/action_videos"
+        android:enabled="true"
+        android:icon="@drawable/ic_video_library_white_24dp"
+        android:title="@string/text_videos" />
 </menu>
