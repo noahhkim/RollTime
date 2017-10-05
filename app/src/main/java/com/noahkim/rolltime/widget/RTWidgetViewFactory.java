@@ -1,7 +1,6 @@
 package com.noahkim.rolltime.widget;
 
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
@@ -117,11 +116,14 @@ public class RTWidgetViewFactory implements RemoteViewsService.RemoteViewsFactor
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Match match = postSnapshot.getValue(Match.class);
                     mMatches.add(match);
+                }
+                if (mCountDownLatch.getCount() == 0) {
+                    Intent updateWidgetIntent = new Intent(mContext, RTWidgetProvider.class);
+                    updateWidgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                    mContext.sendBroadcast(updateWidgetIntent);
+                } else {
                     mCountDownLatch.countDown();
                 }
-                AppWidgetManager mgr = AppWidgetManager.getInstance(mContext);
-                ComponentName cn = new ComponentName(mContext, RTWidgetProvider.class);
-                mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.widget_match_list);
             }
 
             @Override
