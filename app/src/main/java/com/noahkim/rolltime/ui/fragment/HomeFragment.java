@@ -31,13 +31,10 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.rv_matches)
     RecyclerView mMatchesRecyclerView;
 
-    private LinearLayoutManager mLayoutManager;
-
     // Firebase instance variables
     public static FirebaseDatabase FIREBASE_DB;
     public static DatabaseReference FIREBASE_DB_REF;
     private FirebaseRecyclerAdapter mRecyclerAdapter;
-    private Query mRecentMatches;
 
     // Array of belt levels
     private int[] beltArray = {
@@ -63,20 +60,20 @@ public class HomeFragment extends Fragment {
         FIREBASE_DB_REF = FIREBASE_DB.getReference().child("matches");
 
         // Limit query to last 10 matches
-        mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
+        Query recentMatches = FIREBASE_DB_REF.limitToLast(5);
 
         // Initialize LayoutManager
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
-        mMatchesRecyclerView.setLayoutManager(mLayoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        mMatchesRecyclerView.setLayoutManager(layoutManager);
 
         // Attach FirebaseRecyclerAdapter to recyclerview
         mRecyclerAdapter = new FirebaseRecyclerAdapter<Match, MatchHolder>(
                 Match.class,
                 R.layout.list_item_matches,
                 MatchHolder.class,
-                mRecentMatches) {
+                recentMatches) {
             @Override
             protected void populateViewHolder(MatchHolder holder, Match match, int position) {
                 holder.setName(match.getOppName());

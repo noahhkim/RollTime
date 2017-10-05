@@ -74,4 +74,6 @@
     <string name="opp_belt_level">Opponent belt level</string>
     <string name="belt_level_colors">Belt level colors</string>
 
+    <!--Youtube Base URL-->
+    <string name="youtube_base_url">https://www.googleapis.com/youtube/v3/</string>
 </resources>

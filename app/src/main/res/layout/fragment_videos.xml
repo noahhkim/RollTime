@@ -7,6 +7,13 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.noahkim.rolltime.ui.fragment.VideosFragment">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_videos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

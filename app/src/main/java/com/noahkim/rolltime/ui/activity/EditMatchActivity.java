@@ -22,7 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.util.SpinnerAdapter;
+import com.noahkim.rolltime.adapters.SpinnerAdapter;
 import com.noahkim.rolltime.data.Match;
 
 import butterknife.BindView;
