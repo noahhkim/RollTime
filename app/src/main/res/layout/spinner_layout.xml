@@ -8,6 +8,7 @@
     <ImageView
         android:id="@+id/spinner_belt_image"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/belt_level_colors"/>
 
 </LinearLayout>

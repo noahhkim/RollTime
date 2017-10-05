@@ -43,6 +43,7 @@
                 android:src="@drawable/ic_bjj_black_belt"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:contentDescription="@string/user_belt_level"
                 android:layout_weight="1" />
 
             <TextView
@@ -92,6 +93,7 @@
                 android:src="@drawable/ic_bjj_black_belt"
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/opp_belt_level"
                 android:layout_weight="1" />
 
             <TextView

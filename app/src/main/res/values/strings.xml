@@ -66,4 +66,11 @@
     <string name="you">You</string>
     <string name="versus">vs.</string>
 
+    <!--Accessibility-->
+    <string name="reset_timer">Reset Timer</string>
+    <string name="start_stop">Start and Stop Button</string>
+    <string name="user_belt_level">User belt level</string>
+    <string name="opp_belt_level">Opponent belt level</string>
+    <string name="belt_level_colors">Belt level colors</string>
+
 </resources>
