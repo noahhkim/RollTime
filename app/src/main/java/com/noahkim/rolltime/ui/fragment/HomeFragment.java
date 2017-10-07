@@ -39,7 +39,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     private FirebaseRecyclerAdapter mRecyclerAdapter;
     private Query mRecentMatches;
     private String userBeltPreference;
-    private MatchHolder mMatchHolder;
 
     // Array of belt levels
     private int[] beltArray = {
@@ -96,6 +95,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public void onResume() {
         super.onResume();
+        // Scroll to top of the list when returning to HomeFragment
         mMatchesRecyclerView.smoothScrollToPosition(5);
     }
 
@@ -105,8 +105,8 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         if (key.equals(getString(R.string.belt_level_key))) {
             userBeltPreference = sharedPreferences.getString(getString(R.string.belt_level_key),
                     getString(R.string.pref_belt_white));
-            mRecyclerAdapter.notifyDataSetChanged();
         }
+        mRecyclerAdapter.notifyDataSetChanged();
     }
 
     private void setUpFirebaseRecyclerViewAdapter() {
@@ -122,13 +122,9 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
                 MatchHolder.class,
                 mRecentMatches) {
             @Override
-            public void onBindViewHolder(MatchHolder holder, int position) {
-                super.onBindViewHolder(holder, position);
-                mMatchHolder = holder;
-                mMatchHolder.setUserBeltLevel(beltArray[Integer.valueOf(userBeltPreference)]);
-            }
-            @Override
             protected void populateViewHolder(MatchHolder holder, Match match, int position) {
+                // Populate views in ViewHolder
+                holder.setUserBeltLevel(beltArray[Integer.valueOf(userBeltPreference)]);
                 holder.setOppName(match.getOppName());
                 holder.setOppBeltLevel(beltArray[match.getOppBeltLevel()]);
                 holder.setUserChokeCount(match.getUserChokeCount());
@@ -144,6 +140,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
                 viewHolder.setOnClickListener(new MatchHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        // Attach onClickListener to recyclerview list items
                         DatabaseReference itemRef = mRecyclerAdapter.getRef(position);
                         Intent intent = new Intent(getActivity(), EditMatchActivity.class);
                         String postId = itemRef.getKey();
