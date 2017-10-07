@@ -1,14 +1,16 @@
 package com.noahkim.rolltime.ui.fragment;
 
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -54,6 +56,7 @@ public class HistoryFragment extends Fragment {
     private void attachDatabaseReadListener() {
         if (mValueEventListener == null) {
             mValueEventListener = new ValueEventListener() {
+                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // Retrieve data from Firebase
@@ -85,21 +88,21 @@ public class HistoryFragment extends Fragment {
                         userBarGroup.add(new BarEntry(userChokeFloat, TOTAL_CHOKES));
                         userBarGroup.add(new BarEntry(userArmlockFloat, TOTAL_ARMLOCKS));
                         userBarGroup.add(new BarEntry(userLeglockFloat, TOTAL_LEGLOCKS));
-                        BarDataSet barDataSet1 = new BarDataSet(userBarGroup, "You");
-                        barDataSet1.setColor(Color.rgb(104, 241, 175));
+                        BarDataSet userBarDataSet = new BarDataSet(userBarGroup, "You");
+                        userBarDataSet.setColor(getActivity().getColor(R.color.colorPrimary));
 
                         // Bar group data for opponent
                         ArrayList<BarEntry> oppBarGroup = new ArrayList<>();
                         oppBarGroup.add(new BarEntry(oppChokeFloat, TOTAL_CHOKES));
                         oppBarGroup.add(new BarEntry(oppArmlockFloat, TOTAL_ARMLOCKS));
                         oppBarGroup.add(new BarEntry(oppLeglockFloat, TOTAL_LEGLOCKS));
-                        BarDataSet barDataSet2 = new BarDataSet(oppBarGroup, "Opponent");
-                        barDataSet2.setColor(Color.rgb(255, 102, 0));
+                        BarDataSet oppBarDataSet = new BarDataSet(oppBarGroup, "Opponent");
+                        oppBarDataSet.setColor(getActivity().getColor(R.color.colorOrange));
 
                         // y-value data
                         ArrayList<BarDataSet> dataSets = new ArrayList<>();
-                        dataSets.add(barDataSet1);
-                        dataSets.add(barDataSet2);
+                        dataSets.add(userBarDataSet);
+                        dataSets.add(oppBarDataSet);
 
                         // x-value labels
                         ArrayList<String> labels = new ArrayList<>();
@@ -107,11 +110,24 @@ public class HistoryFragment extends Fragment {
                         labels.add(getResources().getString(R.string.armlock));
                         labels.add(getResources().getString(R.string.leglock));
 
-                        BarData theData = new BarData(labels, dataSets);
-                        mBarChart.setData(theData);
+                        // Set data to bar chart
+                        BarData barData = new BarData(labels, dataSets);
+                        barData.setDrawValues(false);
+                        mBarChart.setData(barData);
 
+                        // Customize bar chart settings
                         mBarChart.setTouchEnabled(false);
                         mBarChart.setPinchZoom(false);
+                        mBarChart.setDescription("");
+                        mBarChart.getLegend().setTextSize(16f);
+                        mBarChart.getXAxis().setTextSize(12f);
+
+                        // Remove horizontal gridlines and numbers on the right
+                        YAxis yAxis = mBarChart.getAxisLeft();
+                        yAxis.setDrawGridLines(false);
+                        yAxis = mBarChart.getAxisRight();
+                        yAxis.setDrawGridLines(false);
+                        yAxis.setDrawLabels(false);
 
                         mBarChart.invalidate();
                     }

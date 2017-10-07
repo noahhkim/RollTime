@@ -129,13 +129,10 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container, fragment, "TAG").commit();
                 }
-
                 return true;
             }
         });
     }
-
-
 
     // Close app if sign-in is cancelled
     @Override

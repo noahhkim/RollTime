@@ -1,9 +1,16 @@
 package com.noahkim.rolltime.data;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by noahkim on 8/23/17.
  */
 
+@IgnoreExtraProperties
 public class Match {
     public static int WHITE_BELT = 0;
     public static int BLUE_BELT = 1;
@@ -34,6 +41,21 @@ public class Match {
         mOppChokeCount = oppChokeCount;
         mOppArmlockCount = oppArmlockCount;
         mOppLeglockCount = oppLeglockCount;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("oppName", mOppName);
+        result.put("oppBeltLevel", mOppBeltLevel);
+        result.put("userChokeCount", mUserChokeCount);
+        result.put("userArmlockCount", mUserArmlockCount);
+        result.put("userLeglockCount", mUserLeglockCount);
+        result.put("oppChokeCount", mOppChokeCount);
+        result.put("oppArmlockCount", mOppArmlockCount);
+        result.put("oppLeglockCount", mOppLeglockCount);
+
+        return result;
     }
 
     public String getOppName() {

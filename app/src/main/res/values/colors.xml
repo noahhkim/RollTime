@@ -8,5 +8,6 @@
     <color name="colorGrey">#9E9E9E</color>
     <color name="colorLightGrey">#F5F5F5</color>
     <color name="colorDarkGrey">#212121</color>
+    <color name="colorOrange">#FF5722</color>
 
 </resources>

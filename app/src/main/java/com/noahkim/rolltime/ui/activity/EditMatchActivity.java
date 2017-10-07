@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.adapters.SpinnerAdapter;
 import com.noahkim.rolltime.data.Match;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -189,7 +191,7 @@ public class EditMatchActivity extends AppCompatActivity {
             case R.id.action_save:
                 saveMatch();
                 finish();
-                Toast.makeText(this, "Match saved!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Match saved!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -221,14 +223,14 @@ public class EditMatchActivity extends AppCompatActivity {
             return;
         }
 
-        DialogInterface.OnClickListener discardButtonClickListener  =
+        DialogInterface.OnClickListener discardButtonClickListener =
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
                     }
                 };
-                showUnsavedChangesDialog(discardButtonClickListener);
+        showUnsavedChangesDialog(discardButtonClickListener);
     }
 
     // save match to FRD
@@ -290,7 +292,16 @@ public class EditMatchActivity extends AppCompatActivity {
                 oppArmlockCount,
                 oppLeglockCount);
 
-        FIREBASE_DB_REF.push().setValue(matchDetails);
+        if (mCurrentMatchUri == null) {
+            // New match, so add data to database
+            FIREBASE_DB_REF.push().setValue(matchDetails);
+        } else {
+            // Previously stored match, so update data to database
+            Map<String, Object> matchValues = matchDetails.toMap();
+            Map<String, Object> matchUpdates = new HashMap<>();
+            matchUpdates.put(mCurrentMatchUri.toString(), matchValues);
+            FIREBASE_DB_REF.updateChildren(matchUpdates);
+        }
     }
 
     /**
