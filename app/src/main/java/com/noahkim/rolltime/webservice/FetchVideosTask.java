@@ -3,7 +3,6 @@ package com.noahkim.rolltime.webservice;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.noahkim.rolltime.BuildConfig;
 import com.noahkim.rolltime.adapters.VideoAdapter;
@@ -18,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * Created by Noah on 10/5/2017.
  */
@@ -27,8 +28,6 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
     private Context mContext;
     private List<Video> mVideos;
     private VideoAdapter mVideoAdapter;
-
-    private static final String LOG_TAG = FetchVideosTask.class.getName();
 
     public FetchVideosTask(Context context, VideoAdapter videoAdapter) {
         mContext = context;
@@ -77,7 +76,7 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
 
         try {
             URL url = new URL(uri.toString());
-            Log.d(LOG_TAG, url.toString());
+            Timber.d(url.toString());
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");

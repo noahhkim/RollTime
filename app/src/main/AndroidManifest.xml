@@ -26,15 +26,6 @@
             android:name=".ui.activity.EditMatchActivity"
             android:label="@string/title_activity_record_match"
             android:parentActivityName=".ui.activity.MainActivity" />
-        <activity
-            android:name=".ui.activity.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".ui.activity.MainActivity"
-            android:theme="@style/SettingsTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.noahkim.rolltime.ui.activity.MainActivity" />
-        </activity>
 
         <receiver android:name=".widget.RTWidgetProvider">
             <intent-filter>
@@ -45,9 +36,18 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/rolltime_widget_info" />
         </receiver>
+
         <service
             android:name=".widget.RTWidgetViewService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <activity android:name=".ui.activity.SettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".ui.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

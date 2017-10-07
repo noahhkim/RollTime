@@ -28,6 +28,7 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new HomeFragment())
                     .commit();
+
+            // Set up timber
+            Timber.plant(new Timber.DebugTree());
         }
 
         mUsername = ANONYMOUS;

@@ -8,7 +8,7 @@
         <item>@drawable/ic_bjj_black_belt</item>
     </integer-array>
 
-    <string-array name="pref_belt_levels">
+    <string-array name="pref_belt_values">
         <item>@string/pref_belt_white</item>
         <item>@string/pref_belt_blue</item>
         <item>@string/pref_belt_purple</item>
@@ -16,6 +16,15 @@
         <item>@string/pref_belt_black</item>
 
     </string-array>
+
+    <!--<integer-array name="pref_belt_values">-->
+        <!--<item>0</item>-->
+        <!--<item>1</item>-->
+        <!--<item>2</item>-->
+        <!--<item>3</item>-->
+        <!--<item>4</item>-->
+
+    <!--</integer-array>-->
 
     <string-array name="pref_belt_labels">
         <item>@string/pref_belt_label_white</item>

@@ -1,6 +1,8 @@
 package com.noahkim.rolltime.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +21,8 @@ public class MatchHolder extends RecyclerView.ViewHolder {
     private MatchHolder.ClickListener mClickListener;
     private Context mContext;
 
+    @BindView(R.id.user_belt_level)
+    ImageView mUserBeltView;
     @BindView(R.id.opponent_name)
     TextView mOpponentNameTextView;
     @BindView(R.id.opponent_belt)
@@ -36,6 +40,17 @@ public class MatchHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.opp_leglock_count)
     TextView mOppLeglockTextView;
 
+    private String mBeltPreference;
+
+    // Array of belt levels
+    private int[] beltArray = {
+            R.drawable.ic_bjj_white_belt,
+            R.drawable.ic_bjj_blue_belt,
+            R.drawable.ic_bjj_purple_belt,
+            R.drawable.ic_bjj_brown_belt,
+            R.drawable.ic_bjj_black_belt
+    };
+
     // Interface to send callbacks
     public interface ClickListener {
         public void onItemClick(View view, int position);
@@ -49,6 +64,10 @@ public class MatchHolder extends RecyclerView.ViewHolder {
     public MatchHolder(View itemView) {
         super(itemView);
         mContext = itemView.getContext();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mBeltPreference = sharedPreferences.getString(
+                mContext.getString(R.string.belt_level_key),
+                mContext.getString(R.string.pref_belt_white));
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -67,11 +86,20 @@ public class MatchHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setName(String name) {
+    public void setUserBeltLevel(int beltImage) {
+        mUserBeltView.setImageResource(beltImage);
+    }
+
+//    public void setUserBeltLevel() {
+//        mUserBeltView.setImageResource(beltArray[Integer.valueOf(mBeltPreference)]);
+//    }
+
+
+    public void setOppName(String name) {
         mOpponentNameTextView.setText(name);
     }
 
-    public void setBeltLevel(int beltImage) {
+    public void setOppBeltLevel(int beltImage) {
         mOpponentBeltView.setImageResource(beltImage);
     }
 

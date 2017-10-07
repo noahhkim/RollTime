@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Roll Time</string>
     <string name="title_activity_record_match">Record Match</string>
-    <string name="title_activity_settings">Settings</string>
-
 
     <!--Menu Actions-->
     <string name="action_settings">Settings</string>
@@ -39,7 +37,7 @@
 
     <!--Settings -->
     <string name="belt_level_label">Belt Level</string>
-    <string name="belt_level_key" translatable="false">belt</string>
+    <string name="belt_level_key" translatable="false">belt_level</string>
     <string name="pref_belt_label_white">White</string>
     <string name="pref_belt_label_blue">Blue</string>
     <string name="pref_belt_label_purple">Purple</string>

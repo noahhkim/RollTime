@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by Noah on 10/5/2017.
  */
 
 public class VideosFragment extends Fragment {
-    private static final String LOG_TAG = VideosFragment.class.getName();
     @BindView(R.id.rv_videos)
     RecyclerView mVideosRecyclerView;
     private VideoAdapter mVideoAdapter;
@@ -54,7 +53,7 @@ public class VideosFragment extends Fragment {
     private void getYoutubeVideos() {
         FetchVideosTask videosTask = new FetchVideosTask(getActivity(), mVideoAdapter);
         videosTask.execute();
-        Log.d(LOG_TAG, "Videos: " + videoList.size());
+        Timber.d("Videos: " + videoList.size());
         mVideoAdapter = new VideoAdapter(videoList);
 
 //        Retrofit retrofit =  new Retrofit.Builder()
