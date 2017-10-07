@@ -120,12 +120,12 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
             JSONObject defaultSize = thumbnails.getJSONObject("default");
             String thumbnailUrl = defaultSize.getString("url");
 
-            Video video = new Video(videoTitle, thumbnailUrl, videoId);
+            final Video video = new Video(videoTitle, thumbnailUrl, videoId);
 
+            // Send data to Firebase
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            DatabaseReference videoReference = firebaseDatabase.getReference().child("videos");
+            final DatabaseReference videoReference = firebaseDatabase.getReference().child("videos");
             videoReference.push().setValue(video);
         }
     }
-
 }
