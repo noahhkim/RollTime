@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Video;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,6 +41,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoItemVie
     public void onBindViewHolder(VideoAdapter.VideoItemViewHolder holder, int position) {
         final Video currentVideo = mVideos.get(position);
         holder.mVideoTitleView.setText(currentVideo.getTitle());
+        Picasso.with(mContext)
+                .load(currentVideo.getThumbnail())
+                .into(holder.mThumbnailView);
+        Timber.d(currentVideo.getThumbnail());
     }
 
     @Override
@@ -46,7 +52,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoItemVie
         if (mVideos == null) {
             return 0;
         }
-        Timber.d("Videos from video adapter: " + mVideos.size());
         return mVideos.size();
     }
 //
@@ -56,6 +61,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoItemVie
 //    }
 
     public class VideoItemViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.video_thumbnail)
+        ImageView mThumbnailView;
         @BindView(R.id.video_title)
         TextView mVideoTitleView;
 

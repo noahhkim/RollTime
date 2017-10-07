@@ -3,29 +3,18 @@ package com.noahkim.rolltime.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by Noah on 10/5/2017.
  */
 
 public class Video implements Parcelable {
 
-    @SerializedName("title")
     private String mTitle;
-
-    @SerializedName("description")
-    private String mDescription;
-
-    @SerializedName("thumbnails")
     private String mThumbnail;
-
-    @SerializedName("videoId")
     private String mVideoId;
 
     protected Video(Parcel in) {
         mTitle = in.readString();
-        mDescription = in.readString();
         mThumbnail = in.readString();
         mVideoId = in.readString();
     }
@@ -33,8 +22,9 @@ public class Video implements Parcelable {
     public Video() {
     }
 
-    public Video(String title) {
+    public Video(String title, String thumbnail) {
         mTitle = title;
+        mThumbnail = thumbnail;
     }
 
     public static final Creator<Video> CREATOR = new Creator<Video>() {
@@ -57,7 +47,6 @@ public class Video implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mTitle);
-        parcel.writeString(mDescription);
         parcel.writeString(mThumbnail);
         parcel.writeString(mVideoId);
     }
@@ -70,12 +59,12 @@ public class Video implements Parcelable {
         mTitle = title;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public String getThumbnail() {
+        return mThumbnail;
     }
 
-    public String getThumbail() {
-        return mThumbnail;
+    public void setThumbnail(String thumbnail) {
+        mThumbnail = thumbnail;
     }
 
     public String getVideoId() {
