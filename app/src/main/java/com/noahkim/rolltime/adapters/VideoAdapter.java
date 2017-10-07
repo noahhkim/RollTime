@@ -54,11 +54,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoItemVie
         }
         return mVideos.size();
     }
-//
-//    public void setVideos(List<Video> videos) {
-//        mVideos = videos;
-//        notifyDataSetChanged();
-//    }
 
     public class VideoItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.video_thumbnail)

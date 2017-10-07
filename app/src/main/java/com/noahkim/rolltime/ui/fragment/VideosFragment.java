@@ -1,5 +1,7 @@
 package com.noahkim.rolltime.ui.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.adapters.VideoAdapter;
 import com.noahkim.rolltime.data.Video;
+import com.noahkim.rolltime.util.RecyclerItemClickListener;
 import com.noahkim.rolltime.webservice.FetchVideosTask;
 
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class VideosFragment extends Fragment {
         // Initialize LayoutManager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mVideosRecyclerView.setLayoutManager(layoutManager);
+        mVideoAdapter = new VideoAdapter(getContext(), mVideos);
 
         // Retrieve data from Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -54,7 +58,6 @@ public class VideosFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Video video = dataSnapshot.getValue(Video.class);
                 mVideos.add(video);
-                mVideoAdapter = new VideoAdapter(getContext(), mVideos);
                 // Attach an adapter
                 mVideosRecyclerView.setAdapter(mVideoAdapter);
                 Timber.d(String.valueOf(mVideos.size()));
@@ -82,6 +85,8 @@ public class VideosFragment extends Fragment {
         };
         videoReference.addChildEventListener(childEventListener);
 
+        setUpOnItemClick();
+
         return rootView;
     }
 
@@ -94,6 +99,29 @@ public class VideosFragment extends Fragment {
     private void getYoutubeVideos() {
         FetchVideosTask videosTask = new FetchVideosTask(getActivity(), mVideoAdapter);
         videosTask.execute();
-        Timber.d(videosTask.getStatus().toString());
+    }
+
+    private void setUpOnItemClick() {
+        mVideosRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                final Video currentVideo = mVideos.get(position);
+
+                Uri uri = new Uri.Builder()
+                        .scheme("https")
+                        .authority("www.youtube.com")
+                        .appendPath("watch")
+                        .appendQueryParameter("v", currentVideo.getVideoId())
+                        .build();
+
+                String videoUrl = uri.toString();
+                Timber.d(videoUrl);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        }
+        ));
     }
 }

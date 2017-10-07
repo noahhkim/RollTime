@@ -22,9 +22,10 @@ public class Video implements Parcelable {
     public Video() {
     }
 
-    public Video(String title, String thumbnail) {
+    public Video(String title, String thumbnail,String videoId) {
         mTitle = title;
         mThumbnail = thumbnail;
+        mVideoId = videoId;
     }
 
     public static final Creator<Video> CREATOR = new Creator<Video>() {
@@ -69,5 +70,9 @@ public class Video implements Parcelable {
 
     public String getVideoId() {
         return mVideoId;
+    }
+
+    public void setVideoId(String videoId) {
+        mVideoId = videoId;
     }
 }

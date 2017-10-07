@@ -71,6 +71,7 @@
     <string name="user_belt_level">User belt level</string>
     <string name="opp_belt_level">Opponent belt level</string>
     <string name="belt_level_colors">Belt level colors</string>
+    <string name="video_thumbnail">This is a thumbnail of the video</string>
 
     <!--Youtube Base URL-->
     <string name="youtube_base_url">https://www.googleapis.com/youtube/v3/</string>
