@@ -4,9 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.BuildConfig;
 import com.noahkim.rolltime.adapters.VideoAdapter;
 import com.noahkim.rolltime.data.Video;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,27 +42,6 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
 
     @Override
     protected List<Video> doInBackground(String... params) {
-//        if (params.length == 0) {
-//            return null;
-//        }
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(mContext.getString(R.string.youtube_base_url))
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        final Api videoApi = retrofit.create(Api.class);
-//        Call<List<Video>> videoCall = videoApi.getVideos();
-//        try {
-//            videoCall.execute();
-//            Log.d(LOG_TAG, "Video call: " + videoCall.toString());
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-
-        if (params.length == 0) {
-            return null;
-        }
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
@@ -95,10 +80,16 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
             if (buffer.length() == 0) {
                 return null;
             }
+
+            // Get response as a string and extract data from JSON
             videoJsonString = buffer.toString();
+            getVideoDataFromJson(videoJsonString);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         } finally {
             if (urlConnection != null) {
@@ -112,15 +103,24 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
                 }
             }
         }
-
         return null;
     }
 
-    @Override
-    protected void onPostExecute(List<Video> videos) {
-        if (videos != null && mVideoAdapter != null) {
-            mVideoAdapter.setVideos(videos);
+    private void getVideoDataFromJson(String videoJson) throws JSONException {
+        JSONObject baseJsonResponse = new JSONObject(videoJson);
+        JSONArray videoArray = baseJsonResponse.getJSONArray("items");
+
+        for (int i = 0; i < videoArray.length(); i++) {
+            JSONObject currentVideo = videoArray.getJSONObject(i);
+            JSONObject videoSnippet = currentVideo.getJSONObject("snippet");
+            String videoTitle = videoSnippet.getString("title");
+
+            Video video = new Video(videoTitle);
+
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference videoReference = firebaseDatabase.getReference().child("videos");
+            videoReference.push().setValue(video);
         }
-        super.onPostExecute(videos);
     }
+
 }

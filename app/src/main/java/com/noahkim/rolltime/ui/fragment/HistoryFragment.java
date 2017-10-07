@@ -128,9 +128,8 @@ public class HistoryFragment extends Fragment {
                         yAxis = mBarChart.getAxisRight();
                         yAxis.setDrawGridLines(false);
                         yAxis.setDrawLabels(false);
-
-                        mBarChart.invalidate();
                     }
+                    mBarChart.invalidate();
                 }
 
                 @Override

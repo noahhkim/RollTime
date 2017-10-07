@@ -30,6 +30,13 @@ public class Video implements Parcelable {
         mVideoId = in.readString();
     }
 
+    public Video() {
+    }
+
+    public Video(String title) {
+        mTitle = title;
+    }
+
     public static final Creator<Video> CREATOR = new Creator<Video>() {
         @Override
         public Video createFromParcel(Parcel in) {
@@ -57,6 +64,10 @@ public class Video implements Parcelable {
 
     public String getTitle() {
         return mTitle;
+    }
+
+    public void setTitle(String title) {
+        mTitle = title;
     }
 
     public String getDescription() {

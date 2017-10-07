@@ -25,7 +25,7 @@
 
     <!--Bottom nav menu-->
     <string name="text_home">Home</string>
-    <string name="text_history">History</string>
+    <string name="text_stats">Stats</string>
     <string name="text_timer">Timer</string>
     <string name="text_videos">Videos</string>
 

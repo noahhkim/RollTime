@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                             mFab.setVisibility(View.VISIBLE);
                         }
                         break;
-                    case R.id.action_history:
+                    case R.id.action_stats:
                         fragment = new HistoryFragment();
                         mFab.setVisibility(View.GONE);
                         break;

@@ -7,10 +7,10 @@
         android:icon="@drawable/ic_home_white_24dp"
         android:title="@string/text_home" />
     <item
-        android:id="@+id/action_history"
+        android:id="@+id/action_stats"
         android:enabled="true"
-        android:icon="@drawable/ic_history_white_24dp"
-        android:title="@string/text_history" />
+        android:icon="@drawable/ic_trending_up_white_24dp"
+        android:title="@string/text_stats" />
     <item
         android:id="@+id/action_timer"
         android:enabled="true"

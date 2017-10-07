@@ -118,7 +118,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         // Attach FirebaseRecyclerAdapter to recyclerview
         mRecyclerAdapter = new FirebaseRecyclerAdapter<Match, MatchHolder>(
                 Match.class,
-                R.layout.list_item_matches,
+                R.layout.matches_list_item,
                 MatchHolder.class,
                 mRecentMatches) {
             @Override

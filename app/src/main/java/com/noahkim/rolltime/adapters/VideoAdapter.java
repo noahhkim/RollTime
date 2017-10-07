@@ -1,7 +1,7 @@
 package com.noahkim.rolltime.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +14,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by Noah on 10/5/2017.
  */
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoItemViewHolder> {
+    private Context mContext;
     private List<Video> mVideos;
-    private static final String LOG_TAG = VideoAdapter.class.getName();
 
-    public VideoAdapter(List<Video> videos) {
+    public VideoAdapter(Context context, List<Video> videos) {
+        mContext = context;
         mVideos = videos;
     }
 
@@ -44,14 +46,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoItemVie
         if (mVideos == null) {
             return 0;
         }
-        Log.d(LOG_TAG, "Videos from video adapter: " + mVideos.size());
+        Timber.d("Videos from video adapter: " + mVideos.size());
         return mVideos.size();
     }
-
-    public void setVideos(List<Video> videos) {
-        mVideos = videos;
-        notifyDataSetChanged();
-    }
+//
+//    public void setVideos(List<Video> videos) {
+//        mVideos = videos;
+//        notifyDataSetChanged();
+//    }
 
     public class VideoItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.video_title)
@@ -62,5 +64,4 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoItemVie
             ButterKnife.bind(this, itemView);
         }
     }
-
 }
