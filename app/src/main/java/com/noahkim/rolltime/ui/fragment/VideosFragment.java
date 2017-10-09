@@ -3,6 +3,7 @@ package com.noahkim.rolltime.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,9 @@ public class VideosFragment extends Fragment {
     RecyclerView mVideosRecyclerView;
     private VideoAdapter mVideoAdapter;
     private List<Video> mVideos = new ArrayList<>();
+    private Parcelable mState;
+    private final String SAVED_RECYCLER_VIEW_STATUS_ID = "saved_id";
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,8 +47,8 @@ public class VideosFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         // Initialize LayoutManager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        mVideosRecyclerView.setLayoutManager(layoutManager);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mVideosRecyclerView.setLayoutManager(mLayoutManager);
         mVideoAdapter = new VideoAdapter(getContext(), mVideos);
 
         // Retrieve data from Firebase
@@ -121,18 +125,23 @@ public class VideosFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mVideosRecyclerView.setAdapter(null);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mVideosRecyclerView.setAdapter(null);
+        if (mVideosRecyclerView != null) {
+            mVideosRecyclerView.clearOnScrollListeners();
+        }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setRetainInstance(true);
+        if (mState != null) {
+            mLayoutManager.onRestoreInstanceState(mState);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        mState = mLayoutManager.onSaveInstanceState();
+        outState.putParcelable(SAVED_RECYCLER_VIEW_STATUS_ID, mState);
+        super.onSaveInstanceState(outState);
     }
 }

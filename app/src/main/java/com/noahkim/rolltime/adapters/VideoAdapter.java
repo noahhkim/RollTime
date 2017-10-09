@@ -1,6 +1,7 @@
 package com.noahkim.rolltime.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoItemVie
         Picasso.with(mContext)
                 .load(currentVideo.getThumbnail())
                 .into(holder.mThumbnailView);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
     }
 
     @Override
