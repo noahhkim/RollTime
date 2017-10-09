@@ -25,7 +25,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 import timber.log.Timber;
 
@@ -129,7 +128,6 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
             String thumbnailUrl = defaultSize.getString("url");
 
             final Video video = new Video(videoTitle, thumbnailUrl, videoId);
-            final Map<String, Object> videoValues = video.toMap();
 
             // Send data to Firebase
             mFirebaseDatabase = FirebaseDatabase.getInstance();

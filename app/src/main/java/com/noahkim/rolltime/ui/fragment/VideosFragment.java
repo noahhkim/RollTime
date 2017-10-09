@@ -119,6 +119,18 @@ public class VideosFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mVideosRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mVideosRecyclerView.setAdapter(null);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);
