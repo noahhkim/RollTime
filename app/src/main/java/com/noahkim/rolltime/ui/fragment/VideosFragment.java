@@ -111,8 +111,6 @@ public class VideosFragment extends Fragment {
                         .appendQueryParameter("v", currentVideo.getVideoId())
                         .build();
 
-                String videoUrl = uri.toString();
-
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }

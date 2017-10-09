@@ -3,10 +3,17 @@ package com.noahkim.rolltime.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Noah on 10/5/2017.
  */
 
+@IgnoreExtraProperties
 public class Video implements Parcelable {
 
     private String mTitle;
@@ -26,6 +33,16 @@ public class Video implements Parcelable {
         mTitle = title;
         mThumbnail = thumbnail;
         mVideoId = videoId;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("title", mTitle);
+        result.put("thumbnail", mThumbnail);
+        result.put("videoId", mVideoId);
+
+        return result;
     }
 
     public static final Creator<Video> CREATOR = new Creator<Video>() {
