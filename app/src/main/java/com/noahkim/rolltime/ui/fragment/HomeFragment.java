@@ -157,4 +157,10 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             }
         };
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
+    }
 }
