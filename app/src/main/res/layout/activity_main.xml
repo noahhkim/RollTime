@@ -49,5 +49,6 @@
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:layout_insetEdge="bottom"
+        android:contentDescription="@string/fab_accessibility"
         app:menu="@menu/bottom_navigation_main" />
 </RelativeLayout>

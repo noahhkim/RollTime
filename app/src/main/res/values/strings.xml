@@ -72,7 +72,13 @@
     <string name="opp_belt_level">Opponent belt level</string>
     <string name="belt_level_colors">Belt level colors</string>
     <string name="video_thumbnail">This is a thumbnail of the video</string>
+    <string name="fab_accessibility">This will take you to the Edit Match page</string>
 
     <!--Youtube Base URL-->
     <string name="youtube_base_url">https://www.googleapis.com/youtube/v3/</string>
+
+    <!--Sign in strings-->
+    <string name="signed_in">Signed in!</string>
+    <string name="sign_in_cancelled">Sign in cancelled</string>
+
 </resources>

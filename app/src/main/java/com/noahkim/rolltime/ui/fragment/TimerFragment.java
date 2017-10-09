@@ -165,4 +165,10 @@ public class TimerFragment extends Fragment implements View.OnClickListener {
         MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), Settings.System.DEFAULT_ALARM_ALERT_URI);
         mediaPlayer.start();
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
+    }
 }
