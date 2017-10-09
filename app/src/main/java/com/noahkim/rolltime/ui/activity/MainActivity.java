@@ -2,7 +2,6 @@ package com.noahkim.rolltime.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         // Create login authentication page
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // user is signed in
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         // set bottom nav views to inflate fragments upon selection
         mBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(MenuItem item) {
                 Fragment fragment = null;
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
                 switch (item.getItemId()) {

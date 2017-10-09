@@ -2,8 +2,6 @@ package com.noahkim.rolltime.ui.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,9 +40,8 @@ public class HistoryFragment extends Fragment {
 
     private ValueEventListener mValueEventListener;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -56,7 +53,6 @@ public class HistoryFragment extends Fragment {
     private void attachDatabaseReadListener() {
         if (mValueEventListener == null) {
             mValueEventListener = new ValueEventListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // Retrieve data from Firebase
@@ -89,7 +85,9 @@ public class HistoryFragment extends Fragment {
                         userBarGroup.add(new BarEntry(userArmlockFloat, TOTAL_ARMLOCKS));
                         userBarGroup.add(new BarEntry(userLeglockFloat, TOTAL_LEGLOCKS));
                         BarDataSet userBarDataSet = new BarDataSet(userBarGroup, "You");
-                        userBarDataSet.setColor(getActivity().getColor(R.color.colorPrimary));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            userBarDataSet.setColor(getActivity().getColor(R.color.colorPrimary));
+                        }
 
                         // Bar group data for opponent
                         ArrayList<BarEntry> oppBarGroup = new ArrayList<>();
@@ -97,7 +95,9 @@ public class HistoryFragment extends Fragment {
                         oppBarGroup.add(new BarEntry(oppArmlockFloat, TOTAL_ARMLOCKS));
                         oppBarGroup.add(new BarEntry(oppLeglockFloat, TOTAL_LEGLOCKS));
                         BarDataSet oppBarDataSet = new BarDataSet(oppBarGroup, "Opponent");
-                        oppBarDataSet.setColor(getActivity().getColor(R.color.colorOrange));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            oppBarDataSet.setColor(getActivity().getColor(R.color.colorOrange));
+                        }
 
                         // y-value data
                         ArrayList<BarDataSet> dataSets = new ArrayList<>();
