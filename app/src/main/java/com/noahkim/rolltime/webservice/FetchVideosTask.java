@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.BuildConfig;
@@ -125,7 +128,35 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
             // Send data to Firebase
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             final DatabaseReference videoReference = firebaseDatabase.getReference().child("videos");
-            videoReference.push().setValue(video);
+            videoReference.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Timber.d(String.valueOf(dataSnapshot.getChildrenCount()));
+                    if (dataSnapshot.getChildrenCount() <= 10) {
+                        videoReference.push().setValue(video);
+                    }
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 }

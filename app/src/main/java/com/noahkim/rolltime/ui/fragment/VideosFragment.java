@@ -26,7 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 /**
  * Created by Noah on 10/5/2017.
@@ -58,7 +57,6 @@ public class VideosFragment extends Fragment {
                 mVideos.add(video);
                 // Attach an adapter
                 mVideosRecyclerView.setAdapter(mVideoAdapter);
-                Timber.d(String.valueOf(mVideos.size()));
             }
 
             @Override
@@ -114,7 +112,6 @@ public class VideosFragment extends Fragment {
                         .build();
 
                 String videoUrl = uri.toString();
-                Timber.d(videoUrl);
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
