@@ -4,9 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.BuildConfig;
@@ -37,6 +34,8 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
     private Context mContext;
     private List<Video> mVideos;
     private VideoAdapter mVideoAdapter;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mVideoReference;
 
     public FetchVideosTask(Context context, VideoAdapter videoAdapter) {
         mContext = context;
@@ -113,50 +112,61 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
         JSONObject baseJsonResponse = new JSONObject(videoJson);
         JSONArray videoArray = baseJsonResponse.getJSONArray("items");
 
+//        final Map<String, Object> videoValues = null;
+
         for (int i = 0; i < videoArray.length(); i++) {
             JSONObject currentVideo = videoArray.getJSONObject(i);
             JSONObject id = currentVideo.getJSONObject("id");
-            String videoId = id.getString("videoId");
+            final String videoId = id.getString("videoId");
             JSONObject videoSnippet = currentVideo.getJSONObject("snippet");
             String videoTitle = videoSnippet.getString("title");
             JSONObject thumbnails = videoSnippet.getJSONObject("thumbnails");
             JSONObject defaultSize = thumbnails.getJSONObject("default");
             String thumbnailUrl = defaultSize.getString("url");
 
-            final Video video = new Video(videoTitle, thumbnailUrl, videoId);
+            Video video = new Video(videoTitle, thumbnailUrl, videoId);
+//            final Map<String, Object> videoValues = video.toMap();
 
             // Send data to Firebase
-            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            final DatabaseReference videoReference = firebaseDatabase.getReference().child("videos");
-            videoReference.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Timber.d(String.valueOf(dataSnapshot.getChildrenCount()));
-                    if (dataSnapshot.getChildrenCount() <= 10) {
-                        videoReference.push().setValue(video);
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+            mVideoReference = mFirebaseDatabase.getReference().child("videos");
+            mVideoReference.push().setValue(video);
+//            mVideoReference.addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    String videoKey = dataSnapshot.getKey();
+//                    Timber.d(videoKey);
+//                    Map<String, Object> videoUpdates = new HashMap<>();
+//                    videoUpdates.put(videoKey, videoValues);
+//                    mVideoReference.updateChildren(videoUpdates);
+//                }
+//
+//                @Override
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
         }
+    }
+
+
+    @Override
+    protected void onPostExecute(List<Video> videos) {
+        super.onPostExecute(videos);
     }
 }
