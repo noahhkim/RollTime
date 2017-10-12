@@ -81,4 +81,9 @@
     <string name="signed_in">Signed in!</string>
     <string name="sign_in_cancelled">Sign in cancelled</string>
 
+    <!--Button values-->
+    <string name="button_increase">+</string>
+    <string name="button_decrease">-</string>
+    <string name="default_quantity_value">0</string>
+
 </resources>

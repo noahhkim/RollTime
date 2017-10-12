@@ -110,19 +110,79 @@
                 android:paddingLeft="4dp"
                 android:paddingStart="4dp">
 
-                <!-- Choke field -->
-                <EditText
-                    android:id="@+id/edit_user_choke"
-                    style="@style/EditorFieldStyle"
-                    android:hint="@string/choke"
-                    android:inputType="number" />
+                <!-- User choke field -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <!--Armlock field-->
-                <EditText
-                    android:id="@+id/edit_user_armlock"
-                    style="@style/EditorFieldStyle"
-                    android:hint="@string/armlock"
-                    android:inputType="number" />
+                    <TextView
+                        android:id="@+id/user_choke_label"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:text="@string/choke"/>
+
+                    <Button
+                        android:id="@+id/user_choke_decrease_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_decrease" />
+
+                    <TextView
+                        android:id="@+id/user_choke_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="@string/default_quantity_value"/>
+
+                    <Button
+                        android:id="@+id/user_choke_increase_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_increase" />
+
+
+                </LinearLayout>
+
+                <!-- User armlock field -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/user_armlock_label"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:text="@string/armlock"/>
+
+                    <Button
+                        android:id="@+id/user_armlock_decrease_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_decrease" />
+
+                    <TextView
+                        android:id="@+id/user_armlock_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="@string/default_quantity_value"/>
+
+                    <Button
+                        android:id="@+id/user_armlock_increase_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_increase" />
+
+
+                </LinearLayout>
 
                 <!--Leglock field-->
                 <EditText
