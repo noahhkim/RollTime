@@ -13,8 +13,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,10 +44,7 @@ public class EditMatchActivity extends AppCompatActivity {
     EditText mNameEditText;
     @BindView(R.id.belts_spinner)
     Spinner mBeltSpinner;
-    @BindView(R.id.edit_user_choke)
-    EditText mUserChokeEditText;
-    @BindView(R.id.edit_user_armlock)
-    EditText mUserArmlockEditText;
+
     @BindView(R.id.edit_user_leglock)
     EditText mUserLeglockEditText;
     @BindView(R.id.edit_opp_choke)
@@ -54,6 +53,20 @@ public class EditMatchActivity extends AppCompatActivity {
     EditText mOppArmlockEditText;
     @BindView(R.id.edit_opp_leglock)
     EditText mOppLeglockEditText;
+
+    @BindView(R.id.user_choke_increase_button)
+    Button mUserChokeIncreaseButton;
+    @BindView(R.id.user_choke_decrease_button)
+    Button mUserChokeDecreaseButton;
+    @BindView(R.id.user_choke_quantity)
+    TextView mUserChokeQuantity;
+    @BindView(R.id.user_armlock_increase_button)
+    Button mUserArmlockIncreaseButton;
+    @BindView(R.id.user_armlock_decrease_button)
+    Button mUserArmlockDecreaseButton;
+    @BindView(R.id.user_armlock_quantity)
+    TextView mUserArmlockQuantity;
+
 
     // Keep track of whether match info has been edited or not
     private boolean mInfoHasChanged = false;
@@ -82,6 +95,8 @@ public class EditMatchActivity extends AppCompatActivity {
             R.drawable.ic_bjj_black_belt
     };
 
+    private int mQuantity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,8 +122,8 @@ public class EditMatchActivity extends AppCompatActivity {
                     Match match = dataSnapshot.getValue(Match.class);
                     mNameEditText.setText(match.getOppName());
                     mBeltSpinner.setSelection(match.getOppBeltLevel());
-                    mUserChokeEditText.setText(String.valueOf(match.getUserChokeCount()));
-                    mUserArmlockEditText.setText(String.valueOf(match.getUserArmlockCount()));
+                    mUserChokeQuantity.setText(String.valueOf(match.getUserChokeCount()));
+                    mUserArmlockQuantity.setText(String.valueOf(match.getUserArmlockCount()));
                     mUserLeglockEditText.setText(String.valueOf(match.getUserLeglockCount()));
                     mOppChokeEditText.setText(String.valueOf(match.getOppChokeCount()));
                     mOppArmlockEditText.setText(String.valueOf(match.getOppArmlockCount()));
@@ -122,9 +137,31 @@ public class EditMatchActivity extends AppCompatActivity {
             });
         }
 
-        // Setup OnTouchListeners on all input fields
+        // Set up OnTouchListeners on input fields
         mNameEditText.setOnTouchListener(mTouchListener);
-        mUserChokeEditText.setOnTouchListener(mTouchListener);
+
+        // Set up onClickListeners for increase and decrease buttons
+        mUserChokeIncreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mUserChokeQuantity.getText()));
+                mQuantity++;
+                String chokeQuantity = "" + mQuantity;
+                mUserChokeQuantity.setText(chokeQuantity);
+            }
+        });
+        mUserChokeDecreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mUserChokeQuantity.getText()));
+                if (mQuantity == 0) {
+                    return;
+                }
+                mQuantity--;
+                String chokeQuantity = "" + mQuantity;
+                mUserChokeQuantity.setText(chokeQuantity);
+            }
+        });
     }
 
     private void setUpBeltSpinner() {
@@ -236,8 +273,8 @@ public class EditMatchActivity extends AppCompatActivity {
     private void saveMatch() {
         // Read from input fields
         String oppNameString = mNameEditText.getText().toString().trim();
-        String userChokeString = mUserChokeEditText.getText().toString().trim();
-        String userArmlockString = mUserArmlockEditText.getText().toString().trim();
+        String userChokeString = mUserChokeQuantity.getText().toString().trim();
+        String userArmlockString = mUserArmlockQuantity.getText().toString().trim();
         String userLeglockString = mUserLeglockEditText.getText().toString().trim();
         String oppChokeString = mOppChokeEditText.getText().toString().trim();
         String oppArmlockString = mOppArmlockEditText.getText().toString().trim();
