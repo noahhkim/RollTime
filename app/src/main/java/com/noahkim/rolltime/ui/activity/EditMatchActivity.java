@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -76,7 +77,7 @@ public class EditMatchActivity extends AppCompatActivity {
     @BindView(R.id.opp_armlock_quantity)
     TextView mOppArmlockQuantity;
     @BindView(R.id.opp_leglock_increase_button)
-    Button mOppLeglockIncreaseButton;
+    ImageButton mOppLeglockIncreaseButton;
     @BindView(R.id.opp_leglock_decrease_button)
     Button mOppLeglockDecreaseButton;
     @BindView(R.id.opp_leglock_quantity)

@@ -73,7 +73,18 @@
     <string name="belt_level_colors">Belt level colors</string>
     <string name="video_thumbnail">This is a thumbnail of the video</string>
     <string name="fab_accessibility">This will take you to the Edit Match page</string>
-
+    <string name="increase_user_chokes">Increase user chokes</string>
+    <string name="decrease_user_chokes">Decrease user chokes</string>
+    <string name="increase_user_armlocks">Increase user armlocks</string>
+    <string name="decrease_user_armlocks">Decrease user armlocks</string>
+    <string name="increase_user_leglocks">Increase user leglocks</string>
+    <string name="decrease_user_leglocks">Decrease user leglocks</string>
+    <string name="increase_opp_chokes">Increase opponent chokes</string>
+    <string name="decrease_opp_chokes">Decrease opponent chokes</string>
+    <string name="increase_opp_armlocks">Increase opponent armlocks</string>
+    <string name="decrease_opp_armlocks">Decrease opponent armlocks</string>
+    <string name="increase_opp_leglocks">Increase opponent leglocks</string>
+    <string name="decrease_opp_leglocks">Decrease opponent leglocks</string>
     <!--Youtube Base URL-->
     <string name="youtube_base_url">https://www.googleapis.com/youtube/v3/</string>
 
