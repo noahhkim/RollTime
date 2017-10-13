@@ -45,15 +45,6 @@ public class EditMatchActivity extends AppCompatActivity {
     @BindView(R.id.belts_spinner)
     Spinner mBeltSpinner;
 
-    @BindView(R.id.edit_user_leglock)
-    EditText mUserLeglockEditText;
-    @BindView(R.id.edit_opp_choke)
-    EditText mOppChokeEditText;
-    @BindView(R.id.edit_opp_armlock)
-    EditText mOppArmlockEditText;
-    @BindView(R.id.edit_opp_leglock)
-    EditText mOppLeglockEditText;
-
     @BindView(R.id.user_choke_increase_button)
     Button mUserChokeIncreaseButton;
     @BindView(R.id.user_choke_decrease_button)
@@ -66,7 +57,30 @@ public class EditMatchActivity extends AppCompatActivity {
     Button mUserArmlockDecreaseButton;
     @BindView(R.id.user_armlock_quantity)
     TextView mUserArmlockQuantity;
-
+    @BindView(R.id.user_leglock_increase_button)
+    Button mUserLeglockIncreaseButton;
+    @BindView(R.id.user_leglock_decrease_button)
+    Button mUserLeglockDecreaseButton;
+    @BindView(R.id.user_leglock_quantity)
+    TextView mUserLeglockQuantity;
+    @BindView(R.id.opp_choke_increase_button)
+    Button mOppChokeIncreaseButton;
+    @BindView(R.id.opp_choke_decrease_button)
+    Button mOppChokeDecreaseButton;
+    @BindView(R.id.opp_choke_quantity)
+    TextView mOppChokeQuantity;
+    @BindView(R.id.opp_armlock_increase_button)
+    Button mOppArmlockIncreaseButton;
+    @BindView(R.id.opp_armlock_decrease_button)
+    Button mOppArmlockDecreaseButton;
+    @BindView(R.id.opp_armlock_quantity)
+    TextView mOppArmlockQuantity;
+    @BindView(R.id.opp_leglock_increase_button)
+    Button mOppLeglockIncreaseButton;
+    @BindView(R.id.opp_leglock_decrease_button)
+    Button mOppLeglockDecreaseButton;
+    @BindView(R.id.opp_leglock_quantity)
+    TextView mOppLeglockQuantity;
 
     // Keep track of whether match info has been edited or not
     private boolean mInfoHasChanged = false;
@@ -124,10 +138,10 @@ public class EditMatchActivity extends AppCompatActivity {
                     mBeltSpinner.setSelection(match.getOppBeltLevel());
                     mUserChokeQuantity.setText(String.valueOf(match.getUserChokeCount()));
                     mUserArmlockQuantity.setText(String.valueOf(match.getUserArmlockCount()));
-                    mUserLeglockEditText.setText(String.valueOf(match.getUserLeglockCount()));
-                    mOppChokeEditText.setText(String.valueOf(match.getOppChokeCount()));
-                    mOppArmlockEditText.setText(String.valueOf(match.getOppArmlockCount()));
-                    mOppLeglockEditText.setText(String.valueOf(match.getOppLeglockCount()));
+                    mUserLeglockQuantity.setText(String.valueOf(match.getUserLeglockCount()));
+                    mOppChokeQuantity.setText(String.valueOf(match.getOppChokeCount()));
+                    mOppArmlockQuantity.setText(String.valueOf(match.getOppArmlockCount()));
+                    mOppLeglockQuantity.setText(String.valueOf(match.getOppLeglockCount()));
                 }
 
                 @Override
@@ -137,17 +151,23 @@ public class EditMatchActivity extends AppCompatActivity {
             });
         }
 
+        setUpButtonClickListeners();
+
         // Set up OnTouchListeners on input fields
         mNameEditText.setOnTouchListener(mTouchListener);
 
+
+    }
+
+    private void setUpButtonClickListeners() {
         // Set up onClickListeners for increase and decrease buttons
         mUserChokeIncreaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mQuantity = Integer.valueOf(String.valueOf(mUserChokeQuantity.getText()));
                 mQuantity++;
-                String chokeQuantity = "" + mQuantity;
-                mUserChokeQuantity.setText(chokeQuantity);
+                String quantity = "" + mQuantity;
+                mUserChokeQuantity.setText(quantity);
             }
         });
         mUserChokeDecreaseButton.setOnClickListener(new View.OnClickListener() {
@@ -158,12 +178,116 @@ public class EditMatchActivity extends AppCompatActivity {
                     return;
                 }
                 mQuantity--;
-                String chokeQuantity = "" + mQuantity;
-                mUserChokeQuantity.setText(chokeQuantity);
+                String quantity = "" + mQuantity;
+                mUserChokeQuantity.setText(quantity);
+            }
+        });
+        mUserArmlockIncreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mUserArmlockQuantity.getText()));
+                mQuantity++;
+                String quantity = "" + mQuantity;
+                mUserArmlockQuantity.setText(quantity);
+            }
+        });
+        mUserArmlockDecreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mUserArmlockQuantity.getText()));
+                if (mQuantity == 0) {
+                    return;
+                }
+                mQuantity--;
+                String quantity = "" + mQuantity;
+                mUserArmlockQuantity.setText(quantity);
+            }
+        });
+        mUserLeglockIncreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mUserLeglockQuantity.getText()));
+                mQuantity++;
+                String quantity = "" + mQuantity;
+                mUserLeglockQuantity.setText(quantity);
+            }
+        });
+        mUserLeglockDecreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mUserLeglockQuantity.getText()));
+                if (mQuantity == 0) {
+                    return;
+                }
+                mQuantity--;
+                String quantity = "" + mQuantity;
+                mUserLeglockQuantity.setText(quantity);
+            }
+        });
+        mOppChokeIncreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mOppChokeQuantity.getText()));
+                mQuantity++;
+                String quantity = "" + mQuantity;
+                mOppChokeQuantity.setText(quantity);
+            }
+        });
+        mOppChokeDecreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mOppChokeQuantity.getText()));
+                if (mQuantity == 0) {
+                    return;
+                }
+                mQuantity--;
+                String quantity = "" + mQuantity;
+                mOppChokeQuantity.setText(quantity);
+            }
+        });
+        mOppArmlockIncreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mOppArmlockQuantity.getText()));
+                mQuantity++;
+                String quantity = "" + mQuantity;
+                mOppArmlockQuantity.setText(quantity);
+            }
+        });
+        mOppArmlockDecreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mOppArmlockQuantity.getText()));
+                if (mQuantity == 0) {
+                    return;
+                }
+                mQuantity--;
+                String quantity = "" + mQuantity;
+                mOppArmlockQuantity.setText(quantity);
+            }
+        });
+        mOppLeglockIncreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mOppLeglockQuantity.getText()));
+                mQuantity++;
+                String quantity = "" + mQuantity;
+                mOppLeglockQuantity.setText(quantity);
+            }
+        });
+        mOppLeglockDecreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mQuantity = Integer.valueOf(String.valueOf(mOppLeglockQuantity.getText()));
+                if (mQuantity == 0) {
+                    return;
+                }
+                mQuantity--;
+                String quantity = "" + mQuantity;
+                mOppLeglockQuantity.setText(quantity);
             }
         });
     }
-
     private void setUpBeltSpinner() {
         // Set up belt spinner
         mBeltSpinner.setAdapter(new SpinnerAdapter(this, beltArray));
@@ -227,7 +351,6 @@ public class EditMatchActivity extends AppCompatActivity {
             case R.id.action_save:
                 saveMatch();
                 finish();
-//                Toast.makeText(this, "Match saved!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -275,10 +398,10 @@ public class EditMatchActivity extends AppCompatActivity {
         String oppNameString = mNameEditText.getText().toString().trim();
         String userChokeString = mUserChokeQuantity.getText().toString().trim();
         String userArmlockString = mUserArmlockQuantity.getText().toString().trim();
-        String userLeglockString = mUserLeglockEditText.getText().toString().trim();
-        String oppChokeString = mOppChokeEditText.getText().toString().trim();
-        String oppArmlockString = mOppArmlockEditText.getText().toString().trim();
-        String oppLeglockString = mOppLeglockEditText.getText().toString().trim();
+        String userLeglockString = mUserLeglockQuantity.getText().toString().trim();
+        String oppChokeString = mOppChokeQuantity.getText().toString().trim();
+        String oppArmlockString = mOppArmlockQuantity.getText().toString().trim();
+        String oppLeglockString = mOppLeglockQuantity.getText().toString().trim();
 
         // Check if the name field is blank
         if (TextUtils.isEmpty(oppNameString)) {

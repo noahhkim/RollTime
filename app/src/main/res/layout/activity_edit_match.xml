@@ -118,10 +118,7 @@
 
                     <TextView
                         android:id="@+id/user_choke_label"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        style="@style/SubmissionLabelStyle"
                         android:text="@string/choke"/>
 
                     <Button
@@ -144,7 +141,6 @@
                         android:layout_height="44dp"
                         android:text="@string/button_increase" />
 
-
                 </LinearLayout>
 
                 <!-- User armlock field -->
@@ -155,10 +151,7 @@
 
                     <TextView
                         android:id="@+id/user_armlock_label"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        style="@style/SubmissionLabelStyle"
                         android:text="@string/armlock"/>
 
                     <Button
@@ -181,15 +174,40 @@
                         android:layout_height="44dp"
                         android:text="@string/button_increase" />
 
-
                 </LinearLayout>
 
-                <!--Leglock field-->
-                <EditText
-                    android:id="@+id/edit_user_leglock"
-                    style="@style/EditorFieldStyle"
-                    android:hint="@string/leglock"
-                    android:inputType="number" />
+                <!-- User leglock field -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/user_leglock_label"
+                        style="@style/SubmissionLabelStyle"
+                        android:text="@string/leglock"/>
+
+                    <Button
+                        android:id="@+id/user_leglock_decrease_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_decrease" />
+
+                    <TextView
+                        android:id="@+id/user_leglock_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="@string/default_quantity_value"/>
+
+                    <Button
+                        android:id="@+id/user_leglock_increase_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_increase" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -199,15 +217,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="24dp">
 
             <!-- Label -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textView5"
@@ -219,8 +237,8 @@
                     android:id="@+id/textView6"
                     style="@style/CategoryStyle"
                     android:layout_width="match_parent"
-                    android:text="@string/category_submissions"
-                    android:paddingTop="0dp"/>
+                    android:paddingTop="0dp"
+                    android:text="@string/category_submissions" />
 
             </LinearLayout>
 
@@ -233,26 +251,104 @@
                 android:paddingLeft="4dp"
                 android:paddingStart="4dp">
 
-                <!-- Choke field -->
-                <EditText
-                    android:id="@+id/edit_opp_choke"
-                    style="@style/EditorFieldStyle"
-                    android:hint="@string/choke"
-                    android:inputType="number" />
+                <!-- Opponent choke field -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <!--Armlock field-->
-                <EditText
-                    android:id="@+id/edit_opp_armlock"
-                    style="@style/EditorFieldStyle"
-                    android:hint="@string/armlock"
-                    android:inputType="number" />
+                    <TextView
+                        android:id="@+id/opp_choke_label"
+                        style="@style/SubmissionLabelStyle"
+                        android:text="@string/choke" />
 
-                <!--Leglock field-->
-                <EditText
-                    android:id="@+id/edit_opp_leglock"
-                    style="@style/EditorFieldStyle"
-                    android:hint="@string/leglock"
-                    android:inputType="number" />
+                    <Button
+                        android:id="@+id/opp_choke_decrease_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_decrease" />
+
+                    <TextView
+                        android:id="@+id/opp_choke_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="@string/default_quantity_value" />
+
+                    <Button
+                        android:id="@+id/opp_choke_increase_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_increase" />
+
+                </LinearLayout>
+
+                <!-- Opponent armlock field -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/opp_armlock_label"
+                        style="@style/SubmissionLabelStyle"
+                        android:text="@string/armlock" />
+
+                    <Button
+                        android:id="@+id/opp_armlock_decrease_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_decrease" />
+
+                    <TextView
+                        android:id="@+id/opp_armlock_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="@string/default_quantity_value" />
+
+                    <Button
+                        android:id="@+id/opp_armlock_increase_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_increase" />
+
+                </LinearLayout>
+
+                <!-- Opponent leglock field -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/opp_leglock_label"
+                        style="@style/SubmissionLabelStyle"
+                        android:text="@string/leglock" />
+
+                    <Button
+                        android:id="@+id/opp_leglock_decrease_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_decrease" />
+
+                    <TextView
+                        android:id="@+id/opp_leglock_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="@string/default_quantity_value" />
+
+                    <Button
+                        android:id="@+id/opp_leglock_increase_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:text="@string/button_increase" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
