@@ -42,20 +42,40 @@
 
     <style name="SubmissionLabelStyle">
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_width">88dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="SubmissionQuantityStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:padding">8dp</item>
     </style>
 
     <style name="IncreaseButtonStyle">
         <item name="android:src">@drawable/ic_add_white_24dp</item>
         <item name="android:background">@drawable/button_shape</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:layout_marginStart" tools:targetApi="lollipop">8dp</item>
-        <item name="android:layout_height">36dp</item>
-        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginStart" tools:targetApi="lollipop">4dp</item>
+        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
+    </style>
+
+    <style name="DecreaseButtonStyle">
+        <item name="android:src">@drawable/ic_remove_white_24dp</item>
+        <item name="android:background">@drawable/button_shape</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginEnd" tools:targetApi="lollipop">4dp</item>
+        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">40dp</item>
     </style>
 
     <!-- Style for submission textviews in matches list item -->

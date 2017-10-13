@@ -16,7 +16,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.ui.fragment.HistoryFragment;
+import com.noahkim.rolltime.ui.fragment.StatsFragment;
 import com.noahkim.rolltime.ui.fragment.HomeFragment;
 import com.noahkim.rolltime.ui.fragment.TimerFragment;
 import com.noahkim.rolltime.ui.fragment.VideosFragment;
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case R.id.action_stats:
-                        fragment = new HistoryFragment();
+                        fragment = new StatsFragment();
                         mFab.setVisibility(View.GONE);
                         break;
                     case R.id.action_timer:
