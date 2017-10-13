@@ -30,7 +30,7 @@ import static com.noahkim.rolltime.ui.fragment.HomeFragment.FIREBASE_DB_REF;
  * Created by noahkim on 9/13/17.
  */
 
-public class HistoryFragment extends Fragment {
+public class StatsFragment extends Fragment {
     @BindView(R.id.bar_chart)
     BarChart mBarChart;
 
@@ -42,7 +42,7 @@ public class HistoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_history, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_stats, container, false);
         ButterKnife.bind(this, rootView);
 
         attachDatabaseReadListener();
@@ -137,6 +137,7 @@ public class HistoryFragment extends Fragment {
 
                 }
             };
+            mBarChart.setNoDataText("");
             FIREBASE_DB_REF.addValueEventListener(mValueEventListener);
         }
     }

@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -45,41 +44,40 @@ public class EditMatchActivity extends AppCompatActivity {
     EditText mNameEditText;
     @BindView(R.id.belts_spinner)
     Spinner mBeltSpinner;
-
     @BindView(R.id.user_choke_increase_button)
     ImageButton mUserChokeIncreaseButton;
     @BindView(R.id.user_choke_decrease_button)
-    Button mUserChokeDecreaseButton;
+    ImageButton mUserChokeDecreaseButton;
     @BindView(R.id.user_choke_quantity)
     TextView mUserChokeQuantity;
     @BindView(R.id.user_armlock_increase_button)
     ImageButton mUserArmlockIncreaseButton;
     @BindView(R.id.user_armlock_decrease_button)
-    Button mUserArmlockDecreaseButton;
+    ImageButton mUserArmlockDecreaseButton;
     @BindView(R.id.user_armlock_quantity)
     TextView mUserArmlockQuantity;
     @BindView(R.id.user_leglock_increase_button)
     ImageButton mUserLeglockIncreaseButton;
     @BindView(R.id.user_leglock_decrease_button)
-    Button mUserLeglockDecreaseButton;
+    ImageButton mUserLeglockDecreaseButton;
     @BindView(R.id.user_leglock_quantity)
     TextView mUserLeglockQuantity;
     @BindView(R.id.opp_choke_increase_button)
     ImageButton mOppChokeIncreaseButton;
     @BindView(R.id.opp_choke_decrease_button)
-    Button mOppChokeDecreaseButton;
+    ImageButton mOppChokeDecreaseButton;
     @BindView(R.id.opp_choke_quantity)
     TextView mOppChokeQuantity;
     @BindView(R.id.opp_armlock_increase_button)
     ImageButton mOppArmlockIncreaseButton;
     @BindView(R.id.opp_armlock_decrease_button)
-    Button mOppArmlockDecreaseButton;
+    ImageButton mOppArmlockDecreaseButton;
     @BindView(R.id.opp_armlock_quantity)
     TextView mOppArmlockQuantity;
     @BindView(R.id.opp_leglock_increase_button)
     ImageButton mOppLeglockIncreaseButton;
     @BindView(R.id.opp_leglock_decrease_button)
-    Button mOppLeglockDecreaseButton;
+    ImageButton mOppLeglockDecreaseButton;
     @BindView(R.id.opp_leglock_quantity)
     TextView mOppLeglockQuantity;
 
@@ -289,6 +287,7 @@ public class EditMatchActivity extends AppCompatActivity {
             }
         });
     }
+
     private void setUpBeltSpinner() {
         // Set up belt spinner
         mBeltSpinner.setAdapter(new SpinnerAdapter(this, beltArray));
