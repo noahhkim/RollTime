@@ -47,31 +47,31 @@ public class EditMatchActivity extends AppCompatActivity {
     Spinner mBeltSpinner;
 
     @BindView(R.id.user_choke_increase_button)
-    Button mUserChokeIncreaseButton;
+    ImageButton mUserChokeIncreaseButton;
     @BindView(R.id.user_choke_decrease_button)
     Button mUserChokeDecreaseButton;
     @BindView(R.id.user_choke_quantity)
     TextView mUserChokeQuantity;
     @BindView(R.id.user_armlock_increase_button)
-    Button mUserArmlockIncreaseButton;
+    ImageButton mUserArmlockIncreaseButton;
     @BindView(R.id.user_armlock_decrease_button)
     Button mUserArmlockDecreaseButton;
     @BindView(R.id.user_armlock_quantity)
     TextView mUserArmlockQuantity;
     @BindView(R.id.user_leglock_increase_button)
-    Button mUserLeglockIncreaseButton;
+    ImageButton mUserLeglockIncreaseButton;
     @BindView(R.id.user_leglock_decrease_button)
     Button mUserLeglockDecreaseButton;
     @BindView(R.id.user_leglock_quantity)
     TextView mUserLeglockQuantity;
     @BindView(R.id.opp_choke_increase_button)
-    Button mOppChokeIncreaseButton;
+    ImageButton mOppChokeIncreaseButton;
     @BindView(R.id.opp_choke_decrease_button)
     Button mOppChokeDecreaseButton;
     @BindView(R.id.opp_choke_quantity)
     TextView mOppChokeQuantity;
     @BindView(R.id.opp_armlock_increase_button)
-    Button mOppArmlockIncreaseButton;
+    ImageButton mOppArmlockIncreaseButton;
     @BindView(R.id.opp_armlock_decrease_button)
     Button mOppArmlockDecreaseButton;
     @BindView(R.id.opp_armlock_quantity)
