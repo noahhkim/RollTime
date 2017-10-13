@@ -21,6 +21,7 @@
             <!-- Label -->
             <TextView
                 style="@style/CategoryStyle"
+                android:paddingTop="16dp"
                 android:text="@string/category_opponent" />
 
             <!-- Input field -->
@@ -52,6 +53,7 @@
             <!-- Label -->
             <TextView
                 style="@style/CategoryStyle"
+                android:gravity="center_vertical"
                 android:text="@string/category_belt" />
 
             <!-- Input field -->
@@ -89,6 +91,7 @@
                     android:id="@+id/textView2"
                     style="@style/CategoryStyle"
                     android:layout_width="match_parent"
+                    android:paddingTop="4dp"
                     android:text="@string/category_your" />
 
                 <TextView
@@ -204,7 +207,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="24dp">
+            android:paddingTop="28dp">
 
             <!-- Label -->
             <LinearLayout
@@ -217,6 +220,7 @@
                     android:id="@+id/textView5"
                     style="@style/CategoryStyle"
                     android:layout_width="match_parent"
+                    android:paddingTop="4dp"
                     android:text="@string/category_opponent" />
 
                 <TextView
