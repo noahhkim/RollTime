@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     public static FirebaseDatabase FIREBASE_DB;
     public static DatabaseReference FIREBASE_DB_REF;
     private FirebaseRecyclerAdapter mRecyclerAdapter;
+    private FirebaseUser mFirebaseUser;
     private Query mRecentMatches;
     private String userBeltPreference;
 
@@ -60,9 +63,11 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
         // Initialize Firebase
         FIREBASE_DB = FirebaseDatabase.getInstance();
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FIREBASE_DB.setPersistenceEnabled(true);
 
         // Set up reference to database
-        FIREBASE_DB_REF = FIREBASE_DB.getReference().child("matches");
+        FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + mFirebaseUser.getUid());
 
         // Limit query to last 10 matches
         mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
