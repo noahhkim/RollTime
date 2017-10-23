@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private FirebaseUser mFirebaseUser;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
