@@ -16,8 +16,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.ui.fragment.StatsFragment;
 import com.noahkim.rolltime.ui.fragment.HomeFragment;
+import com.noahkim.rolltime.ui.fragment.StatsFragment;
 import com.noahkim.rolltime.ui.fragment.TimerFragment;
 import com.noahkim.rolltime.ui.fragment.VideosFragment;
 import com.noahkim.rolltime.util.BottomNavigationViewHelper;
@@ -55,15 +55,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        // Set up timber
+        Timber.plant(new Timber.DebugTree());
 
         // inflate HomeFragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new HomeFragment())
                     .commit();
-
-            // Set up timber
-            Timber.plant(new Timber.DebugTree());
         }
 
         mUsername = ANONYMOUS;
