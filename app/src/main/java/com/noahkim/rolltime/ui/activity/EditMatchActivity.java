@@ -31,7 +31,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.noahkim.rolltime.ui.fragment.HomeFragment.FIREBASE_DB_REF;
+import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_DB_REF;
 
 /**
  * Created by noahkim on 8/16/17.
