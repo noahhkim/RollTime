@@ -64,24 +64,25 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         // Initialize Firebase
         FIREBASE_DB = FirebaseDatabase.getInstance();
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        FIREBASE_DB.setPersistenceEnabled(true);
 
-        // Set up reference to database
-        FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + mFirebaseUser.getUid());
+        if (mFirebaseUser != null) {
+            // Set up reference to database
+            FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + mFirebaseUser.getUid());
 
-        // Limit query to last 10 matches
-        mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
+            // Limit query to last 10 matches
+            mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
 
-        // Initialize LayoutManager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        mMatchesRecyclerView.setLayoutManager(layoutManager);
+            // Initialize LayoutManager
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager.setReverseLayout(true);
+            layoutManager.setStackFromEnd(true);
+            mMatchesRecyclerView.setLayoutManager(layoutManager);
 
-        setUpFirebaseRecyclerViewAdapter();
+            setUpFirebaseRecyclerViewAdapter();
 
-        // Attach adapter to recyclerview
-        mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
+            // Attach adapter to recyclerview
+            mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
+        }
 
         return rootView;
     }
@@ -90,7 +91,9 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mRecyclerAdapter.cleanup();
+        if (mRecyclerAdapter != null) {
+            mRecyclerAdapter.cleanup();
+        }
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
