@@ -13,10 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Match;
@@ -25,6 +22,9 @@ import com.noahkim.rolltime.util.MatchHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_DB_REF;
+import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_USER;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -35,10 +35,10 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     RecyclerView mMatchesRecyclerView;
 
     // Firebase instance variables
-    public static FirebaseDatabase FIREBASE_DB;
-    public static DatabaseReference FIREBASE_DB_REF;
+//    public static FirebaseDatabase FIREBASE_DB;
+//    public static DatabaseReference FIREBASE_DB_REF;
+//    private FirebaseUser FIREBASE_USER;
     private FirebaseRecyclerAdapter mRecyclerAdapter;
-    private FirebaseUser mFirebaseUser;
     private Query mRecentMatches;
     private String userBeltPreference;
 
@@ -62,15 +62,13 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
                 .registerOnSharedPreferenceChangeListener(this);
 
         // Initialize Firebase
-        FIREBASE_DB = FirebaseDatabase.getInstance();
-        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//        FIREBASE_DB = FirebaseDatabase.getInstance();
+//        FIREBASE_USER = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (mFirebaseUser != null) {
             // Set up reference to database
-            FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + mFirebaseUser.getUid());
+//            FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + FIREBASE_USER.getUid());
 
-            // Limit query to last 10 matches
-            mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
+        if (FIREBASE_USER != null) {
 
             // Initialize LayoutManager
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -78,10 +76,14 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             layoutManager.setStackFromEnd(true);
             mMatchesRecyclerView.setLayoutManager(layoutManager);
 
+            // Limit query to last 10 matches
+            mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
+
             setUpFirebaseRecyclerViewAdapter();
 
             // Attach adapter to recyclerview
             mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
+
         }
 
         return rootView;
