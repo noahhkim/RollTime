@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#4CAF50</color>
     <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorPrimaryLight">#81C784</color>
     <color name="colorAccent">#03A9F4</color>
     <color name="colorPink">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
@@ -9,5 +10,6 @@
     <color name="colorLightGrey">#F5F5F5</color>
     <color name="colorDarkGrey">#212121</color>
     <color name="colorOrange">#FF5722</color>
+    <color name="colorRed">#F44336</color>
 
 </resources>

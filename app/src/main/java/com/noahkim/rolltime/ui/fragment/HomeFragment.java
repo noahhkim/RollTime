@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Match;
@@ -23,6 +22,9 @@ import com.noahkim.rolltime.util.MatchHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_DB_REF;
+import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_USER;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -33,8 +35,9 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     RecyclerView mMatchesRecyclerView;
 
     // Firebase instance variables
-    public static FirebaseDatabase FIREBASE_DB;
-    public static DatabaseReference FIREBASE_DB_REF;
+//    public static FirebaseDatabase FIREBASE_DB;
+//    public static DatabaseReference FIREBASE_DB_REF;
+//    private FirebaseUser FIREBASE_USER;
     private FirebaseRecyclerAdapter mRecyclerAdapter;
     private Query mRecentMatches;
     private String userBeltPreference;
@@ -59,24 +62,29 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
                 .registerOnSharedPreferenceChangeListener(this);
 
         // Initialize Firebase
-        FIREBASE_DB = FirebaseDatabase.getInstance();
+//        FIREBASE_DB = FirebaseDatabase.getInstance();
+//        FIREBASE_USER = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Set up reference to database
-        FIREBASE_DB_REF = FIREBASE_DB.getReference().child("matches");
+            // Set up reference to database
+//            FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + FIREBASE_USER.getUid());
 
-        // Limit query to last 10 matches
-        mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
+        if (FIREBASE_USER != null) {
 
-        // Initialize LayoutManager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        mMatchesRecyclerView.setLayoutManager(layoutManager);
+            // Initialize LayoutManager
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager.setReverseLayout(true);
+            layoutManager.setStackFromEnd(true);
+            mMatchesRecyclerView.setLayoutManager(layoutManager);
 
-        setUpFirebaseRecyclerViewAdapter();
+            // Limit query to last 10 matches
+            mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
 
-        // Attach adapter to recyclerview
-        mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
+            setUpFirebaseRecyclerViewAdapter();
+
+            // Attach adapter to recyclerview
+            mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
+
+        }
 
         return rootView;
     }
@@ -85,7 +93,9 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mRecyclerAdapter.cleanup();
+        if (mRecyclerAdapter != null) {
+            mRecyclerAdapter.cleanup();
+        }
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
