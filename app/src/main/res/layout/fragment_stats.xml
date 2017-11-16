@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.noahkim.rolltime.ui.fragment.HistoryFragment">
+    tools:context="com.noahkim.rolltime.ui.fragment.StatsFragment">
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/bar_chart"

@@ -15,9 +15,11 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.ui.fragment.HistoryFragment;
 import com.noahkim.rolltime.ui.fragment.HomeFragment;
+import com.noahkim.rolltime.ui.fragment.StatsFragment;
 import com.noahkim.rolltime.ui.fragment.TimerFragment;
 import com.noahkim.rolltime.ui.fragment.VideosFragment;
 import com.noahkim.rolltime.util.BottomNavigationViewHelper;
@@ -39,14 +41,15 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottom_navigation)
     BottomNavigationView mBottomNavView;
 
-    public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
-
-    private String mUsername;
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    public static FirebaseUser FIREBASE_USER;
+    public static FirebaseDatabase FIREBASE_DB;
+    public static DatabaseReference FIREBASE_DB_REF;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -54,33 +57,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        // Set up timber
+        Timber.plant(new Timber.DebugTree());
 
         // inflate HomeFragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new HomeFragment())
                     .commit();
-
-            // Set up timber
-            Timber.plant(new Timber.DebugTree());
         }
-
-        mUsername = ANONYMOUS;
 
         // Initialize Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
+        FIREBASE_DB = FirebaseDatabase.getInstance();
 
         // Create login authentication page
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                FIREBASE_USER = firebaseAuth.getCurrentUser();
+                if (FIREBASE_USER != null) {
                     // user is signed in
-                    onSignedInInitialize(user.getDisplayName());
+                    FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + FIREBASE_USER.getUid());
                 } else {
                     // user is signed out
-                    onSignedOutCleanup();
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case R.id.action_stats:
-                        fragment = new HistoryFragment();
+                        fragment = new StatsFragment();
                         mFab.setVisibility(View.GONE);
                         break;
                     case R.id.action_timer:
@@ -192,14 +192,4 @@ public class MainActivity extends AppCompatActivity {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
     }
-
-    private void onSignedInInitialize(String username) {
-        mUsername = username;
-    }
-
-    private void onSignedOutCleanup() {
-        mUsername = ANONYMOUS;
-    }
-
-
 }
