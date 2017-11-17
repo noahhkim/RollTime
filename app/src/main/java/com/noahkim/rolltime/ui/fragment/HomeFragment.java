@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.noahkim.rolltime.R;
@@ -89,12 +90,19 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         return rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mRecyclerAdapter != null) {
+            mRecyclerAdapter.startListening();
+        }
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (mRecyclerAdapter != null) {
-            mRecyclerAdapter.cleanup();
+            mRecyclerAdapter.stopListening();
         }
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .unregisterOnSharedPreferenceChangeListener(this);
@@ -114,7 +122,9 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             userBeltPreference = sharedPreferences.getString(getString(R.string.belt_level_key),
                     getString(R.string.pref_belt_white));
         }
-        mRecyclerAdapter.notifyDataSetChanged();
+        if (mRecyclerAdapter != null) {
+            mRecyclerAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setUpFirebaseRecyclerViewAdapter() {
@@ -123,14 +133,17 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         userBeltPreference = sharedPreferences.getString(getString(R.string.belt_level_key),
                 getString(R.string.pref_belt_white));
 
+        // Build FirebaseRecyclerOptions
+        FirebaseRecyclerOptions<Match> options =
+                new FirebaseRecyclerOptions.Builder<Match>()
+                .setQuery(mRecentMatches, Match.class)
+                .build();
+
         // Attach FirebaseRecyclerAdapter to recyclerview
         mRecyclerAdapter = new FirebaseRecyclerAdapter<Match, MatchHolder>(
-                Match.class,
-                R.layout.matches_list_item,
-                MatchHolder.class,
-                mRecentMatches) {
+                options) {
             @Override
-            protected void populateViewHolder(MatchHolder holder, Match match, int position) {
+            protected void onBindViewHolder(MatchHolder holder, int position, Match match) {
                 // Populate views in ViewHolder
                 holder.setUserBeltLevel(beltArray[Integer.valueOf(userBeltPreference)]);
                 holder.setOppName(match.getOppName());
@@ -142,10 +155,27 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
                 holder.setOppArmlockCount(match.getOppArmlockCount());
                 holder.setOppLeglockCount(match.getOppLeglockCount());
             }
+
+//            @Override
+//            protected void populateViewHolder(MatchHolder holder, Match match, int position) {
+//                // Populate views in ViewHolder
+//                holder.setUserBeltLevel(beltArray[Integer.valueOf(userBeltPreference)]);
+//                holder.setOppName(match.getOppName());
+//                holder.setOppBeltLevel(beltArray[match.getOppBeltLevel()]);
+//                holder.setUserChokeCount(match.getUserChokeCount());
+//                holder.setUserArmlockCount(match.getUserArmlockCount());
+//                holder.setUserLeglockCount(match.getUserLeglockCount());
+//                holder.setOppChokeCount(match.getOppChokeCount());
+//                holder.setOppArmlockCount(match.getOppArmlockCount());
+//                holder.setOppLeglockCount(match.getOppLeglockCount());
+//            }
             @Override
             public MatchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                MatchHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                viewHolder.setOnClickListener(new MatchHolder.ClickListener() {
+//                MatchHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.matches_list_item, parent, false);
+                MatchHolder matchHolder = new MatchHolder(view);
+                matchHolder.setOnClickListener(new MatchHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         // Attach onClickListener to recyclerview list items
@@ -161,7 +191,23 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
                     }
                 });
-                return viewHolder;
+//                viewHolder.setOnClickListener(new MatchHolder.ClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int position) {
+//                        // Attach onClickListener to recyclerview list items
+//                        DatabaseReference itemRef = mRecyclerAdapter.getRef(position);
+//                        Intent intent = new Intent(getActivity(), EditMatchActivity.class);
+//                        String postId = itemRef.getKey();
+//                        intent.setData(Uri.parse(postId));
+//                        startActivity(intent);
+//                    }
+//
+//                    @Override
+//                    public void onItemLongClick(View view, int position) {
+//
+//                    }
+//                });
+                return matchHolder;
             }
         };
     }
