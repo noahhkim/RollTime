@@ -97,4 +97,8 @@
     <string name="button_decrease">-</string>
     <string name="default_quantity_value">0</string>
 
+    <!--Facebook login-->
+    <string name="facebook_application_id" translatable="false">129706411072508</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb129706411072508</string>
+
 </resources>
