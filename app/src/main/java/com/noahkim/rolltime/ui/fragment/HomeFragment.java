@@ -25,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_DB_REF;
-import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_USER;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -34,6 +33,8 @@ import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_USER;
 public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     @BindView(R.id.rv_matches)
     RecyclerView mMatchesRecyclerView;
+    @BindView(R.id.empty_view)
+    View mEmptyView;
 
     // Firebase instance variables
 //    public static FirebaseDatabase FIREBASE_DB;
@@ -42,6 +43,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     private FirebaseRecyclerAdapter mRecyclerAdapter;
     private Query mRecentMatches;
     private String userBeltPreference;
+    private RecyclerView.AdapterDataObserver mObserver;
 
     // Array of belt levels
     private int[] beltArray = {
@@ -58,26 +60,14 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
 
-        // Set up preference change listener
-        PreferenceManager.getDefaultSharedPreferences(getContext())
-                .registerOnSharedPreferenceChangeListener(this);
-
-        // Initialize Firebase
-//        FIREBASE_DB = FirebaseDatabase.getInstance();
-//        FIREBASE_USER = FirebaseAuth.getInstance().getCurrentUser();
-
-            // Set up reference to database
-//            FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + FIREBASE_USER.getUid());
-
-        if (FIREBASE_USER != null) {
-
+        if (FIREBASE_DB_REF != null) {
             // Initialize LayoutManager
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setReverseLayout(true);
             layoutManager.setStackFromEnd(true);
             mMatchesRecyclerView.setLayoutManager(layoutManager);
 
-            // Limit query to last 10 matches
+            // Limit query to last 5 matches
             mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
 
             setUpFirebaseRecyclerViewAdapter();
@@ -85,7 +75,36 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             // Attach adapter to recyclerview
             mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
 
+            // Remove emptyView if there is data
+            mObserver = new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    if (itemCount == 0) {
+                        mEmptyView.setVisibility(View.VISIBLE);
+                        mMatchesRecyclerView.setVisibility(View.GONE);
+                    } else {
+                        mEmptyView.setVisibility(View.GONE);
+                        mMatchesRecyclerView.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount) {
+                    super.onItemRangeRemoved(positionStart, itemCount);
+                    if (itemCount == 0) {
+                        mEmptyView.setVisibility(View.VISIBLE);
+                        mMatchesRecyclerView.setVisibility(View.GONE);
+                    } else {
+                        mEmptyView.setVisibility(View.GONE);
+                        mMatchesRecyclerView.setVisibility(View.VISIBLE);
+                    }
+                }
+            };
+
+            mRecyclerAdapter.registerAdapterDataObserver(mObserver);
         }
+
 
         return rootView;
     }
@@ -136,12 +155,19 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         // Build FirebaseRecyclerOptions
         FirebaseRecyclerOptions<Match> options =
                 new FirebaseRecyclerOptions.Builder<Match>()
-                .setQuery(mRecentMatches, Match.class)
-                .build();
+                        .setQuery(mRecentMatches, Match.class)
+                        .build();
+
 
         // Attach FirebaseRecyclerAdapter to recyclerview
         mRecyclerAdapter = new FirebaseRecyclerAdapter<Match, MatchHolder>(
                 options) {
+            @Override
+            public void onDataChanged() {
+                super.onDataChanged();
+                mRecyclerAdapter.notifyDataSetChanged();
+            }
+
             @Override
             protected void onBindViewHolder(MatchHolder holder, int position, Match match) {
                 // Populate views in ViewHolder
@@ -156,19 +182,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
                 holder.setOppLeglockCount(match.getOppLeglockCount());
             }
 
-//            @Override
-//            protected void populateViewHolder(MatchHolder holder, Match match, int position) {
-//                // Populate views in ViewHolder
-//                holder.setUserBeltLevel(beltArray[Integer.valueOf(userBeltPreference)]);
-//                holder.setOppName(match.getOppName());
-//                holder.setOppBeltLevel(beltArray[match.getOppBeltLevel()]);
-//                holder.setUserChokeCount(match.getUserChokeCount());
-//                holder.setUserArmlockCount(match.getUserArmlockCount());
-//                holder.setUserLeglockCount(match.getUserLeglockCount());
-//                holder.setOppChokeCount(match.getOppChokeCount());
-//                holder.setOppArmlockCount(match.getOppArmlockCount());
-//                holder.setOppLeglockCount(match.getOppLeglockCount());
-//            }
             @Override
             public MatchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //                MatchHolder viewHolder = super.onCreateViewHolder(parent, viewType);
@@ -191,25 +204,11 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
                     }
                 });
-//                viewHolder.setOnClickListener(new MatchHolder.ClickListener() {
-//                    @Override
-//                    public void onItemClick(View view, int position) {
-//                        // Attach onClickListener to recyclerview list items
-//                        DatabaseReference itemRef = mRecyclerAdapter.getRef(position);
-//                        Intent intent = new Intent(getActivity(), EditMatchActivity.class);
-//                        String postId = itemRef.getKey();
-//                        intent.setData(Uri.parse(postId));
-//                        startActivity(intent);
-//                    }
-//
-//                    @Override
-//                    public void onItemLongClick(View view, int position) {
-//
-//                    }
-//                });
+
                 return matchHolder;
             }
         };
+
     }
 
     @Override

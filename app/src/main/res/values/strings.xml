@@ -100,5 +100,6 @@
     <!--Facebook login-->
     <string name="facebook_application_id" translatable="false">129706411072508</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb129706411072508</string>
-
+    100dp
+    <string name="empty_view_title_text">Enter your matches to get started…</string>
 </resources>
