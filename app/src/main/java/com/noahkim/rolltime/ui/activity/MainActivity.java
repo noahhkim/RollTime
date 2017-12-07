@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.ui.fragment.HomeFragment;
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     public static FirebaseUser FIREBASE_USER;
     public static FirebaseDatabase FIREBASE_DB;
-    public static DatabaseReference FIREBASE_DB_REF;
+//    public static DatabaseReference FIREBASE_DB_REF;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -59,13 +58,6 @@ public class MainActivity extends AppCompatActivity {
         // Set up timber
         Timber.plant(new Timber.DebugTree());
 
-        // inflate HomeFragment
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new HomeFragment())
-                    .commit();
-        }
-
         // Initialize Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
         FIREBASE_DB = FirebaseDatabase.getInstance();
@@ -74,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
-                FIREBASE_USER = firebaseAuth.getCurrentUser();
-                if (FIREBASE_USER != null) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
                     // user is signed in
-                    FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + FIREBASE_USER.getUid());
+//                    FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + FIREBASE_USER.getUid());
                 } else {
                     // user is signed out
                     startActivityForResult(
@@ -94,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+        // inflate HomeFragment
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new HomeFragment())
+                    .commit();
+        }
 
         BottomNavigationViewHelper.removeShiftMode(mBottomNavView);
 
@@ -132,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
     }
 
     // Close app if sign-in is cancelled

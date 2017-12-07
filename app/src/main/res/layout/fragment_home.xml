@@ -15,30 +15,30 @@
         android:scrollbars="vertical" />
 
     <!-- Empty view for the list -->
-    <RelativeLayout
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/empty_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_centerInParent="true">-->
 
-        <ImageView
-            android:id="@+id/empty_shoe_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/sparring_icon" />
-        <TextView
-            android:id="@+id/empty_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_shoe_image"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-medium"
-            android:paddingTop="16dp"
-            android:text="@string/empty_view_title_text"
-            android:textAppearance="?android:textAppearanceMedium"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/empty_matches_image"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:src="@drawable/sparring_icon" />-->
+        <!--<TextView-->
+            <!--android:id="@+id/empty_title_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/empty_matches_image"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:fontFamily="sans-serif-medium"-->
+            <!--android:paddingTop="16dp"-->
+            <!--android:text="@string/empty_view_title_text"-->
+            <!--android:textAppearance="?android:textAppearanceMedium"/>-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
 </android.support.design.widget.CoordinatorLayout>
