@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.ui.fragment.HomeFragment;
 import com.noahkim.rolltime.ui.fragment.StatsFragment;
@@ -45,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    public static FirebaseUser FIREBASE_USER;
-    public static FirebaseDatabase FIREBASE_DB;
 //    public static DatabaseReference FIREBASE_DB_REF;
 
     @Override
@@ -60,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Firebase
         mFirebaseAuth = FirebaseAuth.getInstance();
-        FIREBASE_DB = FirebaseDatabase.getInstance();
 
         // Create login authentication page
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -190,8 +186,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (mAuthStateListener != null) {
-            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-        }
+        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
     }
 }
