@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.noahkim.rolltime.R;
@@ -24,7 +26,7 @@ import com.noahkim.rolltime.util.MatchHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_DB_REF;
+import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_DB;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -33,8 +35,8 @@ import static com.noahkim.rolltime.ui.activity.MainActivity.FIREBASE_DB_REF;
 public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     @BindView(R.id.rv_matches)
     RecyclerView mMatchesRecyclerView;
-    @BindView(R.id.empty_view)
-    View mEmptyView;
+//    @BindView(R.id.empty_view)
+//    View mEmptyView;
 
     // Firebase instance variables
 //    public static FirebaseDatabase FIREBASE_DB;
@@ -44,6 +46,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     private Query mRecentMatches;
     private String userBeltPreference;
     private RecyclerView.AdapterDataObserver mObserver;
+    public static DatabaseReference FIREBASE_DB_REF;
 
     // Array of belt levels
     private int[] beltArray = {
@@ -60,50 +63,52 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
 
-        if (FIREBASE_DB_REF != null) {
-            // Initialize LayoutManager
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            layoutManager.setReverseLayout(true);
-            layoutManager.setStackFromEnd(true);
-            mMatchesRecyclerView.setLayoutManager(layoutManager);
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser mCurrentUser = mFirebaseAuth.getCurrentUser();
+        FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + mCurrentUser.getUid());
 
-            // Limit query to last 5 matches
-            mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
+        // Initialize LayoutManager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        mMatchesRecyclerView.setLayoutManager(layoutManager);
 
-            setUpFirebaseRecyclerViewAdapter();
+        // Limit query to last 5 matches
+        mRecentMatches = FIREBASE_DB_REF.limitToLast(5);
 
-            // Attach adapter to recyclerview
-            mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
+        setUpFirebaseRecyclerViewAdapter();
 
-            // Remove emptyView if there is data
-            mObserver = new RecyclerView.AdapterDataObserver() {
-                @Override
-                public void onItemRangeInserted(int positionStart, int itemCount) {
-                    super.onItemRangeInserted(positionStart, itemCount);
-                    if (itemCount == 0) {
-                        mEmptyView.setVisibility(View.VISIBLE);
-                        mMatchesRecyclerView.setVisibility(View.GONE);
-                    } else {
-                        mEmptyView.setVisibility(View.GONE);
-                        mMatchesRecyclerView.setVisibility(View.VISIBLE);
-                    }
-                }
+        // Attach adapter to recyclerview
+        mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
 
-                @Override
-                public void onItemRangeRemoved(int positionStart, int itemCount) {
-                    super.onItemRangeRemoved(positionStart, itemCount);
-                    if (itemCount == 0) {
-                        mEmptyView.setVisibility(View.VISIBLE);
-                        mMatchesRecyclerView.setVisibility(View.GONE);
-                    } else {
-                        mEmptyView.setVisibility(View.GONE);
-                        mMatchesRecyclerView.setVisibility(View.VISIBLE);
-                    }
-                }
-            };
-
-            mRecyclerAdapter.registerAdapterDataObserver(mObserver);
-        }
+        // Remove emptyView if there is data
+//        mObserver = new RecyclerView.AdapterDataObserver() {
+//            @Override
+//            public void onItemRangeInserted(int positionStart, int itemCount) {
+//                super.onItemRangeInserted(positionStart, itemCount);
+//                if (itemCount == 0) {
+//                    mEmptyView.setVisibility(View.VISIBLE);
+//                    mMatchesRecyclerView.setVisibility(View.GONE);
+//                } else {
+//                    mEmptyView.setVisibility(View.GONE);
+//                    mMatchesRecyclerView.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void onItemRangeRemoved(int positionStart, int itemCount) {
+//                super.onItemRangeRemoved(positionStart, itemCount);
+//                if (itemCount == 0) {
+//                    mEmptyView.setVisibility(View.VISIBLE);
+//                    mMatchesRecyclerView.setVisibility(View.GONE);
+//                } else {
+//                    mEmptyView.setVisibility(View.GONE);
+//                    mMatchesRecyclerView.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        };
+//
+//        mRecyclerAdapter.registerAdapterDataObserver(mObserver);
 
 
         return rootView;
@@ -112,17 +117,14 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public void onStart() {
         super.onStart();
-        if (mRecyclerAdapter != null) {
-            mRecyclerAdapter.startListening();
-        }
+        mRecyclerAdapter.startListening();
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mRecyclerAdapter != null) {
-            mRecyclerAdapter.stopListening();
-        }
+    public void onStop() {
+        super.onStop();
+        mRecyclerAdapter.stopListening();
+
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
@@ -141,9 +143,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             userBeltPreference = sharedPreferences.getString(getString(R.string.belt_level_key),
                     getString(R.string.pref_belt_white));
         }
-        if (mRecyclerAdapter != null) {
             mRecyclerAdapter.notifyDataSetChanged();
-        }
     }
 
     private void setUpFirebaseRecyclerViewAdapter() {
@@ -208,7 +208,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
                 return matchHolder;
             }
         };
-
     }
 
     @Override
