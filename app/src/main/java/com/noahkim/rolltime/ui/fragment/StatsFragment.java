@@ -12,8 +12,12 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Match;
@@ -22,9 +26,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.noahkim.rolltime.ui.fragment.HomeFragment.FIREBASE_DB_REF;
-
 
 /**
  * Created by noahkim on 9/13/17.
@@ -39,11 +40,16 @@ public class StatsFragment extends Fragment {
     private static final int TOTAL_LEGLOCKS = 2;
 
     private ValueEventListener mValueEventListener;
+    private DatabaseReference mDatabaseReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_stats, container, false);
         ButterKnife.bind(this, rootView);
+
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser mCurrentUser = mFirebaseAuth.getCurrentUser();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users/" + mCurrentUser.getUid());
 
         attachDatabaseReadListener();
 
@@ -138,13 +144,13 @@ public class StatsFragment extends Fragment {
                 }
             };
             mBarChart.setNoDataText("");
-            FIREBASE_DB_REF.addValueEventListener(mValueEventListener);
+            mDatabaseReference.addValueEventListener(mValueEventListener);
         }
     }
 
     private void detachDatabaseReadListener() {
         if (mValueEventListener != null) {
-            FIREBASE_DB_REF.removeEventListener(mValueEventListener);
+            mDatabaseReference.removeEventListener(mValueEventListener);
             mValueEventListener = null;
         }
     }
