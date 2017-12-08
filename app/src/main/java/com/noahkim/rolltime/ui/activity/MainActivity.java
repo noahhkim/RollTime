@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // user is signed in
 //                    FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + FIREBASE_USER.getUid());
+                    if (savedInstanceState == null) {
+                        getSupportFragmentManager().beginTransaction()
+                                .add(R.id.container, new HomeFragment())
+                                .commit();
+                    }
                 } else {
                     // user is signed out
                     startActivityForResult(
@@ -82,13 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        // inflate HomeFragment
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new HomeFragment())
-                    .commit();
-        }
 
         BottomNavigationViewHelper.removeShiftMode(mBottomNavView);
 
@@ -127,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
     }
 
     // Close app if sign-in is cancelled
