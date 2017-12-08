@@ -38,14 +38,13 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 //    View mEmptyView;
 
     // Firebase instance variables
-//    public static FirebaseDatabase FIREBASE_DB;
-//    public static DatabaseReference mDatabaseReference;
-//    private FirebaseUser FIREBASE_USER;
     private FirebaseRecyclerAdapter mRecyclerAdapter;
     private Query mRecentMatches;
     private String userBeltPreference;
     private RecyclerView.AdapterDataObserver mObserver;
     private DatabaseReference mDatabaseReference;
+    private FirebaseAuth mFirebaseAuth;
+    public static final int RC_SIGN_IN = 1;
 
     // Array of belt levels
     private int[] beltArray = {
@@ -62,18 +61,20 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
 
-        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+        // Initialize Firebase
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
         FirebaseUser mCurrentUser = mFirebaseAuth.getCurrentUser();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users/" + mCurrentUser.getUid());
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users/" + mCurrentUser.getUid());
+
+        // Limit query to last 5 matches
+        mRecentMatches = mDatabaseReference.limitToLast(5);
 
         // Initialize LayoutManager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         mMatchesRecyclerView.setLayoutManager(layoutManager);
-
-        // Limit query to last 5 matches
-        mRecentMatches = databaseReference.limitToLast(5);
 
         setUpFirebaseRecyclerViewAdapter();
 
@@ -131,6 +132,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public void onResume() {
         super.onResume();
+
         // Scroll to top of the list when returning to HomeFragment
         mMatchesRecyclerView.smoothScrollToPosition(5);
     }
@@ -142,7 +144,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             userBeltPreference = sharedPreferences.getString(getString(R.string.belt_level_key),
                     getString(R.string.pref_belt_white));
         }
-            mRecyclerAdapter.notifyDataSetChanged();
+        mRecyclerAdapter.notifyDataSetChanged();
     }
 
     private void setUpFirebaseRecyclerViewAdapter() {
