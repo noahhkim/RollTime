@@ -1,4 +1,4 @@
-package com.noahkim.rolltime.ui.fragment;
+package com.noahkim.rolltime.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
