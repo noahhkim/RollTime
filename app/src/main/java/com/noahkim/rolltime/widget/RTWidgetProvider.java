@@ -11,7 +11,7 @@ import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.ui.activity.MainActivity;
+import com.noahkim.rolltime.activities.MainActivity;
 
 /**
  * Created by Noah on 9/26/2017.

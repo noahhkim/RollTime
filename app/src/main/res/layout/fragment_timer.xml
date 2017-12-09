@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.noahkim.rolltime.ui.fragment.TimerFragment">
+    tools:context="com.noahkim.rolltime.fragments.TimerFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

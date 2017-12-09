@@ -1,4 +1,4 @@
-package com.noahkim.rolltime.ui.activity;
+package com.noahkim.rolltime.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;

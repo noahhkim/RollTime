@@ -1,4 +1,4 @@
-package com.noahkim.rolltime.ui.activity;
+package com.noahkim.rolltime.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +16,10 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.ui.fragment.HomeFragment;
-import com.noahkim.rolltime.ui.fragment.StatsFragment;
-import com.noahkim.rolltime.ui.fragment.TimerFragment;
-import com.noahkim.rolltime.ui.fragment.VideosFragment;
+import com.noahkim.rolltime.fragments.HomeFragment;
+import com.noahkim.rolltime.fragments.StatsFragment;
+import com.noahkim.rolltime.fragments.TimerFragment;
+import com.noahkim.rolltime.fragments.VideosFragment;
 import com.noahkim.rolltime.util.BottomNavigationViewHelper;
 
 import java.util.Arrays;

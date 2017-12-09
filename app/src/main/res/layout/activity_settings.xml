@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.noahkim.rolltime.ui.activity.SettingsActivity"
-    android:name="com.noahkim.rolltime.ui.fragment.SettingsFragment">
+    tools:context="com.noahkim.rolltime.activities.SettingsActivity"
+    android:name="com.noahkim.rolltime.fragments.SettingsFragment">
 
 </fragment>

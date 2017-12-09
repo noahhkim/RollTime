@@ -1,4 +1,4 @@
-package com.noahkim.rolltime.ui.fragment;
+package com.noahkim.rolltime.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Match;
-import com.noahkim.rolltime.ui.activity.EditMatchActivity;
+import com.noahkim.rolltime.activities.EditMatchActivity;
 import com.noahkim.rolltime.util.MatchHolder;
 
 import butterknife.BindView;
