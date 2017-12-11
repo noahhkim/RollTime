@@ -1,10 +1,13 @@
 package com.noahkim.rolltime.fragments;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,8 +46,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     RecyclerView mMatchesRecyclerView;
     @BindView(R.id.empty_view)
     View mEmptyView;
-    @BindView(R.id.progress_bar)
-    ProgressBar mProgressBar;
 
     // Firebase instance variables
     private FirebaseRecyclerAdapter mRecyclerAdapter;
@@ -53,8 +54,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     private RecyclerView.AdapterDataObserver mObserver;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
-    private static final int EMPTY_VIEW = 3;
-
 
     // Array of belt levels
     private int[] beltArray = {
@@ -167,7 +166,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             @Override
             public void onDataChanged() {
                 super.onDataChanged();
-
                 mRecyclerAdapter.notifyDataSetChanged();
             }
 
@@ -206,7 +204,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
                     }
                 });
-
                 return matchHolder;
             }
         };
