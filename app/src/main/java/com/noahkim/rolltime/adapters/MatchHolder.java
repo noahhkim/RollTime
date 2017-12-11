@@ -1,4 +1,4 @@
-package com.noahkim.rolltime.util;
+package com.noahkim.rolltime.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

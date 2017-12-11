@@ -53,6 +53,21 @@ public class StatsFragment extends Fragment {
 
         attachDatabaseReadListener();
 
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChildren()) {
+                    mBarChart.setNoDataText("No data available");
+                } else {
+                    mBarChart.setNoDataText("");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         return rootView;
     }
 
