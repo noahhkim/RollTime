@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 //                    FIREBASE_DB_REF = FIREBASE_DB.getReference().child("users/" + FIREBASE_USER.getUid());
                     if (savedInstanceState == null) {
                         getSupportFragmentManager().beginTransaction()
-                                .add(R.id.container, new HomeFragment())
+                                .replace(R.id.container, new HomeFragment())
                                 .commit();
                     }
                 } else {

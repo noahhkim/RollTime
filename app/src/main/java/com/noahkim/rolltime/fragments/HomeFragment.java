@@ -11,21 +11,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.data.Match;
 import com.noahkim.rolltime.activities.EditMatchActivity;
-import com.noahkim.rolltime.util.MatchHolder;
+import com.noahkim.rolltime.adapters.MatchHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.noahkim.rolltime.adapters.MatchHolder.*;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -34,8 +41,10 @@ import butterknife.ButterKnife;
 public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     @BindView(R.id.rv_matches)
     RecyclerView mMatchesRecyclerView;
-//    @BindView(R.id.empty_view)
-//    View mEmptyView;
+    @BindView(R.id.empty_view)
+    View mEmptyView;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
 
     // Firebase instance variables
     private FirebaseRecyclerAdapter mRecyclerAdapter;
@@ -44,7 +53,8 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     private RecyclerView.AdapterDataObserver mObserver;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
-    public static final int RC_SIGN_IN = 1;
+    private static final int EMPTY_VIEW = 3;
+
 
     // Array of belt levels
     private int[] beltArray = {
@@ -78,38 +88,10 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
         setUpFirebaseRecyclerViewAdapter();
 
+        setEmptyView();
+
         // Attach adapter to recyclerview
         mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
-
-        // Remove emptyView if there is data
-//        mObserver = new RecyclerView.AdapterDataObserver() {
-//            @Override
-//            public void onItemRangeInserted(int positionStart, int itemCount) {
-//                super.onItemRangeInserted(positionStart, itemCount);
-//                if (itemCount == 0) {
-//                    mEmptyView.setVisibility(View.VISIBLE);
-//                    mMatchesRecyclerView.setVisibility(View.GONE);
-//                } else {
-//                    mEmptyView.setVisibility(View.GONE);
-//                    mMatchesRecyclerView.setVisibility(View.VISIBLE);
-//                }
-//            }
-//
-//            @Override
-//            public void onItemRangeRemoved(int positionStart, int itemCount) {
-//                super.onItemRangeRemoved(positionStart, itemCount);
-//                if (itemCount == 0) {
-//                    mEmptyView.setVisibility(View.VISIBLE);
-//                    mMatchesRecyclerView.setVisibility(View.GONE);
-//                } else {
-//                    mEmptyView.setVisibility(View.GONE);
-//                    mMatchesRecyclerView.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        };
-//
-//        mRecyclerAdapter.registerAdapterDataObserver(mObserver);
-
 
         return rootView;
     }
@@ -132,7 +114,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public void onResume() {
         super.onResume();
-
         // Scroll to top of the list when returning to HomeFragment
         mMatchesRecyclerView.smoothScrollToPosition(5);
     }
@@ -145,6 +126,26 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
                     getString(R.string.pref_belt_white));
         }
         mRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    private void setEmptyView() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChildren()) {
+                    mEmptyView.setVisibility(View.VISIBLE);
+                    mMatchesRecyclerView.setVisibility(View.GONE);
+                } else {
+                    mEmptyView.setVisibility(View.GONE);
+                    mMatchesRecyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setUpFirebaseRecyclerViewAdapter() {
@@ -166,6 +167,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             @Override
             public void onDataChanged() {
                 super.onDataChanged();
+
                 mRecyclerAdapter.notifyDataSetChanged();
             }
 
@@ -185,11 +187,10 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
             @Override
             public MatchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//                MatchHolder viewHolder = super.onCreateViewHolder(parent, viewType);
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.matches_list_item, parent, false);
                 MatchHolder matchHolder = new MatchHolder(view);
-                matchHolder.setOnClickListener(new MatchHolder.ClickListener() {
+                matchHolder.setOnClickListener(new ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         // Attach onClickListener to recyclerview list items
