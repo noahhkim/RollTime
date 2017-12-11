@@ -102,4 +102,8 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb129706411072508</string>
     100dp
     <string name="empty_view_title_text">Enter your matches to get started…</string>
+
+    <!--Bar Chart-->
+    <string name="no_chart_data">No chart data available</string>
+
 </resources>
