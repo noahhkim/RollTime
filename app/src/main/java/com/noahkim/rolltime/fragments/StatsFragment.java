@@ -1,5 +1,6 @@
 package com.noahkim.rolltime.fragments;
 
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -57,7 +59,10 @@ public class StatsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChildren()) {
-                    mBarChart.setNoDataText("No data available");
+                    mBarChart.setNoDataText(getString(R.string.no_chart_data));
+                    Paint p = mBarChart.getPaint(Chart.PAINT_INFO);
+                    p.setColor(getResources().getColor(R.color.colorDarkGrey));
+                    p.setTextSize(50f);
                 } else {
                     mBarChart.setNoDataText("");
                 }
