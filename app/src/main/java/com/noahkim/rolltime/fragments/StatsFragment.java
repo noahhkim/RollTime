@@ -1,6 +1,5 @@
 package com.noahkim.rolltime.fragments;
 
-import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -36,6 +34,8 @@ import butterknife.ButterKnife;
 public class StatsFragment extends Fragment {
     @BindView(R.id.bar_chart)
     BarChart mBarChart;
+    @BindView(R.id.stats_empty_view)
+    View mEmptyStatsView;
 
     private static final int TOTAL_CHOKES = 0;
     private static final int TOTAL_ARMLOCKS = 1;
@@ -59,11 +59,15 @@ public class StatsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChildren()) {
-                    mBarChart.setNoDataText(getString(R.string.no_chart_data));
-                    Paint p = mBarChart.getPaint(Chart.PAINT_INFO);
-                    p.setColor(getResources().getColor(R.color.colorDarkGrey));
-                    p.setTextSize(50f);
+//                    mBarChart.setNoDataText(getString(R.string.no_chart_data));
+//                    Paint p = mBarChart.getPaint(Chart.PAINT_INFO);
+//                    p.setColor(getResources().getColor(R.color.colorDarkGrey));
+//                    p.setTextSize(50f);
+                    mEmptyStatsView.setVisibility(View.VISIBLE);
+                    mBarChart.setVisibility(View.GONE);
                 } else {
+                    mEmptyStatsView.setVisibility(View.GONE);
+                    mBarChart.setVisibility(View.VISIBLE);
                     mBarChart.setNoDataText("");
                 }
             }
