@@ -13,4 +13,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- Empty view for stats -->
+    <RelativeLayout
+        android:id="@+id/stats_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/empty_chart_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_insert_chart_black_100dp" />
+
+        <TextView
+            android:id="@+id/empty_chart_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/empty_chart_image"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-medium"
+            android:paddingTop="16dp"
+            android:text="@string/no_chart_data"
+            android:textColor="@android:color/black"
+            android:textAppearance="?android:textAppearanceMedium"/>
+
+    </RelativeLayout>
+
+
 </android.support.design.widget.CoordinatorLayout>
