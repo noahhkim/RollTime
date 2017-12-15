@@ -34,7 +34,7 @@
                 android:paddingStart="4dp">
 
                 <!-- Name field -->
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/edit_opponent_name"
                     style="@style/EditorFieldStyle"
                     android:hint="@string/hint_opponent_name"
