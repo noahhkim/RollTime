@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -43,7 +45,7 @@ public class EditMatchActivity extends AppCompatActivity {
 
     // Initialize fields
     @BindView(R.id.edit_opponent_name)
-    EditText mNameEditText;
+    AutoCompleteTextView mNameEditText;
     @BindView(R.id.belts_spinner)
     Spinner mBeltSpinner;
     @BindView(R.id.user_choke_increase_button)
@@ -159,10 +161,10 @@ public class EditMatchActivity extends AppCompatActivity {
 
         setUpButtonClickListeners();
 
+        setUpAutoCompleteTextView();
+
         // Set up OnTouchListeners on input fields
         mNameEditText.setOnTouchListener(mTouchListener);
-
-
     }
 
     private void setUpButtonClickListeners() {
@@ -523,7 +525,7 @@ public class EditMatchActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    // delete match from FRD
+    // Delete match from FRD
     private void deleteMatch() {
         if (mCurrentMatchUri != null) {
             mDatabaseReference.child(mCurrentMatchUri.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -540,4 +542,26 @@ public class EditMatchActivity extends AppCompatActivity {
         }
         finish();
     }
+
+    // Set up autocomplete for name field
+    private void setUpAutoCompleteTextView() {
+        final ArrayAdapter<String> autoComplete = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot suggestionSnapshot : dataSnapshot.getChildren()) {
+                    Match match = suggestionSnapshot.getValue(Match.class);
+                    String suggestion = match.getOppName();
+                    autoComplete.add(suggestion);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        mNameEditText.setAdapter(autoComplete);
+    }
+
 }
