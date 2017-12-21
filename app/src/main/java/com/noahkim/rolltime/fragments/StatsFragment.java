@@ -126,7 +126,7 @@ public class StatsFragment extends Fragment {
                         oppBarGroup.add(new BarEntry(oppLeglockFloat, TOTAL_LEGLOCKS));
                         BarDataSet oppBarDataSet = new BarDataSet(oppBarGroup, "Opponent");
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            oppBarDataSet.setColor(getActivity().getColor(R.color.colorOrange));
+                            oppBarDataSet.setColor(getActivity().getColor(R.color.colorGrey));
                         }
 
                         // y-value data
