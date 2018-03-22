@@ -59,10 +59,6 @@ public class StatsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChildren()) {
-//                    mBarChart.setNoDataText(getString(R.string.no_chart_data));
-//                    Paint p = mBarChart.getPaint(Chart.PAINT_INFO);
-//                    p.setColor(getResources().getColor(R.color.colorDarkGrey));
-//                    p.setTextSize(50f);
                     mEmptyStatsView.setVisibility(View.VISIBLE);
                     mBarChart.setVisibility(View.GONE);
                 } else {
