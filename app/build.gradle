@@ -3,7 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-
+            keyAlias 'RollTimeKey'
+            keyPassword 'r0lltimeisreallyc00l'
+            storeFile file("$rootDir/keystore.jks")
+            storePassword 'r0lltimeisreallyc00l'
         }
     }
     compileSdkVersion 26
