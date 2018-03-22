@@ -9,7 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.noahkim.rolltime.BuildConfig;
+import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.adapters.VideoAdapter;
 import com.noahkim.rolltime.data.Video;
 
@@ -61,7 +61,7 @@ public class FetchVideosTask extends AsyncTask<String, Void, List<Video>> {
                 .appendQueryParameter("part", "snippet")
                 .appendQueryParameter("maxResults", "10")
                 .appendQueryParameter("q", "brazilian+jiu+jitsu")
-                .appendQueryParameter("key", BuildConfig.YOUTUBE_API_KEY)
+                .appendQueryParameter("key", mContext.getString(R.string.youtube_api_key))
                 .build();
 
         try {
