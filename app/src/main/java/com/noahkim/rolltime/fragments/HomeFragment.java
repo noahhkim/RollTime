@@ -1,21 +1,16 @@
 package com.noahkim.rolltime.fragments;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -28,14 +23,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.data.Match;
 import com.noahkim.rolltime.activities.EditMatchActivity;
 import com.noahkim.rolltime.adapters.MatchHolder;
+import com.noahkim.rolltime.data.Match;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.noahkim.rolltime.adapters.MatchHolder.*;
+import static com.noahkim.rolltime.adapters.MatchHolder.ClickListener;
 
 /**
  * Created by noahkim on 8/16/17.
@@ -89,7 +84,6 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
         setEmptyView();
 
-        // Attach adapter to recyclerview
         mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
 
         return rootView;
