@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties= new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     signingConfigs {
         config {
-            keyAlias 'RollTimeKey'
-            keyPassword 'r0lltimeisreallyc00l'
-            storeFile file("$rootDir/keystore.jks")
-            storePassword 'r0lltimeisreallyc00l'
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
     }
     compileSdkVersion 26
@@ -51,10 +54,10 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:support-v4:26.1.0'
     compile 'com.android.support:preference-v7:26.1.0'
-    compile 'com.google.android.gms:play-services-auth:11.6.2'
-    compile 'com.google.firebase:firebase-database:11.6.2'
-    compile 'com.google.firebase:firebase-auth:11.6.2'
-    compile 'com.google.firebase:firebase-core:11.6.2'
+    compile 'com.google.android.gms:play-services-auth:12.0.0'
+    compile 'com.google.firebase:firebase-database:12.0.0'
+    compile 'com.google.firebase:firebase-auth:12.0.0'
+    compile 'com.google.firebase:firebase-core:12.0.0'
     compile 'com.facebook.android:facebook-login:4.27.0'
     compile 'com.firebaseui:firebase-ui-database:3.1.0'
     compile 'com.firebaseui:firebase-ui-auth:3.1.0'
