@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
+import com.noahkim.rolltime.StatsPresenter;
 import com.noahkim.rolltime.data.Match;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
  * Created by noahkim on 9/13/17.
  */
 
-public class StatsFragment extends Fragment {
+public class StatsFragment extends Fragment implements StatsPresenter.View {
     @BindView(R.id.bar_chart)
     BarChart mBarChart;
     @BindView(R.id.stats_empty_view)
@@ -43,11 +44,14 @@ public class StatsFragment extends Fragment {
 
     private ValueEventListener mValueEventListener;
     private DatabaseReference mDatabaseReference;
+    private StatsPresenter statsPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_stats, container, false);
         ButterKnife.bind(this, rootView);
+
+        statsPresenter = new StatsPresenter(this);
 
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mCurrentUser = mFirebaseAuth.getCurrentUser();
@@ -59,12 +63,17 @@ public class StatsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChildren()) {
-                    mEmptyStatsView.setVisibility(View.VISIBLE);
-                    mBarChart.setVisibility(View.GONE);
+//                    mEmptyStatsView.setVisibility(View.VISIBLE);
+                    showEmptyView();
+//                    mBarChart.setVisibility(View.GONE);
+                    hideBarChart();
                 } else {
-                    mEmptyStatsView.setVisibility(View.GONE);
-                    mBarChart.setVisibility(View.VISIBLE);
-                    mBarChart.setNoDataText("");
+//                    mEmptyStatsView.setVisibility(View.GONE);
+                    hideEmptyView();
+//                    mBarChart.setVisibility(View.VISIBLE);
+                    showBarChart();
+//                    mBarChart.setNoDataText("");
+                    statsPresenter.setNoDataText("");
                 }
             }
 
@@ -139,7 +148,8 @@ public class StatsFragment extends Fragment {
                         // Set data to bar chart
                         BarData barData = new BarData(labels, dataSets);
                         barData.setDrawValues(false);
-                        mBarChart.setData(barData);
+//                        mBarChart.setData(barData);
+                        statsPresenter.setBarData(barData);
 
                         // Customize bar chart settings
                         mBarChart.setTouchEnabled(false);
@@ -149,13 +159,14 @@ public class StatsFragment extends Fragment {
                         mBarChart.getXAxis().setTextSize(12f);
 
                         // Remove horizontal gridlines and numbers on the right
-                        YAxis yAxis = mBarChart.getAxisLeft();
-                        yAxis.setDrawGridLines(false);
-                        yAxis = mBarChart.getAxisRight();
-                        yAxis.setDrawGridLines(false);
-                        yAxis.setDrawLabels(false);
+                        YAxis yAxisLeft = mBarChart.getAxisLeft();
+                        YAxis yAxisRight = mBarChart.getAxisRight();
+                        yAxisLeft.setDrawGridLines(false);
+                        yAxisRight.setDrawGridLines(false);
+                        yAxisRight.setDrawLabels(false);
                     }
-                    mBarChart.invalidate();
+//                    mBarChart.invalidate();
+                    invalidateBarChart();
                 }
 
                 @Override
@@ -163,7 +174,8 @@ public class StatsFragment extends Fragment {
 
                 }
             };
-            mBarChart.setNoDataText("");
+//            mBarChart.setNoDataText("");
+            statsPresenter.setNoDataText("");
             mDatabaseReference.addValueEventListener(mValueEventListener);
         }
     }
@@ -191,5 +203,40 @@ public class StatsFragment extends Fragment {
     public void onStop() {
         super.onStop();
         detachDatabaseReadListener();
+    }
+
+    @Override
+    public void setNoData(String string) {
+        mBarChart.setNoDataText(string);
+    }
+
+    @Override
+    public void showBarChart() {
+        mBarChart.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideBarChart() {
+        mBarChart.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEmptyView() {
+        mEmptyStatsView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyView() {
+        mEmptyStatsView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void invalidateBarChart() {
+        mBarChart.invalidate();
+    }
+
+    @Override
+    public void setBarData(BarData barData) {
+        mBarChart.setData(barData);
     }
 }
