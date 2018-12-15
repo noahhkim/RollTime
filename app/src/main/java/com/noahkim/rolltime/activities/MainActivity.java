@@ -1,5 +1,6 @@
 package com.noahkim.rolltime.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -79,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
                                     .setTheme(R.style.GreenTheme)
                                     .setIsSmartLockEnabled(false)
                                     .setAvailableProviders(
-                                            Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-                                                    new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-                                                    new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                                            Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
+                                                    new AuthUI.IdpConfig.FacebookBuilder().build(),
+                                                    new AuthUI.IdpConfig.GoogleBuilder().build()))
                                     .build(),
                             RC_SIGN_IN);
                 }
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         // set bottom nav views to inflate fragments upon selection
         mBottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("RestrictedApi")
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 Fragment fragment = null;

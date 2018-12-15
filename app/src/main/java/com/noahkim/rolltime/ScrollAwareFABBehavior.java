@@ -1,5 +1,6 @@
 package com.noahkim.rolltime;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +30,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
         if (dyConsumed > 0 && child.getVisibility() == View.VISIBLE) {
             // User scrolled down and the FAB is currently visible -> hide the FAB
             child.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                @SuppressLint("RestrictedApi")
                 @Override
                 public void onHidden(FloatingActionButton fab) {
                     super.onShown(fab);

@@ -17,10 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.adapters.VideoAdapter;
 import com.noahkim.rolltime.data.Video;
 import com.noahkim.rolltime.util.RecyclerItemClickListener;
-import com.noahkim.rolltime.webservice.FetchVideosTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,7 @@ import butterknife.ButterKnife;
 public class VideosFragment extends Fragment {
     @BindView(R.id.rv_videos)
     RecyclerView mVideosRecyclerView;
-    private VideoAdapter mVideoAdapter;
+//    private VideoAdapter mVideoAdapter;
     private List<Video> mVideos = new ArrayList<>();
     private Parcelable mState;
     private final String SAVED_RECYCLER_VIEW_STATUS_ID = "saved_id";
@@ -49,7 +47,7 @@ public class VideosFragment extends Fragment {
         // Initialize LayoutManager
         mLayoutManager = new LinearLayoutManager(getActivity());
         mVideosRecyclerView.setLayoutManager(mLayoutManager);
-        mVideoAdapter = new VideoAdapter(getContext(), mVideos);
+//        mVideoAdapter = new VideoAdapter(getContext(), mVideos);
 
         // Retrieve data from Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -60,7 +58,7 @@ public class VideosFragment extends Fragment {
                 Video video = dataSnapshot.getValue(Video.class);
                 mVideos.add(video);
                 // Attach an adapter
-                mVideosRecyclerView.setAdapter(mVideoAdapter);
+//                mVideosRecyclerView.setAdapter(mVideoAdapter);
             }
 
             @Override
@@ -92,14 +90,14 @@ public class VideosFragment extends Fragment {
 
     @Override
     public void onStart() {
-        getYoutubeVideos();
+//        getYoutubeVideos();
         super.onStart();
     }
 
-    private void getYoutubeVideos() {
-        FetchVideosTask videosTask = new FetchVideosTask(getActivity(), mVideoAdapter);
-        videosTask.execute();
-    }
+//    private void getYoutubeVideos() {
+//        FetchVideosTask videosTask = new FetchVideosTask(getActivity(), mVideoAdapter);
+//        videosTask.execute();
+//    }
 
     private void setUpOnItemClick() {
         mVideosRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
