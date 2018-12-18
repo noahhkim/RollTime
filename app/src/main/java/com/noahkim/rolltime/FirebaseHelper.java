@@ -25,9 +25,4 @@ public class FirebaseHelper {
     public FirebaseHelper(){
         mFirebaseAuth = FirebaseAuth.getInstance();
     }
-
-
-    public void signOut(Context context) {
-        AuthUI.getInstance().signOut(context);
-    }
 }
