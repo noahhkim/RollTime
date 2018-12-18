@@ -1,20 +1,22 @@
-package com.noahkim.rolltime;
+package com.noahkim.rolltime.stats;
 
 import com.github.mikephil.charting.data.BarData;
+import com.google.firebase.database.DataSnapshot;
 
 public class StatsPresenter {
     private View view;
 
 
-    public StatsPresenter(View view) {
+    StatsPresenter(View view) {
         this.view = view;
+
     }
 
-    public void setNoDataText(String emptyString){
+    void setNoDataText(String emptyString){
         view.setNoData(emptyString);
     }
 
-    public void setBarData(BarData barData) {
+    void setBarData(BarData barData) {
         view.setBarData(barData);
     }
 
@@ -26,6 +28,7 @@ public class StatsPresenter {
         void hideEmptyView();
         void invalidateBarChart();
         void setBarData(BarData barData);
+        void subscribe();
     }
 
 }

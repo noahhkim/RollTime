@@ -1,7 +1,8 @@
-package com.noahkim.rolltime.fragments;
+package com.noahkim.rolltime.stats;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.StatsPresenter;
 import com.noahkim.rolltime.data.Match;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +90,7 @@ public class StatsFragment extends Fragment implements StatsPresenter.View {
         if (mValueEventListener == null) {
             mValueEventListener = new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     // Retrieve data from Firebase
                     int userChokes = 0;
                     int userArmlocks = 0;
@@ -99,6 +100,7 @@ public class StatsFragment extends Fragment implements StatsPresenter.View {
                     int oppLeglocks = 0;
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Match match = postSnapshot.getValue(Match.class);
+                        assert match != null;
                         userChokes += match.getUserChokeCount();
                         userArmlocks += match.getUserArmlockCount();
                         userLeglocks += match.getUserLeglockCount();
@@ -115,7 +117,7 @@ public class StatsFragment extends Fragment implements StatsPresenter.View {
                         float oppLeglockFloat = (float) oppLeglocks;
 
                         // Bar group data for user
-                        final ArrayList<BarEntry> userBarGroup = new ArrayList<>();
+                        final List<BarEntry> userBarGroup = new ArrayList<>();
                         userBarGroup.add(new BarEntry(userChokeFloat, TOTAL_CHOKES));
                         userBarGroup.add(new BarEntry(userArmlockFloat, TOTAL_ARMLOCKS));
                         userBarGroup.add(new BarEntry(userLeglockFloat, TOTAL_LEGLOCKS));
@@ -125,7 +127,7 @@ public class StatsFragment extends Fragment implements StatsPresenter.View {
                         }
 
                         // Bar group data for opponent
-                        ArrayList<BarEntry> oppBarGroup = new ArrayList<>();
+                        final List<BarEntry> oppBarGroup = new ArrayList<>();
                         oppBarGroup.add(new BarEntry(oppChokeFloat, TOTAL_CHOKES));
                         oppBarGroup.add(new BarEntry(oppArmlockFloat, TOTAL_ARMLOCKS));
                         oppBarGroup.add(new BarEntry(oppLeglockFloat, TOTAL_LEGLOCKS));
@@ -135,7 +137,7 @@ public class StatsFragment extends Fragment implements StatsPresenter.View {
                         }
 
                         // y-value data
-                        ArrayList<BarDataSet> dataSets = new ArrayList<>();
+                        List<BarDataSet> dataSets = new ArrayList<>();
                         dataSets.add(userBarDataSet);
                         dataSets.add(oppBarDataSet);
 
@@ -238,5 +240,10 @@ public class StatsFragment extends Fragment implements StatsPresenter.View {
     @Override
     public void setBarData(BarData barData) {
         mBarChart.setData(barData);
+    }
+
+    @Override
+    public void subscribe() {
+
     }
 }

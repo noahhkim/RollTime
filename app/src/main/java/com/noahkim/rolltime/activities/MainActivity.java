@@ -16,9 +16,10 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.noahkim.rolltime.FirebaseHelper;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.fragments.HomeFragment;
-import com.noahkim.rolltime.fragments.StatsFragment;
+import com.noahkim.rolltime.stats.StatsFragment;
 import com.noahkim.rolltime.fragments.TimerFragment;
 import com.noahkim.rolltime.fragments.VideosFragment;
 import com.noahkim.rolltime.util.BottomNavigationViewHelper;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 //    public static DatabaseReference FIREBASE_DB_REF;
+    private FirebaseHelper firebaseHelper;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -56,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
         // Set up timber
         Timber.plant(new Timber.DebugTree());
 
+        firebaseHelper = FirebaseHelper.getFirebaseInstance();
+
         // Initialize Firebase
-        mFirebaseAuth = FirebaseAuth.getInstance();
+//        mFirebaseAuth = FirebaseAuth.getInstance();
 
         // Create login authentication page
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
