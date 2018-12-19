@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         // Set up timber
         Timber.plant(new Timber.DebugTree());
 
-        firebaseHelper = FirebaseHelper.getFirebaseInstance();
+//        firebaseHelper = FirebaseHelper.getFirebaseInstance();
 
         // Initialize Firebase
-//        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
 
         // Create login authentication page
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {

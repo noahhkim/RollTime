@@ -1,14 +1,12 @@
 package com.noahkim.rolltime;
 
-import android.content.Context;
-
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
 public class FirebaseHelper {
 
     // Firebase instance variables
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference mDatabaseReference;
