@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.noahkim.rolltime.FirebaseHelper;
 import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.fragments.HomeFragment;
+import com.noahkim.rolltime.home.HomeFragment;
 import com.noahkim.rolltime.stats.StatsFragment;
 import com.noahkim.rolltime.fragments.TimerFragment;
 import com.noahkim.rolltime.fragments.VideosFragment;
