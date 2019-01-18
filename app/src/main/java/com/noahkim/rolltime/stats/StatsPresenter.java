@@ -51,6 +51,7 @@ public class StatsPresenter {
         this.colorPrimary = colorPrimary;
         this.colorGrey = colorGrey;
         this.view = view;
+
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mCurrentUser = mFirebaseAuth.getCurrentUser();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users/" + mCurrentUser.getUid());
@@ -84,20 +85,12 @@ public class StatsPresenter {
         }
     }
 
-    void setNoDataText(String emptyString){
-        view.setNoData(emptyString);
-    }
-
-    void setBarData(BarData barData) {
-        view.setBarData(barData);
-    }
-
     void onDestroyView() {
         view = null;
     }
 
 
-    void attachDatabaseReadListener() {
+    private void attachDatabaseReadListener() {
         if (mValueEventListener == null) {
             mValueEventListener = new ValueEventListener() {
                 @Override

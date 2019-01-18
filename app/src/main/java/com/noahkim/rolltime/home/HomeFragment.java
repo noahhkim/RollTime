@@ -1,10 +1,11 @@
-package com.noahkim.rolltime.fragments;
+package com.noahkim.rolltime.home;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +37,7 @@ import static com.noahkim.rolltime.adapters.MatchHolder.ClickListener;
  * Created by noahkim on 8/16/17.
  */
 
-public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener, HomePresenter.View {
     @BindView(R.id.rv_matches)
     RecyclerView mMatchesRecyclerView;
     @BindView(R.id.empty_view)
@@ -46,9 +47,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     private FirebaseRecyclerAdapter mRecyclerAdapter;
     private Query mRecentMatches;
     private String userBeltPreference;
-    private RecyclerView.AdapterDataObserver mObserver;
     private DatabaseReference mDatabaseReference;
-    private FirebaseAuth mFirebaseAuth;
 
     // Array of belt levels
     private int[] beltArray = {
@@ -59,15 +58,17 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             R.drawable.ic_bjj_black_belt
     };
 
+    private HomePresenter homePresenter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
         setHasOptionsMenu(true);
 
-        // Initialize Firebase
-        mFirebaseAuth = FirebaseAuth.getInstance();
 
+        // Initialize Firebase
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser mCurrentUser = mFirebaseAuth.getCurrentUser();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users/" + mCurrentUser.getUid());
 
@@ -82,7 +83,8 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
         setUpFirebaseRecyclerViewAdapter();
 
-        setEmptyView();
+//        setEmptyView();
+        homePresenter = new HomePresenter(this);
 
         mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
 
@@ -121,25 +123,25 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         mRecyclerAdapter.notifyDataSetChanged();
     }
 
-    private void setEmptyView() {
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChildren()) {
-                    mEmptyView.setVisibility(View.VISIBLE);
-                    mMatchesRecyclerView.setVisibility(View.GONE);
-                } else {
-                    mEmptyView.setVisibility(View.GONE);
-                    mMatchesRecyclerView.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    private void setEmptyView() {
+//        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (!dataSnapshot.hasChildren()) {
+//                    mEmptyView.setVisibility(View.VISIBLE);
+//                    mMatchesRecyclerView.setVisibility(View.GONE);
+//                } else {
+//                    mEmptyView.setVisibility(View.GONE);
+//                    mMatchesRecyclerView.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
     private void setUpFirebaseRecyclerViewAdapter() {
         // Get user belt preference
@@ -150,7 +152,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         // Build FirebaseRecyclerOptions
         FirebaseRecyclerOptions<Match> options =
                 new FirebaseRecyclerOptions.Builder<Match>()
-                        .setQuery(mRecentMatches, Match.class)
+                        .setQuery(mDatabaseReference, Match.class)
                         .build();
 
 
@@ -207,5 +209,27 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);
+    }
+
+    @Override
+    public void showEmptyView() {
+        mEmptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyView() {
+        mEmptyView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRecyclerView() {
+        mMatchesRecyclerView.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideRecyclerView() {
+        mMatchesRecyclerView.setVisibility(View.GONE);
+
     }
 }
