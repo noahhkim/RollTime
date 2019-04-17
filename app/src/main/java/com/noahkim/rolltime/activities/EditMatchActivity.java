@@ -4,9 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.adapters.SpinnerAdapter;
-import com.noahkim.rolltime.data.Match;
+import com.noahkim.rolltime.model.Match;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,7 +97,7 @@ public class EditMatchActivity extends AppCompatActivity {
     };
 
     // Belt level. Default level is white
-    private int mBeltLevel = Match.WHITE_BELT;
+    private int mBeltLevel = Match.Companion.getWHITE_BELT();
 
     // Uri of selected match
     private Uri mCurrentMatchUri;
@@ -306,29 +305,29 @@ public class EditMatchActivity extends AppCompatActivity {
                 int selection = parent.getSelectedItemPosition();
                 switch (selection) {
                     case 0:
-                        mBeltLevel = Match.WHITE_BELT;
+                        mBeltLevel = Match.Companion.getWHITE_BELT();
                         break;
                     case 1:
-                        mBeltLevel = Match.BLUE_BELT;
+                        mBeltLevel = Match.Companion.getBLUE_BELT();
                         break;
                     case 2:
-                        mBeltLevel = Match.PURPLE_BELT;
+                        mBeltLevel = Match.Companion.getPURPLE_BELT();
                         break;
                     case 3:
-                        mBeltLevel = Match.BROWN_BELT;
+                        mBeltLevel = Match.Companion.getBROWN_BELT();
                         break;
                     case 4:
-                        mBeltLevel = Match.BLACK_BELT;
+                        mBeltLevel = Match.Companion.getBLACK_BELT();
                         break;
                     default:
-                        mBeltLevel = Match.WHITE_BELT;
+                        mBeltLevel = Match.Companion.getWHITE_BELT();
                         break;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                mBeltLevel = Match.WHITE_BELT;
+                mBeltLevel = Match.Companion.getWHITE_BELT();
             }
         });
     }
@@ -465,9 +464,9 @@ public class EditMatchActivity extends AppCompatActivity {
             mDatabaseReference.push().setValue(matchDetails);
         } else {
             // Previously stored match, so update data to database
-            Map<String, Object> matchValues = matchDetails.toMap();
+//            Map<String, Object> matchValues = matchDetails.toMap();
             Map<String, Object> matchUpdates = new HashMap<>();
-            matchUpdates.put(mCurrentMatchUri.toString(), matchValues);
+//            matchUpdates.put(mCurrentMatchUri.toString(), matchValues);
             mDatabaseReference.updateChildren(matchUpdates);
         }
     }

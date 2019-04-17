@@ -1,7 +1,7 @@
 package com.noahkim.rolltime.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,13 +39,13 @@ public class MatchHolder extends RecyclerView.ViewHolder {
     TextView mOppLeglockTextView;
 
     // Array of belt levels
-    private int[] beltArray = {
-            R.drawable.ic_bjj_white_belt,
-            R.drawable.ic_bjj_blue_belt,
-            R.drawable.ic_bjj_purple_belt,
-            R.drawable.ic_bjj_brown_belt,
-            R.drawable.ic_bjj_black_belt
-    };
+//    private int[] beltArray = {
+//            R.drawable.ic_bjj_white_belt,
+//            R.drawable.ic_bjj_blue_belt,
+//            R.drawable.ic_bjj_purple_belt,
+//            R.drawable.ic_bjj_brown_belt,
+//            R.drawable.ic_bjj_black_belt
+//    };
 
     // Interface to send callbacks
     public interface ClickListener {

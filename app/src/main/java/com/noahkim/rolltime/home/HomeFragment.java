@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +25,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.noahkim.rolltime.R;
 import com.noahkim.rolltime.activities.EditMatchActivity;
+import com.noahkim.rolltime.adapters.HomeAdapter;
 import com.noahkim.rolltime.adapters.MatchHolder;
-import com.noahkim.rolltime.data.Match;
+import com.noahkim.rolltime.model.Match;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +49,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 
     // Firebase instance variables
     private FirebaseRecyclerAdapter mRecyclerAdapter;
+    private HomeAdapter homeAdapter;
     private Query mRecentMatches;
     private String userBeltPreference;
     private DatabaseReference mDatabaseReference;
@@ -57,6 +62,8 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
             R.drawable.ic_bjj_brown_belt,
             R.drawable.ic_bjj_black_belt
     };
+
+    private List<Match> matches = new ArrayList<>();
 
     private HomePresenter homePresenter;
 
@@ -73,7 +80,7 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users/" + mCurrentUser.getUid());
 
         // Limit query to last 5 matches
-        mRecentMatches = mDatabaseReference.limitToLast(5);
+//        mRecentMatches = mDatabaseReference.limitToLast(5);
 
         // Initialize LayoutManager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -81,12 +88,19 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         layoutManager.setStackFromEnd(true);
         mMatchesRecyclerView.setLayoutManager(layoutManager);
 
-        setUpFirebaseRecyclerViewAdapter();
+        // Get user belt preference
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        userBeltPreference = sharedPreferences.getString(getString(R.string.belt_level_key),
+                getString(R.string.pref_belt_white));
+
+//        setUpFirebaseRecyclerViewAdapter();
+
+        initView();
 
 //        setEmptyView();
         homePresenter = new HomePresenter(this);
 
-        mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
+//        mMatchesRecyclerView.setAdapter(mRecyclerAdapter);
 
         return rootView;
     }
@@ -94,13 +108,13 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
     @Override
     public void onStart() {
         super.onStart();
-        mRecyclerAdapter.startListening();
+//        mRecyclerAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mRecyclerAdapter.stopListening();
+//        mRecyclerAdapter.stopListening();
 
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .unregisterOnSharedPreferenceChangeListener(this);
@@ -143,11 +157,28 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
 //        });
 //    }
 
+    private void initView() {
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                matches.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Match match = snapshot.getValue(Match.class);
+                    matches.add(match);
+                }
+                homeAdapter = new HomeAdapter(matches);
+                mMatchesRecyclerView.setAdapter(homeAdapter);
+                homeAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void setUpFirebaseRecyclerViewAdapter() {
-        // Get user belt preference
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        userBeltPreference = sharedPreferences.getString(getString(R.string.belt_level_key),
-                getString(R.string.pref_belt_white));
 
         // Build FirebaseRecyclerOptions
         FirebaseRecyclerOptions<Match> options =

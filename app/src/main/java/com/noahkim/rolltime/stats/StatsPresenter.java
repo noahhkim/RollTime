@@ -1,10 +1,8 @@
 package com.noahkim.rolltime.stats;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -15,8 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.data.Match;
+import com.noahkim.rolltime.model.Match;
 
 import java.util.ArrayList;
 import java.util.List;

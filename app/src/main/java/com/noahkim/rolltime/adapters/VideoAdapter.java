@@ -1,23 +1,5 @@
 package com.noahkim.rolltime.adapters;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.noahkim.rolltime.R;
-import com.noahkim.rolltime.data.Video;
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Noah on 10/5/2017.
  */

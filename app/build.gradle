@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties= new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
@@ -20,7 +22,7 @@ android {
         targetSdkVersion 28
         versionCode 2
         versionName "1.0.2"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
     buildTypes {
@@ -33,33 +35,37 @@ android {
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    def supportLibVersion = "28.0.0"
+    def supportLibVersion = '1.0.0-beta01'
     def retrofitVersion = "2.4.0"
-    def butterknifeVersion = "8.8.1"
+    def butterknifeVersion = "10.1.0"
     def firebaseUIVersion = "4.3.0"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation "com.jakewharton:butterknife:$butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
-    implementation 'com.jakewharton.timber:timber:4.5.1'
-    implementation "com.android.support:cardview-v7:$supportLibVersion"
-    implementation "com.android.support:exifinterface:$supportLibVersion"
-    implementation "com.android.support:animated-vector-drawable:$supportLibVersion"
-    implementation "com.android.support:customtabs:$supportLibVersion"
-    implementation "com.android.support:support-fragment:$supportLibVersion"
-    implementation "com.android.support:design:$supportLibVersion"
-    implementation "com.android.support:support-v4:$supportLibVersion"
-    implementation "com.android.support:preference-v7:$supportLibVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "androidx.cardview:cardview:$supportLibVersion"
+    implementation "androidx.exifinterface:exifinterface:$supportLibVersion"
+    implementation "androidx.vectordrawable:vectordrawable-animated:$supportLibVersion"
+    implementation "androidx.browser:browser:$supportLibVersion"
+    implementation 'androidx.fragment:fragment:1.1.0-alpha06'
+    implementation "com.google.android.material:material:$supportLibVersion"
+    implementation "androidx.legacy:legacy-support-v4:$supportLibVersion"
+    implementation 'androidx.preference:preference:1.1.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.google.firebase:firebase-database:16.0.5'
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
     implementation 'com.facebook.android:facebook-login:4.31.0'
     implementation "com.firebaseui:firebase-ui-database:$firebaseUIVersion"
     implementation "com.firebaseui:firebase-ui-auth:$firebaseUIVersion"
@@ -68,5 +74,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation 'com.squareup.picasso:picasso:2.71828'
     testImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}
